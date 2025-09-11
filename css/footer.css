@@ -1,0 +1,35 @@
+.subscribe {
+  display: inline-block;
+  padding: 1px; /* Border thickness */
+  border-radius: 82px;
+  background: linear-gradient(180deg, #ffffff, #54a3da); /* Border gradient */
+  z-index: auto;
+}
+
+.subscribe .input {
+  background: linear-gradient(64deg, #3d1e1e 0%, #6a2323 0%);
+  border-radius: 82px;
+  width: 100%;
+  height: 100%;
+}
+
+.footer .copy-right {
+  
+  background: rgba(217, 217, 217, 1);
+height: 1px;
+}
+
+.thankyou{
+  display: inline-block;
+  padding: 1px; /* Border thickness */
+  border-radius: 82px;
+  background: linear-gradient(180deg, #ffffff, #54a3da); /* Border gradient */
+  z-index: auto;
+}
+
+.thankyou .input {
+  background: linear-gradient(64deg, #3d1e1e 0%, #6a2323 0%);
+  border-radius: 82px;
+  width: 100%;
+  height: 100%;
+}

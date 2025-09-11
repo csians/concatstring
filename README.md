@@ -1,2 +1,2 @@
-# concatstring
-Concatstring.com site repository.
+# concat-string-website
+Concatenating Visions with Digital Reality

@@ -1,0 +1,666 @@
+.about1 {
+  box-shadow: 0 14px 54px rgba(231, 33, 37, 0.3),
+    0 14px 54px rgba(84, 163, 218, 0.25);
+}
+
+/* vision slider */
+
+.vision-slider .slick-list {
+  overflow: initial !important;
+  padding: 0;
+}
+
+/* Default slick slide behavior */
+.vision-slider .slick-slide {
+  transform: scale(0.85);
+  opacity: 0.5;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+  z-index: 1;
+  border-radius: 20px !important;
+}
+
+/* Highlight the center slide */
+.vision-slider .slick-center {
+  transform: scale(1);
+  opacity: 1;
+  margin: 0 auto;
+  z-index: 3;
+}
+
+/* Border wrapper (slide-wrap) with gradient */
+.vision-slider .slide-wrap {
+  padding: 5px;
+  border-radius: 10px;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+/* Apply gradient border to the center */
+.vision-slider .slick-center {
+  background: linear-gradient(180deg, #da2124 0%, #8e1d1d 100%);
+  border-radius: 10px;
+}
+
+.vision-slider .slick-center {
+  position: relative;
+}
+
+.slick-center .slide{
+  position: relative;
+}
+
+.slick-center .slide::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Shadow height */
+  pointer-events: none;
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0) 58%,
+      /* Fully transparent at top */
+      rgba(98, 98, 98, 0.5) 70%,
+      /* Light gray semi-transparent */
+      rgba(0, 0, 0, 0.8) 100%);
+}
+
+/* Inner slide box */
+.vision-slider .slide {
+  border-radius: 16px;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+}
+
+/* Slide content (title + arrow) */
+.slide-content {
+  position: absolute;
+  z-index: 2;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+/* Show content only on center slide */
+.vision-slider .slick-center .slide-content {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.slick-dots li button:before {
+  background: #d9d9d9;
+  height: 12px !important;
+  width: 12px !important;
+  content: "" !important;
+  border-radius: 100%;
+  opacity: 1 !important;
+}
+
+.slick-dots li.slick-active button:before {
+  background: linear-gradient(115.51deg,
+      #e72125 32.11%,
+      #8e1d1d 116.15%) !important;
+  height: 12px;
+  width: 12px;
+  content: "";
+  border-radius: 100;
+  opacity: 1;
+}
+
+.vision-slider .slick-dots {
+  text-align: center;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.vision-slider .slick-dots li {
+  padding: 0;
+  margin: 0;
+  height: 0;
+  width: 0;
+}
+
+.vision-slider .slick-dots li button {
+  padding: 0;
+}
+
+.vision-slider .slick-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vector-path path {
+  fill: none;
+  stroke: #54a3da;
+  stroke-width: 3;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+button#scrollUp {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* cursor: pointer; */
+  overflow: hidden;
+  /* Prevent ::before overflow */
+  z-index: 1;
+}
+
+button#scrollUp:hover {
+  border: none;
+}
+
+button#scrollUp:hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  padding: 2px;
+  /* Ring thickness */
+  background: linear-gradient(0deg, #e72125 0%, #54a3da 100%);
+  background-clip: padding-box, border-box;
+  -webkit-background-clip: padding-box, border-box;
+  background-origin: border-box;
+  box-sizing: border-box;
+  mask: radial-gradient(farthest-side,
+      transparent calc(100% - 2px),
+      white 100%);
+  -webkit-mask: radial-gradient(farthest-side,
+      transparent calc(100% - 2px),
+      white 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+button#scrollDown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* cursor: pointer; */
+  overflow: hidden;
+  /* Prevent ::before overflow */
+  z-index: 1;
+}
+
+button#scrollDown:hover {
+  border: none;
+}
+
+button#scrollDown:hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  padding: 2px;
+  /* Ring thickness */
+  background: linear-gradient(180deg, #e72125 0%, #54a3da 100%);
+  background-clip: padding-box, border-box;
+  -webkit-background-clip: padding-box, border-box;
+  background-origin: border-box;
+  box-sizing: border-box;
+  mask: radial-gradient(farthest-side,
+      transparent calc(100% - 2px),
+      white 100%);
+  -webkit-mask: radial-gradient(farthest-side,
+      transparent calc(100% - 2px),
+      white 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.arrow-path {
+  fill: white;
+  transition: fill 0.3s ease;
+}
+
+button#scrollDown:hover .arrow-path {
+  fill: url(#arrowGradient);
+}
+
+button#scrollUp:hover .arrow-path {
+  fill: url(#arrowGradient);
+}
+
+.timeline button[disabled]{
+  pointer-events: none;
+}
+
+
+/* Timeline Arrows */
+@media (min-width: 768px) {
+button#previousArrow {
+  /* position: relative; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* cursor: pointer; */
+  overflow: hidden;
+  /* Prevent ::before overflow */
+  z-index: 1;
+}
+
+button#previousArrow:hover {
+  border: none;
+}
+
+button#previousArrow:hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  padding: 2px;
+  /* Ring thickness */
+  background: linear-gradient(0deg, #e72125 0%, #54a3da 100%);
+  background-clip: padding-box, border-box;
+  -webkit-background-clip: padding-box, border-box;
+  background-origin: border-box;
+  box-sizing: border-box;
+  mask: radial-gradient(farthest-side,
+      transparent calc(100% - 2px),
+      white 100%);
+  -webkit-mask: radial-gradient(farthest-side,
+      transparent calc(100% - 2px),
+      white 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+button#nextArrow {
+  /* position: relative; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* cursor: pointer; */
+  overflow: hidden;
+  /* Prevent ::before overflow */
+  z-index: 1;
+}
+
+button#nextArrow:hover {
+  border: none;
+}
+
+button#nextArrow:hover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  padding: 2px;
+  /* Ring thickness */
+  background: linear-gradient(180deg, #e72125 0%, #54a3da 100%);
+  background-clip: padding-box, border-box;
+  -webkit-background-clip: padding-box, border-box;
+  background-origin: border-box;
+  box-sizing: border-box;
+  mask: radial-gradient(farthest-side,
+      transparent calc(100% - 2px),
+      white 100%);
+  -webkit-mask: radial-gradient(farthest-side,
+      transparent calc(100% - 2px),
+      white 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.arrow-path {
+  fill: white;
+  transition: fill 0.3s ease;
+}
+
+button#nextArrow:hover .arrow-path {
+  fill: url(#arrowGradient);
+}
+
+button#previousArrow:hover .arrow-path {
+  fill: url(#arrowGradient);
+}
+
+button#nextArrow[disabled], button#previousArrow[disabled]{
+  pointer-events: none;
+}
+}
+
+@media (max-width: 768px) {
+  button#previousArrowMobile {
+    /* position: relative; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* cursor: pointer; */
+    overflow: hidden;
+    /* Prevent ::before overflow */
+    z-index: 1;
+  }
+  
+  button#previousArrowMobile:hover {
+    border: none;
+  }
+  
+  button#previousArrowMobile:hover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    padding: 2px;
+    /* Ring thickness */
+    background: linear-gradient(0deg, #e72125 0%, #54a3da 100%);
+    background-clip: padding-box, border-box;
+    -webkit-background-clip: padding-box, border-box;
+    background-origin: border-box;
+    box-sizing: border-box;
+    mask: radial-gradient(farthest-side,
+        transparent calc(100% - 2px),
+        white 100%);
+    -webkit-mask: radial-gradient(farthest-side,
+        transparent calc(100% - 2px),
+        white 100%);
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  button#nextArrowMobile {
+    /* position: relative; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* cursor: pointer; */
+    overflow: hidden;
+    /* Prevent ::before overflow */
+    z-index: 1;
+  }
+  
+  button#nextArrowMobile:hover {
+    border: none;
+  }
+  
+  button#nextArrowMobile:hover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    padding: 2px;
+    /* Ring thickness */
+    background: linear-gradient(180deg, #e72125 0%, #54a3da 100%);
+    background-clip: padding-box, border-box;
+    -webkit-background-clip: padding-box, border-box;
+    background-origin: border-box;
+    box-sizing: border-box;
+    mask: radial-gradient(farthest-side,
+        transparent calc(100% - 2px),
+        white 100%);
+    -webkit-mask: radial-gradient(farthest-side,
+        transparent calc(100% - 2px),
+        white 100%);
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  .arrow-path {
+    fill: white;
+    transition: fill 0.3s ease;
+  }
+  
+  button#nextArrowMobile:hover .arrow-path {
+    fill: url(#arrowGradient);
+  }
+  
+  button#previousArrowMobile:hover .arrow-path {
+    fill: url(#arrowGradient);
+  }
+  
+  button#nextArrowMobile[disabled], button#previousArrowMobile[disabled]{
+    pointer-events: none;
+  }
+  }
+
+
+
+.tab-buttons {
+  max-width: 894px;
+  width: 100%;
+}
+
+/* Vector path */
+
+.vector-path {
+  position: absolute;
+}
+
+@media (min-width: 1315px) and (max-width: 1390px) {
+  .vector-path {
+    top: 10% !important;
+    left: 5% !important;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1315px) {
+  .vector-path {
+    top: 10% !important;
+    left: 5% !important;
+  }
+}
+
+@media (min-width: 1105px) and (max-width: 1280px) {
+  .vector-path {
+    top: 0%;
+  }
+}
+
+@media (max-width: 1105px) {
+  .vector-path {
+    top: 10%;
+  }
+}
+
+@media (min-width: 1024px) {
+
+
+
+
+  .who-we-are .zoom-in {
+    transition: all 0.6s ease-in-out;
+    transform: scale(1) translate(-50%, -50%);
+    transform-origin: center;
+    opacity: 1;
+    top: 50%;
+    left: 50%;
+  }
+
+
+  .who-we-are.animation-active .zoom-in {
+    transform: scale(1) translate(-50%, -50%);
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .who-we-are .content {
+    transition: all 0.8s ease-in-out;
+    opacity: 0;
+  }
+
+  .who-we-are.animation-active .content {
+    transition-delay: 1.6s !important;
+    transition: all 0.6s ease-in-out;
+    opacity: 1;
+  }
+
+  .who-we-are img:not(.zoom-in) {
+    transition: all 0.8s ease-in-out;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: 50%;
+    right: 50%;
+  }
+
+
+  .who-we-are.animation-active img:not(.zoom-in) {
+
+    opacity: 1;
+    transition: all 1.2s ease-in-out;
+    transition-delay: 0.2s;
+  }
+
+
+  .who-we-are.animation-active img[data-state="animation-stop"] {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all 1.2s ease-in-out;
+    /* transition-delay: 1.2s; */
+    transform: scale(0.7);
+  }
+
+  /* 1st image */
+  .who-we-are.animation-active img:nth-of-type(1) {
+    transform: translate(0%, 0%);
+    top: -13%;
+    left: 20%;
+    bottom: auto;
+    right: auto;
+  }
+
+  /* 2nd image */
+  .who-we-are.animation-active img:nth-of-type(2) {
+    transform: translate(0%, 0%);
+    width: 300px;
+    top: 0%;
+    left: 0%;
+    bottom: auto;
+    right: auto;
+  }
+
+  /* 3rd image */
+  .who-we-are.animation-active img:nth-of-type(3) {
+    transform: translate(0%, 0%);
+    bottom: 16%;
+    left: -2%;
+    top: auto;
+    right: auto;
+
+  }
+
+  /* 4th image */
+  .who-we-are.animation-active img:nth-of-type(4) {
+    transform: translate(0%, 0%);
+    right: 0%;
+    top: 7%;
+    left: auto;
+    bottom: auto;
+  }
+
+  /* 5th image */
+  .who-we-are.animation-active img:nth-of-type(5) {
+    transform: translate(0%, 0%);
+    right: -3%;
+    bottom: 2%;
+    left: auto;
+    top: auto;
+  }
+
+  /* 6th image */
+  .who-we-are.animation-active img:nth-of-type(6) {
+    transform: translate(0%, 0%);
+    right: 25%;
+    bottom: -2%;
+    left: auto;
+    top: auto;
+  }
+
+}
+
+/* Timeline Styles */
+.timeline {
+  scroll-behavior: auto;
+}
+
+.timeline-container {
+  scroll-behavior: auto;
+  scroll-snap-type: y mandatory;
+}
+
+.timeline-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.timeline-section:not(:last-child) {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+/* Ensure no gaps between sections */
+.timeline-container .timeline-section {
+  margin: 0;
+  padding: 2rem 1rem;
+  border: none;
+  outline: none;
+}
+
+/* Remove any default spacing */
+.timeline-container > div {
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure smooth transitions */
+.timeline-section {
+  transition: all 0.3s ease;
+}
+
+/* Custom scrollbar for timeline */
+.timeline-container::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.timeline-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.timeline-container::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.timeline-popup a:not(.btn-primary) {
+  text-decoration: underline;
+  color: rgba(76, 160, 255, 1);
+  text-underline-offset: 2px;
+}
+
+.timeline-popup a:not(.btn-primary):hover {
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .vision-slider .slick-slide{
+    border-radius: 15px !important;
+  }
+
+  .vision-slider .slide{
+    border-radius: 10px;
+  }
+}

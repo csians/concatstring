@@ -1,0 +1,83 @@
+/* ========= Events Slider CSS =========== */
+.events-slider-container {
+  position: relative;
+}
+
+.events-slider .slick-slide {
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.events-slider .slick-slide.slick-active {
+  opacity: 1;
+}
+
+.events-slider .slick-list {
+  overflow: hidden;
+}
+
+.events-slider .slick-track {
+  display: flex;
+  align-items: flex-start;
+}
+
+Ensure proper fade transition .events-slider.slick-slider {
+  position: relative;
+}
+
+.events-slider .slick-slide > div {
+  width: 100%;
+}
+
+/* Custom Slick Dots Styling */
+.custom-slick-dots {
+  position: relative !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  text-align: left !important;
+  margin-top: 30px !important;
+  justify-content: center !important;
+}
+
+.custom-slick-dots li {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+.custom-slick-dots li button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d9d9d9;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+  line-height: 0;
+  text-indent: -9999px;
+}
+
+.custom-slick-dots li button:hover {
+  transform: scale(1.1);
+}
+
+.custom-slick-dots li.slick-active button {
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(90deg, #ea070b 0%, #df1418 15.8%, #ff686b 100%);
+}
+
+.custom-slick-dots li button::before {
+  display: none !important;
+}

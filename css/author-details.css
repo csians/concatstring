@@ -1,0 +1,27 @@
+.blog-slider .slick-dots {
+  width: max-content;
+  left: 0;
+  bottom: -41px;
+}
+
+.slick-dots li button:before {
+  background: #d9d9d9;
+  height: 12px;
+  width: 12px;
+  content: "";
+  border-radius: 100%;
+  opacity: 1;
+}
+
+.slick-dots li.slick-active button:before {
+  background: linear-gradient(
+    115.51deg,
+    #e72125 32.11%,
+    #8e1d1d 116.15%
+  ) !important;
+  height: 12px;
+  width: 12px;
+  content: "";
+  border-radius: 100%;
+  opacity: 1;
+}
