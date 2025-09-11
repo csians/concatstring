@@ -246,7 +246,7 @@ const FutureOfAi: React.FC<Props> = ({ post }) => {
               <div className="faq-section faq 2xl:mt-[60px] xl:mt-[60px] lg:mt-[50px] md:mt-[40px] sm:mt-[30px] mt-[30px]">
                 <div className="faq-wrap flex flex-col justify-center items-center 2xl:gap-[60px] xl:gap-[60px] lg:gap-[50px] md:gap-[40px] sm:gap-[30px] gap-[30px] rounded-[12px]">
                   <h2 className="font-denton font-bold 2xl:text-[60px] xl:text-[60px] lg:text-[50px] md:text-[40px] sm:text-[35px] text-[30px] 2xl:leading-[80px] xl:leading-[80px] lg:leading-[60px] md:leading-[50px] sm:leading-[45px] leading-[40px] text-white text-center">
-                    {postData?.flexibleContent?.flexibleContent?.find((item: any) => item?.faqTitle)?.faqTitle || "FAQ"}
+                    {postData?.flexibleContent?.flexibleContent?.find((item: any) => item?.faqTitle)?.faqTitle}
                   </h2>
                   <div className="faq-wrap flex flex-col gap-[20px] w-full max-w-[1217px]">
                     {postData?.flexibleContent?.flexibleContent?.find((item: any) => item?.faqTitle)?.faqData?.nodes?.map((faq: any, idx: number) => (

@@ -25,9 +25,9 @@ const Technologies = () => {
   const technologies = techSection.technologies?.nodes || [];
 
   // Show skeleton while loading and no cached data
-  if (loading && !cachedData) {
-    return <TechnologiesSkeleton />;
-  }
+  // if (loading && !cachedData) {
+  //   return <TechnologiesSkeleton />;
+  // }
 
   if (!technologies || !techSection || !techSection.weProvideTitle) return null;
   return (
