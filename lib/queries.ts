@@ -1459,6 +1459,7 @@ export const GET_LIFE_AT_COMPANY = gql`
               nodes {
                 ... on Event {
                   id
+                  slug
                   eventSettings {
                     eventTitle
                     eventDate
@@ -1501,6 +1502,7 @@ export const GET_LIFE_AT_COMPANY_WITH_EVENTS = gql`
               nodes {
                 ... on Event {
                   id
+                  slug
                   eventSettings {
                     eventDate
                     eventDescription
@@ -1848,6 +1850,7 @@ export const GET_BLOG_POSTS = gql`
       viewsCount
       link
       blogDetail {
+        blogDetailContent
         viewAllBlog {
           title
           url
@@ -1929,6 +1932,7 @@ export const GET_POST_BY_SLUG = gql`
   query GetPostBySlug($slug: ID!) {
     post(id: $slug, idType: SLUG) {
       slug
+      content
       flexibleContent {
         flexibleContent {
           ... on FlexibleContentFlexibleContentFaqLayout {
@@ -2424,3 +2428,42 @@ export const GET_SERVICE_SEO = gql`
     }
   }
 `;
+
+export const GET_EVENT_BY_SLUG = gql`
+  query GetEventBySlug($slug: ID!) {
+    event(id: $slug, idType: SLUG) {
+      id
+      slug
+      title
+      date
+      eventSettings {
+        eventDate
+        eventTitle
+        eventDescription
+        eventViewMoreLink {
+          title
+          url
+        }
+        eventImages {
+          eventImage {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+        }
+      }
+      seo {
+        focuskw
+        title
+        metaDesc
+        opengraphImage {
+          altText
+          sourceUrl
+        }
+      }
+    }
+  }
+`;
+
+
