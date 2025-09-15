@@ -128,7 +128,7 @@ const MoreFromMe: React.FC<Props> = ({ post }) => {
                                 </h3>
                               </a>
                               <p className="font-lato text-[17px] font-normal leading-[26px] text-[#C3C3C3] line-clamp-2">
-                                {stripHtml(post.excerpt)}
+                                {stripHtml(post.blogDetail?.blogDetailContent || post.excerpt || '')}
                               </p>
                             </div>
                             <a

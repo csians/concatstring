@@ -151,9 +151,9 @@ const TechTalks = () => {
                           </span>
                         </div>
                       </div> */}
-                      {post?.excerpt && (
+                      {(post?.blogDetail?.blogDetailContent || post?.excerpt) && (
                         <p className="font-lato text-[17px] font-normal leading-[26px] text-[#C3C3C3]">
-                          {post?.excerpt?.replace(/<[^>]*>/g, "")}
+                          {(post?.blogDetail?.blogDetailContent || post?.excerpt || '').replace(/<[^>]*>/g, "")}
                         </p>
                       )}
                     </div>
