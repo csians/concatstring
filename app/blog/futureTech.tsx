@@ -155,7 +155,7 @@ const FutureTech = () => {
   const filteredPosts = allPosts.filter(
     (post) =>
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
+      (post.blogDetail?.blogDetailContent && post.blogDetail.blogDetailContent.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   // Calculate pagination
@@ -397,7 +397,7 @@ const FutureTech = () => {
                         </div>
                       </div> */}
                       <p className="font-lato text-[17px] font-normal leading-[26px] text-[#C3C3C3]">
-                        {stripHtml(post.excerpt)}
+                        {stripHtml(post.blogDetail?.blogDetailContent || post.excerpt || '')}
                       </p>
                     </div>
                     <a

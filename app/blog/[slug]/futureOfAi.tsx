@@ -30,7 +30,7 @@ const FutureOfAi: React.FC<Props> = ({ post }) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = postData?.blogDetail?.blogDetailContent || "";
+      tempDiv.innerHTML = postData?.content;
 
       const h2Tags = tempDiv.querySelectorAll("h2");
       const h2Texts = Array.from(h2Tags).map(
@@ -200,9 +200,12 @@ const FutureOfAi: React.FC<Props> = ({ post }) => {
                   {formatDate(postData?.date)}
                 </span>
               </div>
-              <p className="font-lato font-normal 2xl:text-[25px] xl:text-[25px] lg:text-[20px] md:text-[20px] sm:text-[20px] text-[18px] 2xl:leading-[40px] xl:leading-[40px] lg:leading-[30px] md:leading-[30px] sm:leading-[30px] leading-[30px] text-white">
-                {postData?.blogDetail?.blogDetailShotDesc}
-              </p>
+              <div 
+                className="font-lato font-normal 2xl:text-[25px] xl:text-[25px] lg:text-[20px] md:text-[20px] sm:text-[20px] text-[18px] 2xl:leading-[40px] xl:leading-[40px] lg:leading-[30px] md:leading-[30px] sm:leading-[30px] leading-[30px] text-white"
+                dangerouslySetInnerHTML={{
+                  __html: postData?.blogDetail?.blogDetailShotDesc || "",
+                }}
+              />
             </div>
             </div>
           </div>
@@ -211,7 +214,7 @@ const FutureOfAi: React.FC<Props> = ({ post }) => {
             <div className="flex flex-col items-start 2xl:gap-[30px] xl:gap-[30px] lg:gap-[20px] md:gap-[20px] sm:gap-[20px] gap-[20px] 2xl:max-w-[970px] xl:max-w-[800px] lg:max-w-full md:max-w-full sm:max-w-full max-w-full blog-content">
               <div
                 dangerouslySetInnerHTML={{
-                  __html: postData?.blogDetail?.blogDetailContent || "",
+                  __html: postData?.content,
                 }}
               />
             </div>
@@ -246,7 +249,7 @@ const FutureOfAi: React.FC<Props> = ({ post }) => {
               <div className="faq-section faq 2xl:mt-[60px] xl:mt-[60px] lg:mt-[50px] md:mt-[40px] sm:mt-[30px] mt-[30px]">
                 <div className="faq-wrap flex flex-col justify-center items-center 2xl:gap-[60px] xl:gap-[60px] lg:gap-[50px] md:gap-[40px] sm:gap-[30px] gap-[30px] rounded-[12px]">
                   <h2 className="font-denton font-bold 2xl:text-[60px] xl:text-[60px] lg:text-[50px] md:text-[40px] sm:text-[35px] text-[30px] 2xl:leading-[80px] xl:leading-[80px] lg:leading-[60px] md:leading-[50px] sm:leading-[45px] leading-[40px] text-white text-center">
-                    {postData?.flexibleContent?.flexibleContent?.find((item: any) => item?.faqTitle)?.faqTitle || "FAQ"}
+                    {postData?.flexibleContent?.flexibleContent?.find((item: any) => item?.faqTitle)?.faqTitle}
                   </h2>
                   <div className="faq-wrap flex flex-col gap-[20px] w-full max-w-[1217px]">
                     {postData?.flexibleContent?.flexibleContent?.find((item: any) => item?.faqTitle)?.faqData?.nodes?.map((faq: any, idx: number) => (
