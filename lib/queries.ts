@@ -1851,6 +1851,7 @@ export const GET_BLOG_POSTS = gql`
       link
       blogDetail {
         blogDetailContent
+        blogDetailShotDesc
         viewAllBlog {
           title
           url
