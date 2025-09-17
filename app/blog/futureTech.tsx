@@ -396,8 +396,8 @@ const FutureTech = () => {
                           </span>
                         </div>
                       </div> */}
-                      <p className="font-lato text-[17px] font-normal leading-[26px] text-[#C3C3C3]">
-                        {stripHtml(post.blogDetail?.blogDetailContent || post.excerpt || '')}
+                      <p className="font-lato text-[17px] font-normal leading-[26px] text-[#C3C3C3] line-clamp-3">
+                        {stripHtml(post.blogDetail?.blogDetailShotDesc || '')}
                       </p>
                     </div>
                     <a

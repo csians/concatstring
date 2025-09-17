@@ -38,22 +38,21 @@ const Banner: React.FC<Props> = ({ data }) => {
       aria-label={bannerAlt}
     >
       <div className="container max-w-[1440px] px-[20px] mx-auto">
+        <div className="flex justify-between items-center">
+          <h1 className="h1 text-white max-w-[662px] leading-[100%]">
+            {serviceName}
+          </h1>
+        </div>
+        
         {/* Breadcrumb Navigation */}
-        <div className="mb-10">
+        <div className="mt-10">
           <Breadcrumb
             items={[
-              { label: 'Home', href: '/' },
               { label: 'Services', href: '/services' },
               { label: serviceName || 'Service', isActive: true }
             ]}
             variant="contrast"
           />
-        </div>
-        
-        <div className="flex justify-between items-center">
-          <h1 className="h1 text-white max-w-[662px] leading-[100%]">
-            {serviceName}
-          </h1>
         </div>
       </div>
     </section>

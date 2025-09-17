@@ -6,7 +6,6 @@ import { EmpoweringSkeleton } from "@/components/skeletons";
 import { setEmpoweringData } from "@/store/slices/aboutSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
-import Breadcrumb from "@/components/Breadcrumb";
 
 const Empowering = () => {
   const dispatch = useDispatch();
@@ -69,17 +68,6 @@ const Empowering = () => {
         </video>
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
         <div className="relative z-10 mx-auto px-[20px] flex flex-col items-center justify-center">
-          {/* Breadcrumb Navigation */}
-          <div className="mb-8">
-            <Breadcrumb 
-              items={[
-                { label: 'Home', href: '/' },
-                { label: 'About Us', isActive: true }
-              ]}
-              variant="contrast"
-            />
-          </div>
-          
           <h1 className="h1 text-center text-white text-[45px] sm:text-[60px] md:text-[70px] lg:text-[80px] xl:text-[100px] 2xl:text-[100px] max-w-[1272px] max-h-[244px]">
             {title}
           </h1>
