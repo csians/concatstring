@@ -61,6 +61,14 @@ const TechTalks = () => {
     return post?.featuredImage?.node?.sourceUrl;
   };
 
+  // Strip HTML tags from content
+  const stripHtml = (html: string) => {
+    if (!html) return "";
+    const tmp = document.createElement("div");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+  };
+
   if (!posts || posts.length === 0 || !blogIcons || !blogIcons?.title)
     return null;
   return (
@@ -151,9 +159,9 @@ const TechTalks = () => {
                           </span>
                         </div>
                       </div> */}
-                      {(post?.blogDetail?.blogDetailContent || post?.excerpt) && (
-                        <p className="font-lato text-[17px] font-normal leading-[26px] text-[#C3C3C3]">
-                          {(post?.blogDetail?.blogDetailContent || post?.excerpt || '').replace(/<[^>]*>/g, "")}
+                      {(post?.blogDetail?.blogDetailShotDesc) && (
+                        <p className="font-lato text-[17px] font-normal leading-[26px] text-[#C3C3C3] line-clamp-3">
+                          {stripHtml(post?.blogDetail?.blogDetailShotDesc || '')}
                         </p>
                       )}
                     </div>

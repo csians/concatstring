@@ -5,7 +5,6 @@ import { GET_EVENTS_BANNER, GET_LIFE_AT_COMPANY } from "@/lib/queries";
 import { setEventsBannerData } from "@/store/slices/eventsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
-import Breadcrumb from "@/components/Breadcrumb";
  
 const Banner = () => {
 const dispatch = useDispatch();
@@ -46,17 +45,6 @@ className="hero-section bg-cover 2xl:pt-[240px] xl:pt-[200px] lg:pt-[200px] md:p
 style={{ backgroundImage: `url(${backgroundImage})` }}
 >
 <div className="container max-w-[1440px] 2xl:px-[20px] xl:px-[20px] lg:px-[20px] md:px-[15px] sm:px-[12px] px-[10px] mx-auto">
-{/* Breadcrumb Navigation */}
-<div className="mb-8">
-  <Breadcrumb 
-    items={[
-      { label: 'Home', href: '/' },
-      { label: 'Life', isActive: true }
-    ]}
-    variant="contrast"
-  />
-</div>
-
 <div className="flex justify-between items-start flex-col ">
 <h1 className="h1 text-white max-w-[662px] leading-[100%] mb-10 normal-case">
 {title}

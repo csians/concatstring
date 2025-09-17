@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { GET_OUR_SERVICE_BANNER } from "@/lib/queries";
 import { setOurServiceBanner } from "@/store/slices/servicesSlice";
 import { RootState } from "@/store";
-import Breadcrumb from "@/components/Breadcrumb";
 
 const OurServices = () => {
   const dispatch = useDispatch();
@@ -49,18 +48,7 @@ const OurServices = () => {
           </video>
         )}
         <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative z-10 mx-auto px-[20px] flex flex-col items-center justify-center">
-          {/* Breadcrumb Navigation */}
-          <div className="mb-8">
-            <Breadcrumb 
-              items={[
-                { label: 'Home', href: '/' },
-                { label: 'Services', isActive: true }
-              ]}
-              variant="contrast"
-            />
-          </div>
-          
+        <div className="relative z-10 mx-auto px-[20px] flex flex-col items-center justify-center">         
           <h1 className="h1 text-center text-white text-[45px] sm:text-[60px] md:text-[70px] lg:text-[80px] xl:text-[100px] 2xl:text-[100px] max-w-[1200px]">
             {title}
           </h1>

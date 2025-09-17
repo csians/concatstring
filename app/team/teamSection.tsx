@@ -156,9 +156,9 @@ const TeamSection: React.FC = () => {
   }, [isPopupOpen]);
 
   // Show skeleton while loading
-  if (loading) {
-    return <TeamSectionSkeleton />;
-  }
+  // if (loading) {
+  //   return <TeamSectionSkeleton />;
+  // }
 
   // Show error message if there's an error
   if (error) {
