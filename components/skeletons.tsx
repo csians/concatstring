@@ -253,11 +253,19 @@ export const ConnectNowSkeleton = () => (
 
 // Skeleton for team banner section (OurTeam)
 export const TeamBannerSkeleton = () => (
-  <section className="2xl:pt-[311px] xl:pt-[274px] lg:pt-[250px] md:pt-[200px] sm:pt-[180px] pt-[160px] 2xl:pb-[351px] xl:pb-[344px] lg:pb-[330px] md:pb-[250px] sm:pb-[200px] pb-[180px] bg-[#2E0707]">
+  <section className="mt-[114px] bg-[#2E0707] lg:pt-[100px] sm:pt-[40px] pt-[20px] lg:pb-[100px] sm:pb-[40px] pb-[20px] aspect-[1700/800] rounded-bl-[20px] rounded-br-[20px]">
     <div className="container max-w-[1440px] 2xl:px-[20px] xl:px-[20px] lg:px-[20px] md:px-[15px] sm:px-[12px] px-[10px] mx-auto">
-      <div className="flex justify-between items-center">
-        {/* Team Title */}
-        <StyledSkeleton width={662} height={80} className="max-w-[662px]" />
+      
+      
+      {/* Team Title Skeleton */}
+      <div className="flex justify-center items-center">
+        <div className="text-center">
+          <StyledSkeleton 
+            width={400} 
+            height={100} 
+            className="xl:h-[100px] max-sm:h-[30px] mx-auto max-w-full max-sm:w-[200px]"
+          />
+        </div>
       </div>
     </div>
   </section>
@@ -268,11 +276,7 @@ export const TeamSectionSkeleton = () => (
   <section className="2xl:py-[120px] xl:py-[120px] lg:py-[100px] md:py-[80px] sm:py-[60px] py-[60px]">
     <div className="container max-w-[1400px] px-[20px] mx-auto w-full">
       {/* Section Title */}
-      <div className="text-center mb-[60px]">
-        <StyledSkeleton width={400} height={66} className="mx-auto mb-[20px]" />
-        <StyledSkeleton width={600} height={22} className="mx-auto" />
-      </div>
-
+    
       {/* Team Members Grid */}
       <div className="grid 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-[30px]">
         {Array.from({ length: 8 }, (_, index) => (
@@ -304,54 +308,41 @@ export const TeamSectionSkeleton = () => (
 
 // Skeleton for strategy squad section
 export const StrategySquadSkeleton = () => (
-  <section className="2xl:py-[120px] xl:py-[120px] lg:py-[100px] md:py-[80px] sm:py-[60px] py-[60px] bg-[#2E0707]">
-    <div className="container max-w-[1400px] px-[20px] mx-auto w-full">
-      {/* Section Title */}
-      <div className="text-center mb-[60px]">
-        <StyledSkeleton width={500} height={66} className="mx-auto mb-[20px]" />
-        <StyledSkeleton width={700} height={22} className="mx-auto" />
-      </div>
-
-      {/* Strategy Team Grid */}
-      <div className="grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-[40px]">
-        {Array.from({ length: 6 }, (_, index) => (
-          <div
-            key={index}
-            className="bg-white/10 rounded-[16px] p-[30px] backdrop-blur-sm"
-          >
-            <div className="flex flex-col items-center text-center">
-              {/* Profile Image */}
-              <StyledSkeleton
-                width={150}
-                height={150}
-                circle
-                className="mb-[25px]"
-              />
-              {/* Name */}
-              <StyledSkeleton width={180} height={28} className="mb-[12px]" />
-              {/* Position */}
-              <StyledSkeleton width={140} height={20} className="mb-[20px]" />
-              {/* Description */}
-              <StyledSkeleton
-                count={4}
-                width="100%"
-                height={18}
-                className="mb-[8px]"
-              />
-              {/* Social Links */}
-              <div className="flex gap-[15px] mt-[20px]">
-                {Array.from({ length: 3 }, (_, socialIndex) => (
-                  <StyledSkeleton
-                    key={socialIndex}
-                    width={24}
-                    height={24}
-                    circle
-                  />
-                ))}
+  <section className="meet-the-mind bg-black pb-[50px] sm:pb-[60px] md:pb-[80px] lg:pb-[120px]">
+    <div className="container max-w-[1440px] px-[20px] mx-auto">
+      <div className="flex flex-col items-center justify-center gap-[30px] sm:gap-[40px] md:gap-[60px]">
+    
+        
+        {/* Team Grid */}
+        <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-[16px] sm:gap-[24px] md:gap-[30px] w-full 2xl:pb-[100px] xl:pb-[100px] lg:pb-0 md:pb-0 sm:pb-0 pb-0">
+          {Array.from({ length: 8 }, (_, index) => (
+            <div
+              key={index}
+              className={`group relative aspect-[447/587] rounded-xl overflow-hidden transition-all duration-500 py-[15px] sm:py-[15px] md:py-[20px] px-[15px] sm:px-[15px] md:px-[15px] flex items-end cursor-pointer ${
+                index % 2 === 1
+                  ? "2xl:translate-y-[100px] xl:translate-y-[100px] lg:translate-y-0 md:translate-y-0 sm:translate-y-0 translate-y-0"
+                  : "translate-y-0"
+              }`}
+            >
+              {/* Background Image Skeleton */}
+              <div className="absolute inset-0 w-full h-full bg-gray-700 animate-pulse rounded-xl"></div>
+              
+              {/* Content Area Skeleton */}
+              <div className="bg-white rounded-[12px] p-[8px] sm:p-[12px] md:p-[15px] relative w-full z-10 flex items-center gap-[6px] sm:gap-[10px]">
+                {/* Name Badge Skeleton */}
+                <div className="bg-gray-600 rounded-[6px] flex items-center justify-center text-[16px] sm:text-[18px] md:text-[22px] p-[8px] sm:p-[10px] w-max">
+                  <StyledSkeleton width={80} height={20} />
+                </div>
+                {/* Position Skeleton */}
+                <StyledSkeleton 
+                  width={120} 
+                  height={18} 
+                  className="text-[12px] sm:text-[14px] md:text-[15px]"
+                />
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -655,7 +646,7 @@ export const MeetTheMindSkeleton = () => (
     <div className="container max-w-[1440px] px-[20px] mx-auto">
       <div className="flex flex-col items-center justify-center gap-[60px]">
         {/* Section Title */}
-        <StyledSkeleton width={800} height={66} className="max-w-[1045px]" />
+        <StyledSkeleton width={800} height={66} className="max-w-[1045px] max-w-full max-sm:w-[200px]" />
         
         {/* Team members grid */}
         <div className="grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 grid-cols-1 gap-[30px] w-full">
@@ -877,12 +868,12 @@ export const BannerSkeleton = () => (
       playsInline
       className="absolute top-[42px] left-0 w-full h-full object-cover object-center z-0"
     >
-      <source src="/video/banner_background.mp4" type="video/mp4" />
+      <source src="/video/banner_background1.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
 
     {/* Dark Overlay */}
-    <div className="absolute inset-0 bg-black/40 z-0" />
+    {/* <div className="absolute inset-0 bg-black/40 z-0" /> */}
 
     {/* Content Skeleton */}
     <div className="relative z-10 max-w-[1432px] px-4 mx-auto pt-[200px] md:pt-[200px] lg:pt-[267px] pb-[100px] px-4 lg:pb-[227px]">

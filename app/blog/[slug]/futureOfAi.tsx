@@ -41,6 +41,56 @@ const FutureOfAi: React.FC<Props> = ({ post }) => {
     }
   }, [postData]);
 
+  // Table responsiveness script
+  useEffect(() => {
+    // Add a small delay to ensure content is fully rendered
+    const timeoutId = setTimeout(() => {
+      const tables = document.querySelectorAll("table");
+      console.log(`Found ${tables.length} tables in blog content`);
+      
+      tables.forEach((table, tableIndex) => {
+        console.log(`Processing table ${tableIndex + 1}`);
+        
+        // Try to find headers in thead first, then fallback to first row
+        let headers: string[] = [];
+        
+        const theadTh = table.querySelectorAll("thead th");
+        if (theadTh.length > 0) {
+          headers = Array.from(theadTh).map(th => th.textContent?.trim() || "");
+          console.log(`Found headers in thead:`, headers);
+        } else {
+          // Fallback: use first row as headers
+          const firstRow = table.querySelector("tr");
+          if (firstRow) {
+            const firstRowCells = firstRow.querySelectorAll("th, td");
+            headers = Array.from(firstRowCells).map(cell => cell.textContent?.trim() || "");
+            console.log(`Found headers in first row:`, headers);
+          }
+        }
+        
+        if (headers.length > 0) {
+          // Apply data-label to all rows (including header row if it's not in thead)
+          const allRows = table.querySelectorAll("tr");
+          console.log(`Applying data-labels to ${allRows.length} rows`);
+          
+          allRows.forEach((row, rowIndex) => {
+            const cells = row.querySelectorAll("td, th");
+            cells.forEach((cell, i) => {
+              if (headers[i]) {
+                cell.setAttribute("data-label", headers[i]);
+                console.log(`Applied data-label "${headers[i]}" to cell ${i} in row ${rowIndex}`);
+              }
+            });
+          });
+        } else {
+          console.log(`No headers found for table ${tableIndex + 1}`);
+        }
+      });
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [postData]);
+
   // FAQ functionality
   useEffect(() => {
     const faqItems = document.querySelectorAll(".faq-item");
@@ -148,9 +198,8 @@ const FutureOfAi: React.FC<Props> = ({ post }) => {
             <div className="mb-8">
               <Breadcrumb 
                 items={[
-                  { label: 'Home', href: '/' },
                   { label: 'Blog', href: '/blog' },
-                  { label: postData?.title || 'Blog Post', isActive: true }
+                  { label: postData?.title, isActive: true }
                 ]}
                 variant="contrast"
               />

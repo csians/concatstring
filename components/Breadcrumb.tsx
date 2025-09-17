@@ -100,7 +100,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
   };
 
   const getContainerClasses = () => {
-    const baseClasses = 'flex items-center text-[1.2rem] font-lato relative z-10';
+    const baseClasses = 'flex flex-wrap items-center text-[1.2rem] font-lato relative z-10';
     
     switch (variant) {
       case 'minimal':

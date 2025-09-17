@@ -7,7 +7,6 @@ import { BlogTitleSkeleton } from "@/components/skeletons";
 import { setBlogSettingsData } from "@/store/slices/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
-import Breadcrumb from "@/components/Breadcrumb";
 
 const BlogTitle = () => {
   const dispatch = useDispatch();
@@ -56,18 +55,7 @@ const BlogTitle = () => {
         backgroundImage: backgroundImage && `url(${backgroundImage})`,
       }}
     >
-      <div className="container max-w-[1440px] px-[20px] mx-auto">
-        {/* Breadcrumb Navigation */}
-        <div className="mb-8">
-          <Breadcrumb 
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Blog', isActive: true }
-            ]}
-            variant="contrast"
-          />
-        </div>
-        
+      <div className="container max-w-[1440px] px-[20px] mx-auto">        
         <div className="flex justify-between items-center">
           {/* <h1 className="h1 text-white max-w-[662px] leading-[100%]">
             {title}

@@ -7,7 +7,6 @@ import { AuthorProfileSkeleton } from "@/components/skeletons";
 import { setAuthorsData } from "@/store/slices/authorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
-import Breadcrumb from "@/components/Breadcrumb";
 
 interface FounderProps {
   userId?: string | null;
@@ -87,19 +86,7 @@ const Founder: React.FC<FounderProps> = ({ userId }) => {
 
   return (
     <section className="pt-[140px] pb-[120px]">
-      <div className="container max-w-[1400px] px-[20px] mx-auto w-full">
-        {/* Breadcrumb Navigation */}
-        <div className="mb-8">
-          <Breadcrumb 
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Blog', href: '/blog' },
-              { label: name || 'Author', isActive: true }
-            ]}
-            variant="contrast"
-          />
-        </div>
-        
+      <div className="container max-w-[1400px] px-[20px] mx-auto w-full">        
         <div className="flex flex-col 2xl:gap-[60px] xl:gap-[60px] lg:gap-[50px] md:gap-[40px] sm:gap-[30px] gap-[30px] items-center">
           <div className="flex flex-col 2xl:gap-[80px] xl:gap-[80px] lg:gap-[60px] md:gap-[50px] sm:gap-[40px] gap-[30px]">
             <div className="flex flex-col 2xl:gap-[44px] xl:gap-[44px] lg:gap-[30px] md:gap-[25px] sm:gap-[25px] gap-[25px] items-center justify-center">

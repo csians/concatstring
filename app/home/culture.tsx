@@ -13,17 +13,25 @@ const decodeHtmlEntities = (text: string) => {
   return textarea.value;
 };
 
-// Hook to detect touch devices
+// Hook to detect touch devices with small screens only
 const useIsTouchDevice = () => {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
     const checkTouchDevice = () => {
       const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-      setIsTouchDevice(hasTouch);
+      const isSmallScreen = window.innerWidth < 1024;
+      setIsTouchDevice(hasTouch && isSmallScreen);
     };
 
     checkTouchDevice();
+    
+    // Add resize listener to handle screen size changes
+    window.addEventListener('resize', checkTouchDevice);
+    
+    return () => {
+      window.removeEventListener('resize', checkTouchDevice);
+    };
   }, []);
 
   return isTouchDevice;

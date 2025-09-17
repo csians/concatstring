@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import ReCAPTCHA from "react-google-recaptcha";
 import { toast } from "react-toastify";
-import Breadcrumb from "@/components/Breadcrumb";
 
 // Type definitions
 interface FormField {
@@ -1493,18 +1492,7 @@ const MultiStepForm = () => {
 
   return (
     <section className="bg-[linear-gradient(358.24deg,_rgba(44,56,148,0)_-2.9%,_rgba(84,163,218,0.5)_98.71%)] py-[120px] pt-[200px] sm:pt-[200px] md:pt-[240px] lg:pt-[240px] xl:pt-[250px] 2xl:pt-[254px]">
-      <div className="container max-w-[1640px] px-[20px] w-full mx-auto">
-        {/* Breadcrumb Navigation */}
-        <div className="mb-8">
-          <Breadcrumb 
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Contact Us', isActive: true }
-            ]}
-            variant="contrast"
-          />
-        </div>
-        
+      <div className="container max-w-[1640px] px-[20px] w-full mx-auto">        
         <div className="flex flex-col items-center justify-center lg:gap-[120px] md:gap-[80px] gap-[50px]">
           <div className="flex flex-col gap-[16px] items-center justify-center">
             <h2 className="h2 text-white text-center 2xl:leading-[120px] xl:leading-[120px] lg:leading-[100px] md:leading-[80px] sm:leading-[60px] leading-[50px]">

@@ -37,6 +37,8 @@ export default function RootLayout({
         />
         <meta name="google-site-verification" content="v8yl-AwGz9it1y8ph-q7gQL4MXAwSWq6JBiPqh7REgc" />
         <link rel="icon" href="/favicon.png" type="image/png" />
+        {/* Removed poster preload per UX preference (no poster visible) */}
+        <link rel="preload" href="/video/banner_background1.mp4" as="video" type="video/mp4" />
         <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-55FER8PNWF"></script>
@@ -91,7 +93,7 @@ export default function RootLayout({
         </noscript>
         {/* End Google Tag Manager (noscript) */}
         <ApolloWrapper>
-          <ScrollToTop />
+          {/* <ScrollToTop /> */}
           <Header />
           {children}
           <Footer />
