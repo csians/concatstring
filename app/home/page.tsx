@@ -22,7 +22,7 @@ const page = () => {
   return (
     <>
 
-      <LoadingProvider>
+      {/* <LoadingProvider> */}
         <Banner />
         <Trusted />
         <Technologies />
@@ -33,7 +33,7 @@ const page = () => {
         <LifeAtCompany />
         <Faq />
 
-      </LoadingProvider>
+      {/* </LoadingProvider> */}
     </>
   );
 };
