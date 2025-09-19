@@ -7,6 +7,7 @@ interface LoadingOverlayProps {
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   children: React.ReactNode;
+  cachedData?: any
 }
 
 export default function LoadingWrapper({
@@ -14,19 +15,27 @@ export default function LoadingWrapper({
   background = 'black',
   size = 'md',
   variant = "fullscreen",
-  className = ''
+  className = '',
+  cachedData
 }: LoadingOverlayProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Close loader after 10 seconds
-    const timer = setTimeout(() => {
-      console.log("Loading complete");
-      setLoading(false);
-    }, 2000);
+      console.log(cachedData)
+      if (cachedData) {
+        setLoading(false);
+        return;
+      }
+  
+      // const timer = setTimeout(() => {
+      //   console.log("Loading complete");
+      //   setLoading(false);
+      // }, 2000);
 
-    return () => clearTimeout(timer);
-  }, []);
+
+      // return () => clearTimeout(timer);
+    // }
+  }, [cachedData]);
 
   const sizeClasses = {
     sm: 'w-16 h-18',

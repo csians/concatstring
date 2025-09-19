@@ -24,22 +24,22 @@ const BlogTitle = () => {
   }, [data, dispatch]);
 
   // Show loading skeleton if data is loading and no cached data is available
-  if (loading && !cachedData) {
+  if (!cachedData) {
     return <BlogTitleSkeleton />;
   }
 
   // Show error message if there's an error
-  if (error)
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
-            Error loading blog title
-          </h3>
-          <p className="text-[#C3C3C3]">Please try again later.</p>
-        </div>
-      </div>
-    );
+  // if (error)
+  //   return (
+  //     <div className="flex items-center justify-center min-h-[400px]">
+  //       <div className="text-center">
+  //         <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
+  //           Error loading blog title
+  //         </h3>
+  //         <p className="text-[#C3C3C3]">Please try again later.</p>
+  //       </div>
+  //     </div>
+  //   );
 
   const heroSection = blogData?.page?.blogSettings?.heroSection;
   const techTalks = blogData?.page?.blogSettings?.techTalks;
