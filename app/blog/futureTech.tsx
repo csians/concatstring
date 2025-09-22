@@ -204,6 +204,20 @@ const FutureTech = () => {
   const goToPage = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
+      // Scroll to the category section after page change
+      setTimeout(() => {
+        const categoryElement = document.getElementById('blog-categories');
+        if (categoryElement) {
+          // Get the element's position and scroll to show it with some offset
+          const elementRect = categoryElement.getBoundingClientRect();
+          const absoluteElementTop = elementRect.top + window.pageYOffset;
+          const offset = 100; // Add some offset to show the categories clearly
+          window.scrollTo({
+            top: absoluteElementTop - offset,
+            behavior: 'smooth'
+          });
+        }
+      }, 100); // Small delay to ensure DOM is updated
     }
   };
 
@@ -226,7 +240,7 @@ const FutureTech = () => {
   };
 
   return (
-    <section className="md:pt-[87px] pt-[50px]">
+    <section id="blog-categories" className="md:pt-[87px] pt-[50px]">
       <div className="container max-w-[1400px] px-[20px] mx-auto w-full">
         <div className="flex flex-col">
           <div className="flex items-start 2xl:gap-[88px] xl:gap-[88px] lg:gap-[70px] md:gap-[60px] sm:gap-[30px] gap-[20px] 2xl:flex-row xl:flex-row lg:flex-row md:flex-col sm:flex-col flex-col 2xl:mb-[60px] xl:mb-[60px] lg:mb-[40px] md:mb-[30px] sm:mb-[30px] mb-[30px]">
