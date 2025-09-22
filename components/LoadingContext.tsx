@@ -20,7 +20,7 @@ export default function LoadingWrapper({
 }: LoadingOverlayProps) {
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+    useEffect(() => {
       // console.log(cachedData)
       if (cachedData) {
         setLoading(false);
@@ -33,6 +33,7 @@ export default function LoadingWrapper({
       return () => clearTimeout(timer);
     // }
   }, [cachedData]);
+
 
   const sizeClasses = {
     sm: 'w-16 h-18',
