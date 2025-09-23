@@ -38,7 +38,7 @@ const LifeAtCompany = () => {
     return null;
   }
 
-  if (loading)
+  if (!lifeAtCompanyData?.lifeAtCompanyTitle)
     return (
       <section className="py-[120px]">
         <div className="container max-w-[1400px] px-[20px] mx-auto">

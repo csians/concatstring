@@ -51,6 +51,20 @@ const Pagination = () => {
   const goToPage = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
+      // Scroll to the category section after page change
+      setTimeout(() => {
+        const categoryElement = document.getElementById('most-recent-events');
+        if (categoryElement) {
+          // Get the element's position and scroll to show it with some offset
+          const elementRect = categoryElement.getBoundingClientRect();
+          const absoluteElementTop = elementRect.top + window.pageYOffset;
+          const offset = 100; // Add some offset to show the categories clearly
+          window.scrollTo({
+            top: absoluteElementTop - offset,
+            behavior: 'smooth'
+          });
+        }
+      }, 100); // Small delay to ensure DOM is updated
     }
   };
 
@@ -116,13 +130,13 @@ const Pagination = () => {
                       </div>
                       {/* <!-- View More Button --> */}
                       {/* Only show View More button if both URL and title exist */}
-                      {event.eventSettings?.eventViewMoreLink?.url && event.eventSettings?.eventViewMoreLink?.title ? (
+                      {event.eventSettings?.eventViewMoreLink?.title && (
                         <Link
-                          href={event.eventSettings.eventViewMoreLink.url}
+                          href={`/life/${event.slug}`}
                           className="flex items-center 2xl:gap-[10px] xl:gap-[10px] lg:gap-[8px] md:gap-[7px] sm:gap-[6px] gap-[5px] cursor-pointer hover:opacity-80 transition-opacity opacity-0 group-hover:opacity-100 duration-300"
                         >
                           <span className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[17px] leading-[16px]">
-                            {event.eventSettings.eventViewMoreLink.title}
+                            {event.eventSettings?.eventViewMoreLink?.title}
                           </span>
                           <svg
                             width="15"
@@ -152,7 +166,7 @@ const Pagination = () => {
                             </defs>
                           </svg>
                         </Link>
-                      ) : null}
+                      )}
                     </div>
                   </div>
                 );

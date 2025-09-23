@@ -8,6 +8,7 @@ import { GET_BANNER_CONTENT } from "@/lib/queries";
 import { setBanner } from "@/store/slices/homeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { BannerSkeleton } from "@/components/skeletons";
+import LoadingProvider from "@/components/LoadingContext";
 
 const Banner = () => {
   const cachedData = useSelector((state: RootState) => state.home.banner);
@@ -38,12 +39,15 @@ const Banner = () => {
     }
   }, [loading, title, content, data]);
 
-  if (loading) {
-    return <BannerSkeleton />;
-  }
-  if (!column || !title || !content || !link) return null;
+  // if (!cachedData) {
+  //   return <BannerSkeleton />;
+  // }
+  // if (!column || !title || !content || !link) return null;
 
   return (
+    <LoadingProvider
+      cachedData={cachedData ?? data}
+    >
     <section className="banner relative min-h-screen max-lg:min-h-[auto] overflow-hidden">
       <video
         muted
@@ -82,6 +86,7 @@ const Banner = () => {
         </div>
       </div>
     </section>
+    </LoadingProvider>
   );
 };
 
