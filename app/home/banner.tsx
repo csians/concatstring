@@ -55,7 +55,7 @@ const Banner = () => {
         loop
         playsInline
         preload="none"
-        poster="/images/banner-bg-small.png"
+        poster="/images/home_banner.png"
         className="absolute top-[42px] left-0 w-full h-full object-cover object-center z-0"
       >
         <source src="/video/banner_background.mp4" type="video/mp4" />
@@ -69,12 +69,12 @@ const Banner = () => {
       <div className="relative z-10 max-w-[1432px] px-4 mx-auto pt-[200px] md:pt-[200px] lg:pt-[267px] pb-[100px] px-4 lg:pb-[227px]">
         <div className="text-left px-4 md:px-0">
           <h1 className="title h1 tracking-normal text-white max-w-full md:max-w-[970px] lg:max-w-[1200px] mx-auto md:mx-0">
-            {title}
+            {title || "High-Performance Websites That Convert"}
           </h1>
 
           <div className="description max-w-full md:max-w-[677px] mb-[30px] md:mb-[60px] mx-auto md:mx-0">
             <p className="font-lato font-medium text-[16px] md:text-[18px] lg:text-[20px] text-white">
-              {content}
+              {content || "Deliver seamless digital experiences with responsive, SEO-optimized websites. Whether it's corporate, eCommerce, or custom platforms, we design with performance and results in mind."}
             </p>
           </div>
 
