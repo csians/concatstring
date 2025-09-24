@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "@/app/globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -31,6 +32,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Performance: Preconnect and DNS-prefetch to reduce connection setup time */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        {/* Cloudways (WordPress) assets host - reduce blocking by preconnecting */}
+        <link rel="preconnect" href="https://phpstack-1517221-5849129.cloudwaysapps.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="//phpstack-1517221-5849129.cloudwaysapps.com" />
+        {/* Unpkg CDN - large Lottie script */}
+        <link rel="preconnect" href="https://unpkg.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="//unpkg.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
           rel="stylesheet"
@@ -39,7 +51,6 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.png" type="image/png" />
         {/* Removed poster preload per UX preference (no poster visible) */}
         {/* Removed video preload to reduce initial bandwidth */}
-        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
         {/* Google Analytics */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-55FER8PNWF"></script>
         <script
@@ -82,6 +93,11 @@ export default function RootLayout({
         {/* End Google Tag Manager */}
       </head>
       <body className="bg-black overflow-x-hidden">
+        {/* Load heavy Lottie script lazily to avoid render blocking */}
+        <Script
+          src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"
+          strategy="lazyOnload"
+        />
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe 
