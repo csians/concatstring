@@ -130,6 +130,10 @@ const LifeAtCompany = () => {
                         ?.node?.altText || "Event Image"
                     }
                     className="w-full h-full object-cover object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                    decoding="async"
+                    width={1200}
+                    height={800}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent  opacity-0 group-hover:opacity-100"></div>
                   <div className="absolute bottom-0 left-0 right-0 2xl:p-[30px] xl:p-[25px] lg:p-[20px] md:p-[15px] sm:p-[12px] p-[10px] flex flex-col justify-between items-start  opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -218,11 +222,15 @@ const LifeAtCompany = () => {
                           ?.node?.altText || "Event Image"
                       }
                       className="w-full h-full object-cover object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                      decoding="async"
+                      width={1200}
+                      height={800}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent  opacity-0 group-hover:opacity-100"></div>
                     <div className="absolute bottom-0 left-0 right-0 2xl:p-[30px] xl:p-[25px] lg:p-[20px] md:p-[15px] sm:p-[12px] p-[10px] flex flex-col justify-between items-start  opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="2xl:mb-[20px] xl:mb-[18px] lg:mb-[15px] md:mb-[12px] sm:mb-[10px] mb-[8px]">
-                        <h3 className="text-white font-denton font-bold 2xl:text-[24px] xl:text-[22px] lg:text-[20px] md:text-[18px] sm:text-[16px] text-[14px] 2xl:leading-[32px] xl:leading-[28px] lg:leading-[26px] md:leading-[24px] sm:leading-[22px] leading-[20px] 2xl:mb-[5px] xl:mb-[5px] lg:mb-[4px] md:mb-[3px] sm:mb-[3px] mb-[2px]">
+                        <h3 className="text-white font-denton font-bold 2xl:text-[24px] xl:text-[22px] lg:text-[20px] md:text-[18px] sm:text-[16px] text-[14px] 2xl:leading-[32px] xl:leading-[28px] lg:leading-[26px] md:leading-[24px] sm:leading-[22px] leading-[20px]">
                           {events[1]?.eventSettings?.eventTitle ||
                             "Event Title"}
                         </h3>
@@ -306,11 +314,15 @@ const LifeAtCompany = () => {
                           ?.node?.altText || "Event Image"
                       }
                       className="w-full h-full object-cover object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                      decoding="async"
+                      width={1200}
+                      height={800}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent  opacity-0 group-hover:opacity-100"></div>
                     <div className="absolute bottom-0 left-0 right-0 2xl:p-[30px] xl:p-[25px] lg:p-[20px] md:p-[15px] sm:p-[12px] p-[10px] flex flex-col justify-between items-start  opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="2xl:mb-[20px] xl:mb-[18px] lg:mb-[15px] md:mb-[12px] sm:mb-[10px] mb-[8px]">
-                        <h3 className="text-white font-denton font-bold 2xl:text-[24px] xl:text-[16px] lg:text-[15px] md:text-[18px] sm:text-[16px] text-[14px] 2xl:leading-[32px] xl:leading-[28px] lg:leading-[26px] md:leading-[24px] sm:leading-[22px] leading-[20px] 2xl:mb-[5px] xl:mb-[5px] lg:mb-[4px] md:mb-[3px] sm:mb-[3px] mb-[2px]">
+                        <h3 className="text-white font-denton font-bold 2xl:text-[24px] xl:text-[16px] lg:text-[15px] md:text-[18px] sm:text-[16px] text-[14px] 2xl:leading-[32px] xl:leading-[28px] lg:leading-[26px] md:leading-[24px] sm:leading-[22px] leading-[20px]">
                           {events[2]?.eventSettings?.eventTitle ||
                             "Event Title"}
                         </h3>
@@ -362,7 +374,7 @@ const LifeAtCompany = () => {
               </div>
                               {events.length > 3 && (
                   <div
-                    className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
+                  className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
                       events[3]?.eventSettings?.eventViewMoreLink?.url ? 'cursor-pointer' : 'cursor-default'
                     }`}
                   onClick={events[3]?.eventSettings?.eventViewMoreLink?.url ? 
@@ -394,6 +406,10 @@ const LifeAtCompany = () => {
                         ?.node?.altText || "Event Image"
                     }
                     className="w-full h-full object-cover object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                    decoding="async"
+                    width={1200}
+                    height={800}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent  opacity-0 group-hover:opacity-100"></div>
                   <div className="absolute bottom-0 left-0 right-0 2xl:p-[30px] xl:p-[25px] lg:p-[20px] md:p-[15px] sm:p-[12px] p-[10px] flex justify-between flex-col items-start  opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -441,9 +457,9 @@ const LifeAtCompany = () => {
                           </svg>
                         </>
                                               ) : null}
-                      </div>
                     </div>
-                    
+                  </div>
+                  
                 </div>
               )}
             </div>

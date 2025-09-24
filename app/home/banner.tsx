@@ -54,6 +54,8 @@ const Banner = () => {
         autoPlay
         loop
         playsInline
+        preload="none"
+        poster="/images/banner-bg-small.png"
         className="absolute top-[42px] left-0 w-full h-full object-cover object-center z-0"
       >
         <source src="/video/banner_background.mp4" type="video/mp4" />
