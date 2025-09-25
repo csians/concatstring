@@ -30,6 +30,7 @@ const Banner = () => {
     if (title && content) {
       setLoading(false);
       const banner = document.querySelector(".banner");
+      console.log('jaimin')
       if (banner) {
         // Small delay to ensure content is rendered
         setTimeout(() => {
@@ -55,10 +56,10 @@ const Banner = () => {
         loop
         playsInline
         preload="none"
-        poster="/images/home_banner.png"
+        poster="/images/home_banner.webp"
         className="absolute top-[42px] left-0 w-full h-full object-cover object-center z-0"
       >
-        <source src="/video/banner_background.mp4" type="video/mp4" />
+        <source src="/video/banner_background.webm" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
