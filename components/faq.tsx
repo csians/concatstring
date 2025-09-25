@@ -34,50 +34,71 @@ const Faq = () => {
   const faqItems = faqSection?.faqData?.nodes || [];
 
   useEffect(() => {
-    const faqItems = document.querySelectorAll(".faq-item");
+    const faqItems = Array.from(document.querySelectorAll(".faq-item"));
     const listeners: Array<() => void> = [];
-    
-    // Open first FAQ item by default
+  
+    // Open first FAQ item by default (batch read + write)
     if (faqItems.length > 0) {
       const firstItem = faqItems[0];
       const firstContent = firstItem.querySelector(".faq-content") as HTMLElement | null;
       const firstIcon = firstItem.querySelector(".faq-icon svg") as HTMLElement | null;
       const firstWrapper = firstItem.closest(".faq-wrapper");
-      
-      if (firstContent) firstContent.style.maxHeight = firstContent.scrollHeight + "px";
-      if (firstIcon) firstIcon.style.transform = "rotate(180deg)";
+  
+      if (firstContent) {
+        requestAnimationFrame(() => {
+          firstContent.style.maxHeight = firstContent.scrollHeight + "px";
+        });
+      }
+      if (firstIcon) {
+        requestAnimationFrame(() => {
+          firstIcon.style.transform = "rotate(180deg)";
+        });
+      }
       firstItem.classList.add("active", "bg-[#2B2B2B]");
       firstWrapper?.classList.add("is-active");
     }
-    
+  
     faqItems.forEach((item) => {
       const head = item.querySelector(".faq-head");
       const content = item.querySelector(".faq-content") as HTMLElement | null;
       const icon = item.querySelector(".faq-icon svg") as HTMLElement | null;
       const wrapper = item.closest(".faq-wrapper");
+  
       const handleClick = () => {
         const isOpen = item.classList.contains("active");
-        faqItems.forEach((faq) => {
-          const c = faq.querySelector(".faq-content") as HTMLElement | null;
-          const i = faq.querySelector(".faq-icon svg") as HTMLElement | null;
-          const w = faq.closest(".faq-wrapper");
-          if (c) c.style.maxHeight = "";
-          if (i) i.style.transform = "rotate(0deg)";
-          faq.classList.remove("active", "bg-[#2B2B2B]");
-          w?.classList.remove("is-active");
+  
+        // Batch DOM reads first
+        const faqContents = faqItems.map((faq) => ({
+          content: faq.querySelector(".faq-content") as HTMLElement | null,
+          icon: faq.querySelector(".faq-icon svg") as HTMLElement | null,
+          wrapper: faq.closest(".faq-wrapper"),
+          item,
+        }));
+  
+        // Batch DOM writes using requestAnimationFrame
+        requestAnimationFrame(() => {
+          faqContents.forEach(({ content, icon, wrapper, item }) => {
+            if (content) content.style.maxHeight = "";
+            if (icon) icon.style.transform = "rotate(0deg)";
+            item.classList.remove("active", "bg-[#2B2B2B]");
+            wrapper?.classList.remove("is-active");
+          });
+  
+          if (!isOpen && content) {
+            content.style.maxHeight = content.scrollHeight + "px";
+            if (icon) icon.style.transform = "rotate(180deg)";
+            item.classList.add("active", "bg-[#2B2B2B]");
+            wrapper?.classList.add("is-active");
+          }
         });
-        if (!isOpen) {
-          if (content) content.style.maxHeight = content.scrollHeight + "px";
-          if (icon) icon.style.transform = "rotate(180deg)";
-          item.classList.add("active", "bg-[#2B2B2B]");
-          wrapper?.classList.add("is-active");
-        }
       };
+  
       if (head) {
         item.addEventListener("click", handleClick);
         listeners.push(() => item.removeEventListener("click", handleClick));
       }
     });
+  
     return () => {
       listeners.forEach((removeListener) => removeListener());
     };

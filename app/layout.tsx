@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { generateSeoMetadata } from "@/components/SEOComponent";
 import CookieConsent from "@/components/CookieConsent";
 import CookiePreferencesButton from "@/components/CookiePreferencesButton";
+import { lato, montserrat } from "@/app/fonts";
 // export const metadata: Metadata = {
 //   title: "White Label Web Design & Development Service - Concatstring",
 //   description:
@@ -30,23 +31,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${lato.className} ${montserrat.className}`}>
       <head>
-        {/* Performance: Preconnect and DNS-prefetch to reduce connection setup time */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-        {/* Cloudways (WordPress) assets host - reduce blocking by preconnecting */}
-        <link rel="preconnect" href="https://phpstack-1517221-5849129.cloudwaysapps.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="//phpstack-1517221-5849129.cloudwaysapps.com" />
         {/* Unpkg CDN - large Lottie script */}
         <link rel="preconnect" href="https://unpkg.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="//unpkg.com" />
-        <link
+        {/* <link
           href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
           rel="stylesheet"
-        />
+        /> */}
         <meta name="google-site-verification" content="v8yl-AwGz9it1y8ph-q7gQL4MXAwSWq6JBiPqh7REgc" />
         <link rel="icon" href="/favicon.png" type="image/png" />
         {/* Removed poster preload per UX preference (no poster visible) */}
@@ -96,7 +88,7 @@ export default function RootLayout({
         {/* Load heavy Lottie script lazily to avoid render blocking */}
         <Script
           src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
         {/* Google Tag Manager (noscript) */}
         <noscript>

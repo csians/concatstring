@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import Image from "next/image";
 import "@/css/home.css";
 import { RootState } from "@/store";
 import { useQuery } from "@apollo/client";
@@ -50,13 +51,21 @@ const Banner = () => {
       cachedData={cachedData ?? data}
     >
     <section className="banner relative min-h-screen max-lg:min-h-[auto] overflow-hidden">
+      <Image
+        src="/images/home_banner.webp"
+        alt="Home Banner"
+        width={1920}
+        height={1080}
+        priority
+        className="absolute top-0 left-0 w-full h-full object-cover object-center z-0"
+      />
       <video
         muted
         autoPlay
         loop
         playsInline
-        preload="none"
-        poster="/images/home_banner.webp"
+        // preload="none"
+        // poster="/images/home_banner.webp"
         className="absolute top-[42px] left-0 w-full h-full object-cover object-center z-0"
       >
         <source src="/video/banner_background.webm" type="video/mp4" />
