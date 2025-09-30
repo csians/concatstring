@@ -168,26 +168,23 @@ const StrategySquad = () => {
     }
   };
 
-  // Show skeleton while loading
-  if (loading) {
-    return <StrategySquadSkeleton />;
-  }
+
 
   // Show error message if there's an error
-  if (error) {
-    return (
-      <section className="2xl:py-[120px] xl:py-[120px] lg:py-[100px] md:py-[80px] sm:py-[60px] py-[60px] bg-[#2E0707]">
-        <div className="container max-w-[1400px] px-[20px] mx-auto w-full">
-          <div className="text-center">
-            <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
-              Error loading strategy squad
-            </h3>
-            <p className="text-[#C3C3C3]">Please try again later.</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <section className="2xl:py-[120px] xl:py-[120px] lg:py-[100px] md:py-[80px] sm:py-[60px] py-[60px] bg-[#2E0707]">
+  //       <div className="container max-w-[1400px] px-[20px] mx-auto w-full">
+  //         <div className="text-center">
+  //           <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
+  //             Error loading strategy squad
+  //           </h3>
+  //           <p className="text-[#C3C3C3]">Please try again later.</p>
+  //         </div>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   // Extract data from the GraphQL response
   const teamListingData =
@@ -200,9 +197,13 @@ const StrategySquad = () => {
   // Get all groups except the first one (Vision Architects)
   const remainingGroups = teamGroups.slice(1);
 
-  if (remainingGroups.length === 0) {
-    return null;
-  }
+  // if (remainingGroups.length === 0) {
+  //   return null;
+  // }
+    // Show skeleton while loading
+    if (remainingGroups.length === 0) {
+      return <StrategySquadSkeleton />;
+    }
 
   return (
     <>
