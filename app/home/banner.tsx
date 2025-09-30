@@ -13,7 +13,10 @@ import LoadingProvider from "@/components/LoadingContext";
 
 const Banner = () => {
   const cachedData = useSelector((state: RootState) => state.home.banner);
-  const { data } = useQuery(GET_BANNER_CONTENT);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data } = useQuery(GET_BANNER_CONTENT, {
+    skip: !!cachedData,
+  });
   const [loading, setLoading] = React.useState(true);
   const dispatch = useDispatch();
   const column =
