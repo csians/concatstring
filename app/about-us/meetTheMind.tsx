@@ -72,17 +72,17 @@ const MeetTheMind = () => {
     }
   }, [data, dispatch]);
 
-  if (error)
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
-            Error loading team data
-          </h3>
-          <p className="text-[#C3C3C3]">Please try again later.</p>
-        </div>
-      </div>
-    );
+  // if (error)
+  //   return (
+  //     <div className="flex items-center justify-center min-h-[400px]">
+  //       <div className="text-center">
+  //         <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
+  //           Error loading team data
+  //         </h3>
+  //         <p className="text-[#C3C3C3]">Please try again later.</p>
+  //       </div>
+  //     </div>
+  //   );
   if (
     !meetOurTeamBlock ||
     !meetOurTeamBlock.teamMember ||
@@ -90,7 +90,7 @@ const MeetTheMind = () => {
     meetOurTeamBlock.teamMember.nodes.length === 0 ||
     !meetOurTeamBlock.meetEveryCsian
   ) {
-    return null;
+    return <MeetTheMindSkeleton />;
   }
 
   const { meetOurTeamTitle, teamMember, meetEveryCsian } = meetOurTeamBlock;

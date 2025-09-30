@@ -34,10 +34,32 @@ const LifeAtCompany = () => {
   }, [data, dispatch]);
 
   // Early return if no essential data exists
-  if (!lifeAtCompanyData?.lifeAtCompanyTitle) {
-    return null;
-  }
+  // if (!lifeAtCompanyData?.lifeAtCompanyTitle) {
+  //   return null;
+  // }
 
+ 
+
+  // if (error)
+  //   return (
+  //     <section className="py-[120px]">
+  //       <div className="container max-w-[1400px] px-[20px] mx-auto">
+  //         <div className="flex flex-col items-center justify-center gap-[40px]">
+  //           <h2 className="h2 text-white text-center">
+  //             Error loading life at company data
+  //           </h2>
+  //           <p className="text-white text-center">Please try again later.</p>
+  //         </div>
+  //       </div>
+  //     </section>
+  //   );
+
+  const events = lifeAtCompanyData?.events?.nodes || [];
+  
+  // // Return null if no events exist
+  // if (!events || events.length === 0) {
+  //   return null;
+  // }
   if (!lifeAtCompanyData?.lifeAtCompanyTitle)
     return (
       <section className="py-[120px]">
@@ -57,28 +79,6 @@ const LifeAtCompany = () => {
         </div>
       </section>
     );
-
-  if (error)
-    return (
-      <section className="py-[120px]">
-        <div className="container max-w-[1400px] px-[20px] mx-auto">
-          <div className="flex flex-col items-center justify-center gap-[40px]">
-            <h2 className="h2 text-white text-center">
-              Error loading life at company data
-            </h2>
-            <p className="text-white text-center">Please try again later.</p>
-          </div>
-        </div>
-      </section>
-    );
-
-  const events = lifeAtCompanyData?.events?.nodes || [];
-  
-  // Return null if no events exist
-  if (!events || events.length === 0) {
-    return null;
-  }
-
 
 
   return (
