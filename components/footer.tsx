@@ -15,7 +15,10 @@ import { FooterSkeleton } from "./skeletons";
 const Footer = () => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.footer);
-  const { data, loading } = useQuery(GET_FOOTER_MENU);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data, loading } = useQuery(GET_FOOTER_MENU, {
+    skip: !!cachedData,
+  });
   const freshFooter = data?.footerSettings?.footerOptions;
   const footer = cachedData || freshFooter;
 

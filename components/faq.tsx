@@ -11,7 +11,10 @@ import { RootState } from "@/store";
 const Faq = () => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.faq);
-  const { data } = useQuery(GET_FAQ);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data } = useQuery(GET_FAQ, {
+    skip: !!cachedData,
+  });
 
   const freshData = data?.page?.flexibleContent?.flexibleContent?.find(
     (item: any) => item?.faqTitle
