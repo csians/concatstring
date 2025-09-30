@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "@/css/about.css";
 import { useQuery } from "@apollo/client";
 import { GET_ABOUT_TECHNOLOGIES } from "@/lib/queries";
-import { TechnologySkeleton } from "@/components/skeletons";
+// import { TechnologySkeleton } from "@/components/skeletons";
 import { setAboutTechnologiesData } from "@/store/slices/aboutSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
@@ -130,17 +130,17 @@ const Technology = () => {
     });
   }, [data, activeTab]); // Added activeTab to dependencies
 
-  if (error)
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
-            Error loading technologies
-          </h3>
-          <p className="text-[#C3C3C3]">Please try again later.</p>
-        </div>
-      </div>
-    );
+  // if (error)
+  //   return (
+  //     <div className="flex items-center justify-center min-h-[400px]">
+  //       <div className="text-center">
+  //         <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
+  //           Error loading technologies
+  //         </h3>
+  //         <p className="text-[#C3C3C3]">Please try again later.</p>
+  //       </div>
+  //     </div>
+  //   );
 
   const technologies = techData?.technologies;
   if (!techData || !technologies || technologies.length === 0) {

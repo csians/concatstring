@@ -268,24 +268,24 @@ const Timeline = () => {
   
 
   // Show loading state
-  if (loading) {
-    return <TimelineSkeleton />;
-  }
+  // if (loading) {
+  //   return <TimelineSkeleton />;
+  // }
 
   // Show error message if there's an error
-  if (error)
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
-            Error loading timeline
-          </h3>
-          <p className="text-[#C3C3C3]">Please try again later.</p>
-        </div>
-      </div>
-    );
+  // if (error)
+  //   return (
+  //     <div className="flex items-center justify-center min-h-[400px]">
+  //       <div className="text-center">
+  //         <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
+  //           Error loading timeline
+  //         </h3>
+  //         <p className="text-[#C3C3C3]">Please try again later.</p>
+  //       </div>
+  //     </div>
+  //   );
 
-  if (!roadTraveledBlock) return null;
+
 
   // Function to truncate text to 30 words
   const truncateToWords = (text: string, wordLimit: number = 30) => {
@@ -303,8 +303,9 @@ const Timeline = () => {
     return tmp.textContent || tmp.innerText || "";
   };
 
+  if (!roadTraveledBlock &&  companyGrowth.length === 0) return <TimelineSkeleton />;;
 
-  if (!companyGrowth || companyGrowth.length === 0) return null;
+  // if (!companyGrowth || ) return null;
 
   return (
     <>
