@@ -33,24 +33,24 @@ const OurTeam = () => {
 
   const titleWords = teamListTitle ? teamListTitle.split(" ") : [];
 
-  if (loading && !cachedTeamData) {
+  if (!cachedTeamData || loading) {
     return <TeamBannerSkeleton />;
   }
 
-  if (error && !cachedTeamData) {
-    return (
-      <section className="pt-[160px] pb-[180px] bg-[#2E0707]">
-        <div className="container mx-auto text-center">
-          <h3 className="text-white font-bold text-[24px]">
-            Error loading team data
-          </h3>
-          <p className="text-[#C3C3C3]">Please try again later.</p>
-        </div>
-      </section>
-    );
-  }
+  // if (error && !cachedTeamData) {
+  //   return (
+  //     <section className="pt-[160px] pb-[180px] bg-[#2E0707]">
+  //       <div className="container mx-auto text-center">
+  //         <h3 className="text-white font-bold text-[24px]">
+  //           Error loading team data
+  //         </h3>
+  //         <p className="text-[#C3C3C3]">Please try again later.</p>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
-  if (!teamListTitle || !bannerImage) return null;
+  // if (!teamListTitle || !bannerImage) return null;
 
   return (
     <section
