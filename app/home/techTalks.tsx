@@ -58,6 +58,7 @@ const TechTalks = () => {
 
   // Get featured image URL with fallback
   const getFeaturedImageUrl = (post: any) => {
+    console.log(post?.featuredImage?.node)
     return post?.featuredImage?.node?.sourceUrl;
   };
 
