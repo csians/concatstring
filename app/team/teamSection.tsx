@@ -20,7 +20,7 @@ interface TeamMember {
     };
     memberGif: {
       node: {
-        altText: string;
+        altText: string;  
         sourceUrl: string;
       };
     };
@@ -161,26 +161,26 @@ const TeamSection: React.FC = () => {
   // }
 
   // Show error message if there's an error
-  if (error) {
-    return (
-      <section className="2xl:py-[120px] xl:py-[120px] lg:py-[100px] md:py-[80px] sm:py-[60px] py-[60px]">
-        <div className="container max-w-[1400px] px-[20px] mx-auto w-full">
-          <div className="text-center">
-            <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
-              Error loading team section
-            </h3>
-            <p className="text-[#C3C3C3]">Please try again later.</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <section className="2xl:py-[120px] xl:py-[120px] lg:py-[100px] md:py-[80px] sm:py-[60px] py-[60px]">
+  //       <div className="container max-w-[1400px] px-[20px] mx-auto w-full">
+  //         <div className="text-center">
+  //           <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
+  //             Error loading team section
+  //           </h3>
+  //           <p className="text-[#C3C3C3]">Please try again later.</p>
+  //         </div>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   if (
     visionArchitectsGroup?.length === 0 ||
     !visionArchitectsGroup?.teamGroupTitle
   ) {
-    return null;
+    return <TeamSectionSkeleton />; 
   }
 
   return (
