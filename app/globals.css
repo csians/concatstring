@@ -740,3 +740,10 @@ button:hover {
   justify-content: flex-start;
 } 
 }
+
+@media (max-width:767px) {
+  .custom-pagination{
+    width: 45px !important; 
+    height: 47px !important;
+  }
+}
