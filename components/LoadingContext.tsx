@@ -7,7 +7,7 @@ interface LoadingOverlayProps {
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   children: React.ReactNode;
-  cachedData?: any
+  cachedData?: any;
 }
 
 export default function LoadingWrapper({
@@ -16,7 +16,7 @@ export default function LoadingWrapper({
   size = 'md',
   variant = "fullscreen",
   className = '',
-  cachedData
+  cachedData,
 }: LoadingOverlayProps) {
   const [loading, setLoading] = useState(true);
 
@@ -26,13 +26,19 @@ export default function LoadingWrapper({
         setLoading(false);
         return;
       }
-  
-      const timer = setTimeout(() => {
+      
+      // Set a maximum timeout to prevent infinite loading
+      // This ensures the loader doesn't show forever if data fetching fails
+      const timeout = setTimeout(() => {
         setLoading(false);
-      }, 2000);
-      return () => clearTimeout(timer);
-    // }
-  }, [cachedData]);
+      }, 1000);
+      
+      // Keep loading state true when there's no cached data
+      // This will show loader while data is being fetched
+      setLoading(true);
+      
+      return () => clearTimeout(timeout);
+    }, [cachedData]);
 
 
   const sizeClasses = {

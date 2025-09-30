@@ -40,7 +40,10 @@ const useIsTouchDevice = () => {
 const Culture = () => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.csian);
-  const { data, loading } = useQuery(GET_CSIAN_CULTURE);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data, loading } = useQuery(GET_CSIAN_CULTURE, {
+    skip: !!cachedData,
+  });
   const isTouchDevice = useIsTouchDevice();
   const freshData = data?.page?.flexibleContent?.flexibleContent?.find(
     (block: any) => block?.csianTitle

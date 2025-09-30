@@ -24,7 +24,10 @@ export default function Header() {
   });
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.header);
-  const { data } = useQuery(GET_HEADER_MENU);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data } = useQuery(GET_HEADER_MENU, {
+    skip: !!cachedData,
+  });
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const closeTimeoutRef = useRef<number | null>(null);
   const router = useRouter();
