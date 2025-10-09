@@ -326,7 +326,7 @@ export default function Header() {
       <header className="header fixed top-0 left-0 w-full z-[999999]">
       <nav className="bg-[#00182D]">
         <div className="max-w-[1432px] flex flex-wrap items-center justify-between mx-auto p-4 py-[22px]">
-          <a
+          <Link
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse 2xl:w-[286px] xl:w-[286px] lg:w-[286px] md:w-[250px] sm:w-[200px] w-[200px]"
           >
@@ -548,7 +548,7 @@ export default function Header() {
                 </clipPath>
               </defs>
             </svg>
-          </a>
+          </Link>
           <button
             onClick={toggleMenu}
             type="button"
@@ -641,7 +641,7 @@ export default function Header() {
 
 
                   <div className="site-logo-wrapper scale-75 opacity-0 transition-all duration-700 ease-in-out">
-                    <a href="/">
+                    <Link href="/">
                     <div className="site-logo 2xl:w-[285px] xl:w-[285px] lg:w-[260px] md:w-[200px] sm:w-[200px] w-[200px]">
                         <Image
                           src={
@@ -653,7 +653,7 @@ export default function Header() {
                           alt={header?.csLogo?.node?.altText || "Logo"}
                         />
                       </div>
-                    </a>
+                    </Link>
                   </div>
                  
                   <div className="close-btn-wrapper opacity-0 -translate-x-32 transition-all duration-700 ease-[cubic-bezier(0.68,-0.55,0.27,1.55)] ">
@@ -740,7 +740,7 @@ export default function Header() {
                                 }
                               }
                               setIsMenuOpen(false);
-                              window.scrollTo({ top: 0, behavior: "auto" });
+                                    window.scrollTo({ top: 0, behavior: "auto" });
                             }}
                           >
                             {item.name}

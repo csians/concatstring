@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import "@/css/home.css";
 import { RootState } from "@/store";
 import { useQuery } from "@apollo/client";
@@ -34,7 +35,7 @@ const Banner = () => {
     if (title && content) {
       setLoading(false);
       const banner = document.querySelector(".banner");
-      console.log('jaimin')
+      // console.log('jaimin')
       if (banner) {
         // Small delay to ensure content is rendered
         setTimeout(() => {
@@ -92,11 +93,11 @@ const Banner = () => {
           </div>
 
           {link && (
-            <a href={link.url} className="inline-block group button">
+            <Link href={link.url} className="inline-block group button">
               <div className="btn-primary-outline">
                 <div className="btn-primary">{link.title}</div>
               </div>
-            </a>
+            </Link>
           )}
         </div>
       </div>

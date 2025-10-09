@@ -6,6 +6,7 @@ import { StrategySquadSkeleton } from "@/components/skeletons";
 import { RootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setTeamData } from "@/store/slices/teamSlice";
+import Link from "next/link";
 
 interface TeamMember {
   teamSetting: {
@@ -403,12 +404,12 @@ const StrategySquad = () => {
                               >
                                 {info.infoTitle}: {
                                   info.infoTitle.toLowerCase().includes('email') ? (
-                                    <a
+                                    <Link
                                       href={`mailto:${info.infoValue}`}
                                       className="hover:underline transition-all duration-300"
                                     >
                                       {info.infoValue}
-                                    </a>
+                                    </Link>
                                   ) : (
                                     info.infoValue
                                   )
@@ -427,7 +428,7 @@ const StrategySquad = () => {
                               {selectedMember.teamSetting.socialLinkTitle}
                             </h4>
                             <div className="flex mt-[-4px]">
-                              <a
+                              <Link
                                 href={selectedMember.teamSetting.socialLink.url}
                                 target="_blank"
                                 className="group w-[25px] h-[25px] flex items-center justify-center"
@@ -445,7 +446,7 @@ const StrategySquad = () => {
                                     className="w-[20px] h-[20px] group-hover:scale-[1.1]"
                                   />
                                 )}
-                              </a>
+                              </Link>
                             </div>
                           </div>
                         )}

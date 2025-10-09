@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
+import Link from "next/link";
 import "@/css/home.css";
 import { TechnologiesSkeleton } from "@/components/skeletons";
 import { useTechnologiesData } from "@/hooks/use-technologies-data";
@@ -29,7 +30,7 @@ const TechnologyItem = React.memo(({ tech, index }: { tech: any; index: number }
         )}
         {settings.readMoreLink?.title && (
           <div className="button-box text-left">
-            <a
+            <Link
               href={`/services/${tech?.slug}`}
               className="inline-block group"
             >
@@ -38,7 +39,7 @@ const TechnologyItem = React.memo(({ tech, index }: { tech: any; index: number }
                   {settings.readMoreLink?.title}
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
         )}
       </div>
@@ -89,17 +90,17 @@ const Technologies = React.memo(() => {
   }
 
   // Show error state if there's an error and no cached data
-  if (error) {
-    return (
-      <section className="explore-technologies md:pt-[100px] pt-[60px]">
-        <div className="max-w-[1432px] px-4 mx-auto">
-          <div className="text-center text-white">
-            <p>Unable to load technologies. Please try again later.</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <section className="explore-technologies md:pt-[100px] pt-[60px]">
+  //       <div className="max-w-[1432px] px-4 mx-auto">
+  //         <div className="text-center text-white">
+  //           <p>Unable to load technologies. Please try again later.</p>
+  //         </div>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   // Don't render if no data available
   if (!hasData) return null;
@@ -114,7 +115,7 @@ const Technologies = React.memo(() => {
             {techSection.weProvideTitle}
           </h2>
           {techSection.exploreTechnologies && (
-            <a
+            <Link
               href={techSection.exploreTechnologies?.url}
               className="btn-primary btn-primary 2xl:h-[82px] xl:h-[82px] lg:h-[80px] md:h-[70px] sm:h-[60px] h-[60px] gap-[10px] 2xl:text-[24px] xl:text-[24px] lg:text-[18px] md:text-[18px] lg:text-[18px] sm:text-[18px] text-[16px] transition-all duration-300 ease-in-out cursor-pointer hover:shadow-[inset_0_0_16px_rgba(255,255,255,0.26),0_24px_124px_rgba(231,33,37,0.22)] inline-block group p-0 max-sm:h-[auto]"
             >
@@ -129,7 +130,7 @@ const Technologies = React.memo(() => {
               /> */}
               </div></div>
              
-            </a>
+            </Link>
           )}
         </div>
         {techSection.provideDescription && (

@@ -6,6 +6,7 @@ import { GET_BLOG_POSTS, GET_BLOG_ICONS } from "@/lib/queries";
 import { setTechTalksData } from "@/store/slices/homeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 const TechTalks = () => {
   const dispatch = useDispatch();
@@ -88,7 +89,7 @@ const TechTalks = () => {
                 >
                   <div className="flex flex-col justify-between gap-[32px] h-full">
                     <div className="flex flex-col flex-grow height-full">
-                      <a href={`/blog/${post.slug}`} className="block hover:opacity-80 transition-opacity">
+                      <Link href={`/blog/${post.slug}`} className="block hover:opacity-80 transition-opacity">
                         <img
                           src={getFeaturedImageUrl(post)}
                           width={399}
@@ -98,7 +99,7 @@ const TechTalks = () => {
                           loading="lazy"
                           decoding="async"
                         />
-                      </a>
+                      </Link>
                       <div className="flex flex-row flex-wrap justify-between gap-[10px] mb-[20px] items-start">
                         <div className="flex flex-row flex-wrap gap-[14px] max-w-[calc(100%-130px)]">
                           {getCategories &&
@@ -130,11 +131,11 @@ const TechTalks = () => {
                         </span>
                       </div>
                       {post?.title && (
-                        <a href={`/blog/${post.slug}`} className="block hover:text-[#E72125] transition-colors">
+                        <Link href={`/blog/${post.slug}`} className="block hover:text-[#E72125] transition-colors">
                           <h3 className="font-denton text-[24px] font-bold leading-[32px] text-white mb-[6px]">
                             {post?.title}
                           </h3>
-                        </a>
+                        </Link>
                       )}
                       {(post?.blogDetail?.blogDetailShotDesc) && (
                         <p className="font-lato text-[17px] font-normal leading-[26px] text-[#C3C3C3] line-clamp-3">
@@ -143,7 +144,7 @@ const TechTalks = () => {
                       )}
                     </div>
                     {blogIcons?.readMore && (
-                      <a
+                      <Link
                         href={`/blog/${post?.slug}`}
                         className="flex items-center gap-[10px] text-white font-denton font-bold text-[18px] leading-[100%] hover:text-[#E72125] w-max"
                       >
@@ -158,7 +159,7 @@ const TechTalks = () => {
                             decoding="async"
                           />
                         )}
-                      </a>
+                      </Link>
                     )}
                   </div>
                 </div>
@@ -167,13 +168,13 @@ const TechTalks = () => {
           {/*
            */}
           {posts[0]?.blogDetail?.viewAllBlog?.title && (
-            <a href={posts[0]?.blogDetail?.viewAllBlog?.url} className="group">
+            <Link href={posts[0]?.blogDetail?.viewAllBlog?.url} className="group">
               <div className="btn-primary-outline">
                 <div className="btn-primary">
                   {posts[0]?.blogDetail?.viewAllBlog?.title}
                 </div>
               </div>
-            </a>
+            </Link>
           )}
         </div>
       </div>

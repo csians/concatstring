@@ -17,6 +17,7 @@ import {
 } from "@/store/slices/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 const FutureTech = () => {
   const dispatch = useDispatch();
@@ -332,7 +333,7 @@ const FutureTech = () => {
                 >
                   <div className="flex flex-col justify-between gap-[32px] h-full">
                     <div className="flex flex-col flex-grow height-full">
-                      <a
+                      <Link
                         href={`/blog/${post.slug}`}
                         className="block hover:opacity-80 transition-opacity"
                       >
@@ -343,7 +344,7 @@ const FutureTech = () => {
                           height="270"
                           className="2xl:rounded-[16px] xl:rounded-[16px] lg:rounded-[16px] md:rounded-[15px] sm:rounded-[10px] rounded-[10px] mb-[16px] w-full object-cover"
                         />
-                      </a>
+                      </Link>
                       <div className="flex flex-row flex-wrap justify-between gap-[10px] mb-[20px] items-start">
                         <div className="flex flex-row flex-wrap gap-[14px] max-w-[calc(100%-130px)]">
                           {post.categories?.nodes?.map(
@@ -372,14 +373,14 @@ const FutureTech = () => {
                           {formatDate(post.date)}
                         </span>
                       </div>
-                      <a
+                      <Link
                         href={`/blog/${post.slug}`}
                         className="block hover:text-[#E72125] transition-colors"
                       >
                         <h3 className="font-denton text-[24px] font-bold leading-[32px] text-white mb-[6px]">
                           {post.title}
                         </h3>
-                      </a>
+                      </Link>
                       {/* <div className="flex items-center justify-between gap-[10px] w-full mb-[16px]">
                         <div className="flex gap-[8px] items-center">
                           {blogIcons?.viewIcon?.node?.sourceUrl && (
@@ -414,7 +415,7 @@ const FutureTech = () => {
                         {stripHtml(post.blogDetail?.blogDetailShotDesc || '')}
                       </p>
                     </div>
-                    <a
+                    <Link
                       href={`/blog/${post.slug}`}
                       className="flex items-center gap-[10px] text-white font-denton font-bold text-[18px] leading-[100%] hover:text-[#E72125] transition-opacity w-max"
                     >
@@ -428,7 +429,7 @@ const FutureTech = () => {
                           className="w-[15px] h-[20px]"
                         />
                       )}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               ))}

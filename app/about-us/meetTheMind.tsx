@@ -7,11 +7,15 @@ import { MeetTheMindSkeleton } from "@/components/skeletons";
 import { setMeetOurTeamData } from "@/store/slices/aboutSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 const MeetTheMind = () => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.about.meetOurTeam);
-  const { data, error } = useQuery(GET_MEET_OUR_TEAM);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data, error } = useQuery(GET_MEET_OUR_TEAM, {
+    skip: !!cachedData,
+  });
 
   // Helper function to split name and return JSX with last name in red
   const renderNameWithRedLastName = (fullName: string) => {
@@ -172,11 +176,11 @@ const MeetTheMind = () => {
               ))}
             </div>
             {meetEveryCsian?.url && (
-              <a href={meetEveryCsian.url} className="group">
+              <Link href={meetEveryCsian.url} className="group">
                 <div className="btn-primary-outline">
                   <div className="btn-primary">{meetEveryCsian.title}</div>
                 </div>
-              </a>
+              </Link>
             )}
           </div>
         </div>
@@ -327,12 +331,12 @@ const MeetTheMind = () => {
                             >
                               {info.infoTitle}: {
                                 info.infoTitle.toLowerCase().includes('email') ? (
-                                  <a
+                                  <Link
                                     href={`mailto:${info.infoValue}`}
                                     className="hover:underline transition-all duration-300"
                                   >
                                     {info.infoValue}
-                                  </a>
+                                  </Link>
                                 ) : (
                                   info.infoValue
                                 )
@@ -351,7 +355,7 @@ const MeetTheMind = () => {
                             {selectedMember.teamSetting.socialLinkTitle}
                           </h4>
                           <div className="flex mt-[-4px]">
-                            <a
+                            <Link
                               href={selectedMember.teamSetting.socialLink.url}
                               target="_blank"
                               className="group w-[25px] h-[25px] flex items-center justify-center"
@@ -369,7 +373,7 @@ const MeetTheMind = () => {
                                   className="w-[20px] h-[20px] group-hover:scale-[1.1]"
                                 />
                               )}
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       )}

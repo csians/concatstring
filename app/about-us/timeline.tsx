@@ -6,13 +6,17 @@ import { TimelineSkeleton } from "@/components/skeletons";
 import { setRoadTraveledData } from "@/store/slices/aboutSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 const Timeline = () => {
   const dispatch = useDispatch();
   const cachedData = useSelector(
     (state: RootState) => state.about.roadTraveled
   );
-  const { data, error, loading } = useQuery(GET_ROAD_TRAVELED);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data, error, loading } = useQuery(GET_ROAD_TRAVELED, {
+    skip: !!cachedData,
+  });
   const [selectedTimeline, setSelectedTimeline] = useState<any>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentTimelineIndex, setCurrentTimelineIndex] = useState(0);
@@ -667,7 +671,7 @@ const Timeline = () => {
 
                 {/* Contact Us Button - Centered */}
                 <div className="flex justify-center">
-                  <a
+                  <Link
                     href={selectedTimeline?.readMoreLink?.url || '#'}
                     className="btn-primary bg-[#E72125] no-underline hover:bg-gradient-to-r from-[#E72125] to-[#8E1D1D] transition-all duration-300 ease-in-out [background-size:100%_153.5%] hover:no-underline hover:text-white"
                     aria-label="Contact us for more information"
@@ -675,7 +679,7 @@ const Timeline = () => {
                     rel={selectedTimeline?.readMoreLink?.target === '_blank' ? 'noopener noreferrer' : undefined}
                   >
                     Contact Us
-                  </a>
+                  </Link>
                 </div>
 
                 {/* Mobile: Navigation Arrows at Bottom */}

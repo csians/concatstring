@@ -6,6 +6,7 @@ import { ConnectNowSkeleton } from "@/components/skeletons";
 import { setAuthorsData } from "@/store/slices/authorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 interface ConnectNowProps {
   userId?: string | null;
@@ -37,22 +38,22 @@ const ConnectNow: React.FC<ConnectNowProps> = ({ userId }) => {
   }
 
   // Show error message if there's an error
-  if (error) {
-    return (
-      <section className="mb-[100px]">
-        <div className="container max-w-[1400px] px-[20px] mx-auto w-full">
-          <div className="bg-white/10 2xl:p-[100px] xl:p-[100px] lg:p-[80px] md:p-[60px] sm:p-[40px] p-[30px] rounded-[16px]">
-            <div className="text-center">
-              <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
-                Error loading contact information
-              </h3>
-              <p className="text-[#C3C3C3]">Please try again later.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <section className="mb-[100px]">
+  //       <div className="container max-w-[1400px] px-[20px] mx-auto w-full">
+  //         <div className="bg-white/10 2xl:p-[100px] xl:p-[100px] lg:p-[80px] md:p-[60px] sm:p-[40px] p-[30px] rounded-[16px]">
+  //           <div className="text-center">
+  //             <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
+  //               Error loading contact information
+  //             </h3>
+  //             <p className="text-[#C3C3C3]">Please try again later.</p>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   const contactSection = author?.userProfileImage?.contactSection;
   const contactTitle = contactSection?.contactTitle;
@@ -79,7 +80,7 @@ const ConnectNow: React.FC<ConnectNowProps> = ({ userId }) => {
                   {contactDescription}
                 </p>
                 {contactLink && (
-                  <a
+                  <Link
                     href={contactLink.url}
                     target={contactLink.target}
                     className="inline-block group"
@@ -87,7 +88,7 @@ const ConnectNow: React.FC<ConnectNowProps> = ({ userId }) => {
                     <div className="btn-primary-outline">
                       <div className="btn-primary">{contactLink.title}</div>
                     </div>
-                  </a>
+                  </Link>
                 )}
               </div>
             </div>
