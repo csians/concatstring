@@ -33,7 +33,7 @@ const Faq = () => {
     }
   }, [data, dispatch]);
 
-  const faqTitle = faqSection?.faqTitle || "FAQ";
+  const faqTitle = faqSection?.faqTitle;
   const faqItems = faqSection?.faqData?.nodes || [];
 
   useEffect(() => {

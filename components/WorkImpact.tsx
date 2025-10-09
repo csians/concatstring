@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { setWorkImpact } from "@/store/slices/homeSlice";
+import Link from "next/link";
 
 // Hook to detect touch devices
 const useIsTouchDevice = () => {
@@ -73,7 +74,7 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
         observer.unobserve(sectionRef.current);
       }
     };
-  }, []);
+  });
 
   let impactData;
 
@@ -381,9 +382,7 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
                             </div>
                             <div
                               className="relative h-full group overflow-hidden rounded-[20px] cursor-pointer"
-                              onClick={() =>
-                                (window.location.href = `/project/${projNode?.slug}`)
-                              }
+                              onClick={() => router.push(`/project/${projNode?.slug}`)}
                             >
                               <div
                                 className={`aspect-[900/480] lg:max-w-[900px] lg:max-h-[480px] max-sm:min-h-[220px] absolute inset-0 z-10 rounded-[20px] transition-all duration-500 ease-in-out ${
@@ -436,7 +435,7 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
                                   {project?.projectImageLabel}
                                 </p>
                                 {project?.readStoryLink?.url && (
-                                  <a
+                                  <Link
                                     href={`/project/${projNode?.slug}`}
                                     className="font-denton font-semibold md:text-[18px] text-[14px] leading-[100%] text-white flex items-center gap-[10px] max-sm:gap-[5px]"
                                     rel="noopener noreferrer"
@@ -455,7 +454,7 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
                                         fill="white"
                                       />
                                     </svg>
-                                  </a>
+                                  </Link>
                                 )}
                               </div>
                             </div>
@@ -506,7 +505,7 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
                   </div>
                 </div>
                 {showViewMore && viewMore?.url && (
-                  <a
+                  <Link
                     href={viewMore.url}
                     className="group mt-[26px] md:mt-[60px]"
                     rel="noopener noreferrer"
@@ -514,7 +513,7 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
                     <div className="btn-primary-outline">
                       <div className="btn-primary">{viewMore.title}</div>
                     </div>
-                  </a>
+                  </Link>
                 )}
               </div>
             </div>

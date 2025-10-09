@@ -23,7 +23,7 @@ const Faq = () => {
     faqData?.page?.flexibleContent?.flexibleContent?.[0]?.contactFaq?.nodes ||
     [];
   const faqTitle =
-    faqData?.page?.flexibleContent?.flexibleContent?.[0]?.faqTitle || "FAQ";
+    faqData?.page?.flexibleContent?.flexibleContent?.[0]?.faqTitle;
   // Contact form state
   const [form, setForm] = useState({
     fullName: "",

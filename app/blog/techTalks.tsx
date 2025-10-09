@@ -2,13 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
+import { useRouter } from "next/navigation";
 import { GET_BLOG_POSTS, GET_BLOG_ICONS } from "@/lib/queries";
 import { TechTalksSkeleton } from "@/components/skeletons";
 import { setBlogPostsData, setBlogIconsData } from "@/store/slices/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 const TechTalks = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [featuredPost, setFeaturedPost] = useState<any>(null); // Separate state for featured post
   const cachedIconsData = useSelector(
@@ -108,9 +111,7 @@ const TechTalks = () => {
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-            onClick={() =>
-              (window.location.href = `/blog/${featuredPost.slug}`)
-            }
+            onClick={() => router.push(`/blog/${featuredPost.slug}`)}
           >
             <div className="shadow"></div>
 
@@ -156,14 +157,14 @@ const TechTalks = () => {
                       </span>
                     </div>
                   </div>
-                  <a
+                  <Link
                     href={`/blog/${featuredPost.slug}`}
                     className="block hover:text-[#E72125] transition-colors"
                   >
                     <h2 className="font-denton font-bold 2xl:text-[34px] xl:text-[34px] lg:text-[30px] md:text-[24px] text:text-[20px] text-[20px] 2xl:leading-[45px] xl:leading-[45px] lg:leading-[40px] md:leading-[30px] sm:leading-[25px] leading-[25px] text-white text-left">
                       {featuredPost?.title}
                     </h2>
-                  </a>
+                  </Link>
                   <div className="flex items-center 2xl:gap-[60px] xl:gap-[60px] lg:gap-[40px] md:gap-[30px] sm:gap-[20px] gap-[10px] flex-row flex-wrap">
                     {/* <div className="flex gap-[8px] items-center">
                       {blogIcons?.viewIcon?.node?.sourceUrl && (
@@ -192,7 +193,7 @@ const TechTalks = () => {
                       </span>
                     </div> */}
                   </div>
-                  <a
+                  <Link
                     href={`/blog/${featuredPost.slug}`}
                     className="flex items-center gap-[10px] text-white font-denton font-bold md:text-[18px] text-[14px] leading-[100%] hover:text-[#E72125] transition-opacity w-max"
                   >
@@ -206,7 +207,7 @@ const TechTalks = () => {
                         className="md:w-[15px] md:h-[20px] w-[10px] h-[15px]"
                       />
                     )}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

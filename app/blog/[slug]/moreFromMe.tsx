@@ -6,6 +6,7 @@ import React, { useEffect } from "react";
 import { setBlogPostsData, setBlogIconsData } from "@/store/slices/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 interface Props {
   post: any;
@@ -91,7 +92,7 @@ const MoreFromMe: React.FC<Props> = ({ post }) => {
                     >
                       <div className="flex gap-[20px] 2xl:flex-row xl:flex-row lg:flex-row lg:flex-col sm:flex-col flex-col">
                         <div className="2xl:max-w-[272px] xl:max-w-[272px] lg:max-w-full md:max-w-full sm:max-w-full max-w-full">
-                          <a
+                          <Link
                             href={`/blog/${post.slug}`}
                             className="block hover:opacity-80 transition-opacity"
                           >
@@ -102,7 +103,7 @@ const MoreFromMe: React.FC<Props> = ({ post }) => {
                               width="272"
                               height="186"
                             />
-                          </a>
+                          </Link>
                         </div>
                         <div className="2xl:max-w-[345px] xl:max-w-[345px] lg:max-w-full md:max-w-full sm:max-w-full max-w-full">
                           <div className="flex flex-col justify-between gap-[26px] items-start">
@@ -119,19 +120,19 @@ const MoreFromMe: React.FC<Props> = ({ post }) => {
                                 </div>
                               ))}
                               </div>
-                              <a
+                              <Link
                                 href={`/blog/${post.slug}`}
                                 className="block hover:text-[#E72125] transition-colors"
                               >
                                 <h3 className="font-denton text-[24px] font-bold leading-[32px] text-white mb-[6px] line-clamp-2">
                                   {post.title}
                                 </h3>
-                              </a>
+                              </Link>
                               <p className="font-lato text-[17px] font-normal leading-[26px] text-[#C3C3C3] line-clamp-2">
                                 {stripHtml(post.blogDetail?.blogDetailShotDesc || '')}
                               </p>
                             </div>
-                            <a
+                            <Link
                               href={`/blog/${post.slug}`}
                               className="flex items-center gap-[10px] text-white font-denton font-bold text-[18px] leading-[100%] hover:opacity-80 transition-opacity w-max"
                             >
@@ -146,7 +147,7 @@ const MoreFromMe: React.FC<Props> = ({ post }) => {
                                   className="w-[15px] h-[20px]"
                                 />
                               )}
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -155,7 +156,7 @@ const MoreFromMe: React.FC<Props> = ({ post }) => {
                   ))}
                   
                 </div>
-                <a
+                <Link
                   href={post?.blogDetail?.viewAllBlog?.url}
                   className="inline-block group"
                 >
@@ -164,7 +165,7 @@ const MoreFromMe: React.FC<Props> = ({ post }) => {
                       {post?.blogDetail?.viewAllBlog?.title}
                     </div>
                   </div>
-                </a>
+                </Link>
               </div>
             </div>
           </section>

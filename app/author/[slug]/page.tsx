@@ -61,9 +61,9 @@ export async function generateMetadata({
       errorPolicy: "all",
     });
 
-    if (error) {
-      // GraphQL error occurred, but we'll continue with fallback
-    }
+    // if (error) {
+    //   // GraphQL error occurred, but we'll continue with fallback
+    // }
 
     const author = findAuthorBySlug(data?.users?.nodes, slug);
 

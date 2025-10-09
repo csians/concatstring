@@ -23,6 +23,24 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import memoryStorage from "./memoryStorage";
+
+// Create a safe storage that falls back to memory storage if localStorage is blocked (Safari)
+const createSafeStorage = () => {
+  try {
+    // Test if localStorage is available
+    const testKey = "__redux_persist_test__";
+    storage.setItem(testKey, "test");
+    storage.removeItem(testKey);
+    return storage;
+  } catch (e) {
+    // localStorage is blocked (common in Safari with strict privacy settings)
+    console.warn("localStorage is unavailable, using memory storage fallback");
+    return memoryStorage;
+  }
+};
+
+const safeStorage = createSafeStorage();
 const rootReducer = combineReducers({
   home: homeReducer,
   about: aboutReducer,
@@ -40,8 +58,10 @@ const rootReducer = combineReducers({
 
 const persistConfig = {
   key: "root",
-  storage,
+  storage: safeStorage,
   whitelist: ["home", "about", "author", "blog", "blogDetail", "contact", "events", "projectDetail", "services", "serviceDetails", "projectDetails", "cookie", "team"],
+  // Add timeout to prevent infinite loading in Safari
+  timeout: 1000,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

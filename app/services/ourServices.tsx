@@ -13,7 +13,10 @@ const OurServices = () => {
     (state: RootState) => state.services.ourServiceBanner
   );
   console.log("Cached Data:", cachedData);
-  const { data } = useQuery(GET_OUR_SERVICE_BANNER);
+  const { data, loading, error } = useQuery(GET_OUR_SERVICE_BANNER, {
+    errorPolicy: 'all', // Allow partial data even if there are errors
+    notifyOnNetworkStatusChange: true,
+  });
 
   useEffect(() => {
     if (data) {

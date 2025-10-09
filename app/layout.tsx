@@ -41,6 +41,8 @@ export default function RootLayout({
         /> */}
         <meta name="google-site-verification" content="v8yl-AwGz9it1y8ph-q7gQL4MXAwSWq6JBiPqh7REgc" />
         <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png" />
         {/* Removed poster preload per UX preference (no poster visible) */}
         {/* Removed video preload to reduce initial bandwidth */}
         {/* Google Analytics */}
