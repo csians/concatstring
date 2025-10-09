@@ -434,13 +434,13 @@ const FutureTech = () => {
                 </div>
               ))}
             </div>
-          ) : (
+          ) : !loading && !allPostsLoading && searchTerm && currentPosts.length === 0 ? (
             <div className="text-center md:py-[100px] py-[60px] px-[20px] bg-[#2e0707] md:rounded-[20px] rounded-[15px]">
               <h3 className="font-denton md:text-[66px] text-[24px] md:leading-[87px] leading-[36px] font-bold text-white mb-[0]">
                 No Blog Found
               </h3>
             </div>
-          )}
+          ) : null}
 
           {/* Pagination Controls */}
           {totalPages > 1 && (
