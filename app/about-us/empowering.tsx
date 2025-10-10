@@ -10,7 +10,10 @@ import { RootState } from "@/store";
 const Empowering = () => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.about.empowering);
-  const { data, loading, error } = useQuery(GET_ABOUT_BANNER);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data, loading, error } = useQuery(GET_ABOUT_BANNER, {
+    skip: !!cachedData,
+  });
 
   // Get fresh data from query
   const freshData = data?.page?.flexibleContent?.flexibleContent?.find(

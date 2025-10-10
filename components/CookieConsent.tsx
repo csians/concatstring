@@ -6,6 +6,7 @@ import { RootState } from '@/store';
 import { setConsent, setPreferences, hideCookiePopup } from '@/store/slices/cookieSlice';
 import { CookieManager } from '@/lib/cookie-utils';
 import CookieSettings from './CookieSettings';
+import Link from 'next/link';
 
 interface CookieConsentProps {
   onAccept?: () => void;
@@ -106,9 +107,9 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onAccept, onDecline }) =>
             </h3>
             <p className="text-gray-300 text-sm font-lato leading-relaxed">
               We use cookies to enhance your experience and analyze site usage. 
-              <a href="/privacy" className="text-[#4CA0FF] hover:text-[#54A3DA] underline ml-1">
+              <Link href="/privacy" className="text-[#4CA0FF] hover:text-[#54A3DA] underline ml-1">
                 Learn more
-              </a>
+              </Link>
             </p>
           </div>
           

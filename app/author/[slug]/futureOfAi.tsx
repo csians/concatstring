@@ -10,6 +10,7 @@ import { AuthorBlogPostsSkeleton } from "@/components/skeletons";
 import { setAuthorsData, setBlogIconsData } from "@/store/slices/authorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 interface Props {
   userId: any;
@@ -87,22 +88,22 @@ const FutureOfAi: React.FC<Props> = ({ userId }) => {
   };
 
   // Show error message if there's an error
-  if (authorsError) {
-    return (
-      <section className="mb-[100px]">
-        <div className="container max-w-[1600px] px-[20px] mx-auto w-full">
-          <div className="bg-white/10 2xl:p-[100px] xl:p-[100px] lg:p-[80px] md:p-[60px] sm:p-[40px] p-[30px] rounded-[16px]">
-            <div className="text-center">
-              <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
-                Error loading blog posts
-              </h3>
-              <p className="text-[#C3C3C3]">Please try again later.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  // if (authorsError) {
+  //   return (
+  //     <section className="mb-[100px]">
+  //       <div className="container max-w-[1600px] px-[20px] mx-auto w-full">
+  //         <div className="bg-white/10 2xl:p-[100px] xl:p-[100px] lg:p-[80px] md:p-[60px] sm:p-[40px] p-[30px] rounded-[16px]">
+  //           <div className="text-center">
+  //             <h3 className="font-denton text-[24px] font-bold text-white mb-[16px]">
+  //               Error loading blog posts
+  //             </h3>
+  //             <p className="text-[#C3C3C3]">Please try again later.</p>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   // Show loading state if data is loading and no cached data is available
   if ((authorsLoading || iconsLoading) && !cachedAuthorsData && !cachedBlogIconsData) {
@@ -139,7 +140,7 @@ const FutureOfAi: React.FC<Props> = ({ userId }) => {
                     >
                       <div className="flex flex-col justify-between gap-[32px] h-full">
                         <div className="flex flex-col flex-grow height-full">
-                          <a href={`/blog/${post.slug}`} className="block hover:opacity-80 transition-opacity">
+                          <Link href={`/blog/${post.slug}`} className="block hover:opacity-80 transition-opacity">
                             <img
                               src={post.featuredImage?.node?.sourceUrl}
                               alt={post.featuredImage?.node?.altText}
@@ -147,12 +148,12 @@ const FutureOfAi: React.FC<Props> = ({ userId }) => {
                               height="270"
                               className="2xl:rounded-[16px] xl:rounded-[16px] lg:rounded-[16px] md:rounded-[15px] sm:rounded-[10px] rounded-[10px] mb-[18px] w-full object-cover"
                             />
-                          </a>
-                          <a href={`/blog/${post.slug}`} className="block hover:text-[#E72125] transition-colors">
+                          </Link>
+                          <Link href={`/blog/${post.slug}`} className="block hover:text-[#E72125] transition-colors">
                             <h3 className="font-denton text-[24px] font-bold leading-[32px] text-white mb-[6px]">
                               {post.title}
                             </h3>
-                          </a>
+                          </Link>
 
                           <div className="flex items-center justify-between gap-[10px] w-full mb-[30px]">
                             {/* <div className="flex gap-[8px] items-center">
@@ -184,7 +185,7 @@ const FutureOfAi: React.FC<Props> = ({ userId }) => {
                             </div> */}
                           </div>
 
-                          <a
+                          <Link
                             href={`/blog/${post.slug}`}
                             className="flex items-center gap-[10px] text-white font-denton font-bold text-[18px] leading-[100%] mt-auto hover:text-[#E72125] transition-opacity w-max"
                           >
@@ -198,7 +199,7 @@ const FutureOfAi: React.FC<Props> = ({ userId }) => {
                                 className="w-[15px] h-[20px]"
                               />
                             )}
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -221,7 +222,7 @@ const FutureOfAi: React.FC<Props> = ({ userId }) => {
                                 >
                                   <div className="flex flex-col justify-between gap-[32px] h-full">
                                     <div className="flex flex-col flex-grow height-full">
-                                      <a href={`/blog/${post.slug}`} className="block hover:opacity-80 transition-opacity">
+                                      <Link href={`/blog/${post.slug}`} className="block hover:opacity-80 transition-opacity">
                                         <img
                                           src={
                                             post.featuredImage?.node?.sourceUrl
@@ -231,12 +232,12 @@ const FutureOfAi: React.FC<Props> = ({ userId }) => {
                                           height="270"
                                           className="2xl:rounded-[16px] xl:rounded-[16px] lg:rounded-[16px] md:rounded-[15px] sm:rounded-[10px] rounded-[10px] mb-[18px] w-full object-cover"
                                         />
-                                      </a>
-                                      <a href={`/blog/${post.slug}`} className="block hover:text-[#E72125] transition-colors">
+                                      </Link>
+                                      <Link href={`/blog/${post.slug}`} className="block hover:text-[#E72125] transition-colors">
                                         <h3 className="font-denton text-[24px] font-bold leading-[32px] text-white mb-[6px]">
                                           {post.title}
                                         </h3>
-                                      </a>
+                                      </Link>
 
                                       <div className="flex items-center justify-between gap-[10px] w-full mb-[30px]">
                                         {/* <div className="flex gap-[8px] items-center">
@@ -281,7 +282,7 @@ const FutureOfAi: React.FC<Props> = ({ userId }) => {
                                         </div> */}
                                       </div>
 
-                                      <a
+                                      <Link
                                         href={`/blog/${post.slug}`}
                                         className="flex items-center gap-[10px] text-white font-denton font-bold text-[18px] leading-[100%] mt-auto"
                                       >
@@ -302,7 +303,7 @@ const FutureOfAi: React.FC<Props> = ({ userId }) => {
                                               className="w-[15px] h-[20px]"
                                             />
                                           )}
-                                      </a>
+                                      </Link>
                                     </div>
                                   </div>
                                 </div>

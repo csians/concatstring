@@ -6,16 +6,26 @@ import { WorkingMethodSkeleton } from "@/components/skeletons";
 import { setWorkingMethodData } from "@/store/slices/aboutSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 const WorkingMethod = () => {
   const pathRef = useRef<SVGPathElement | null>(null);
   const scrollPanelRef = useRef<HTMLDivElement | null>(null);
+  const dispatch = useDispatch();
+  const cachedData = useSelector((state: RootState) => state.about.workingMethod);
+  
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data } = useQuery(GET_WORKING_METHOD, {
+    skip: !!cachedData,
+  });
 
-  const { data } = useQuery(GET_WORKING_METHOD);
-
-  const workingMethodData = data?.page?.flexibleContent?.flexibleContent?.find(
+  // Get fresh data from query
+  const freshData = data?.page?.flexibleContent?.flexibleContent?.find(
     (item: any) => item.workingMethodTitle
   );
+
+  // Use cached data from Redux if available, otherwise use fresh data from query
+  const workingMethodData = cachedData || freshData;
 
   const {
     workingDescription,
@@ -23,6 +33,18 @@ const WorkingMethod = () => {
     contactUsButton,
     workingCycle = [],
   } = workingMethodData || {};
+
+  // Store data in Redux when it comes from query
+  useEffect(() => {
+    if (data) {
+      const workingMethodBlock = data?.page?.flexibleContent?.flexibleContent?.find(
+        (item: any) => item?.workingMethodTitle
+      );
+      if (workingMethodBlock) {
+        dispatch(setWorkingMethodData(workingMethodBlock));
+      }
+    }
+  }, [data, dispatch]);
 
   useEffect(() => {
     const path = pathRef.current;
@@ -217,11 +239,11 @@ const WorkingMethod = () => {
                 </p>
               </div>
               {contactUsButton?.url && (
-                <a href={contactUsButton.url} className="group w-max">
+                <Link href={contactUsButton.url} className="group w-max">
                   <div className="btn-primary-outline w-max">
                     <div className="btn-primary">{contactUsButton.title}</div>
                   </div>
-                </a>
+                </Link>
               )}
             </div>
             <div

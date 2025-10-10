@@ -7,6 +7,7 @@ import { AuthorProfileSkeleton } from "@/components/skeletons";
 import { setAuthorsData } from "@/store/slices/authorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 interface FounderProps {
   userId?: string | null;
@@ -112,7 +113,7 @@ const Founder: React.FC<FounderProps> = ({ userId }) => {
                         <ul className="flex items-center 2xl:gap-[40px] xl:gap-[40px] lg:gap-[30px] md:gap-[20px] sm:gap-[20px] gap-[10px]">
                           {socialMedia.map((social: any, index: number) => (
                             <li key={index}>
-                              <a
+                              <Link
                                 href={social.socialLink?.url}
                                 target={social.socialLink?.target}
                                 className="group w-[25px] h-[25px] flex items-center justify-center"
@@ -130,7 +131,7 @@ const Founder: React.FC<FounderProps> = ({ userId }) => {
                                     {social.socialLink?.title}
                                   </span>
                                 )}
-                              </a>
+                              </Link>
                             </li>
                           ))}
                         </ul>

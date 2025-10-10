@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setProjectRelatedProjects } from "@/store/slices/projectDetailsSlice";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 interface Props {
   project: any;
@@ -52,15 +53,15 @@ const RelatedProjects: React.FC<Props> = ({ project }) => {
                       <div className="flex lg:flex-col md:gap-[40px] lg:justify-start gap-[20px] 2xl:order-1 xl:order-1 lg:order-1 md:order-2 sm:order-2 order-2 flex-row justify-between w-full lg:w-auto items-center lg:items-start">
                         <h4 className="font-lato font-bold 2xl:text-[46px] xl:text-[46px] lg:text-[40px] md:text-[35px] sm:text-[30px] text-[26px] leading-[100%] text-white">
                         {settings.arrowSvg?.node?.sourceUrl && settings.projectLink?.url && (
-                          <a
+                          <Link
                             href={settings.projectLink.url}
                           >
                           {settings.relatedProjectName}
-                          </a>
+                          </Link>
                         )}
                         </h4>
                         {settings.arrowSvg?.node?.sourceUrl && settings.projectLink?.url && (
-                          <a
+                          <Link
                             href={settings.projectLink.url}
                           >
                             <img
@@ -70,12 +71,12 @@ const RelatedProjects: React.FC<Props> = ({ project }) => {
                               height="76"
                               className="w-[40px] h-[40px] md:w-[76px] md:h-[76px]"
                             />
-                          </a>
+                          </Link>
                         )}
                       </div>
                       <div className="p-[8px] rounded-[10px] bg-gradient-to-b from-[#E72125] via-[#A11E1E] to-[#8E1D1D] 2xl:w-[829px] xl:w-[829px] lg:w-[829px] md:w-full sm:w-full w-full 2xl:order-2 xl:order-2 lg:order-2 md:order-1 sm:order-1 order-1">
                       {settings.arrowSvg?.node?.sourceUrl && settings.projectLink?.url && (
-                          <a
+                          <Link
                             href={settings.projectLink.url}
                             className="group rounded-[10px] overflow-hidden table"
                           >
@@ -86,7 +87,7 @@ const RelatedProjects: React.FC<Props> = ({ project }) => {
                           height="450"
                           className="2xl:w-[828px] xl:w-[828px] lg:w-[828px] md:w-full sm:w-full w-full rounded-[10px] group-hover:scale-105 transition-all duration-300"
                         />
-                        </a>
+                        </Link>
                         )}
                       </div>
                     </div>

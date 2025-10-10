@@ -6,6 +6,7 @@ import { setBlogPostsData } from "@/store/slices/blogDetailSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 interface Props {
   post: any;
@@ -227,7 +228,7 @@ const AboutTheAuthor: React.FC<Props> = ({ post }) => {
                             {postData?.author?.node?.userProfileImage?.socialMedia?.map(
                               (term: any, index: any) => (
                                 <li key={index}>
-                                  <a
+                                  <Link
                                     href={term?.socialLink?.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -238,7 +239,7 @@ const AboutTheAuthor: React.FC<Props> = ({ post }) => {
                                       alt={term?.socialSvg?.node?.altText}
                                       className="w-[20px] h-[20px] hover:scale-105 transition-all duration-300 ease-in-out"
                                     />
-                                  </a>
+                                  </Link>
                                 </li>
                               )
                             )}

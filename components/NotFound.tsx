@@ -1,17 +1,19 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const NotFound: React.FC = () => {
+  const router = useRouter();
   const [countdown, setCountdown] = useState(7);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
-          window.location.href = '/';
+          router.push('/');
           return 0;
         }
         return prev - 1;
@@ -19,7 +21,7 @@ const NotFound: React.FC = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [router]);
 
   return (
     <div className="min-h-screen bg-black">

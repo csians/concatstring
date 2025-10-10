@@ -1,6 +1,7 @@
 'use client'
 import { useEffect } from "react";
 import "../css/termsAndConditions.css";
+import Link from "next/link";
 const termsandconditions = () => {
 
   useEffect(() => {
@@ -77,92 +78,92 @@ const termsandconditions = () => {
             <nav className="2xl:block xl:block lg:hidden md:hidden sm:hidden hidden 2xl:w-[400px] xl:w-[300px] lg:w-[300px] sticky top-[436px]  pr-[20px] box-content">
               <ul className="flex flex-col gap-[16px] 2xl:w-[400px] xl:w-[300px] lg:w-[300px] sticky sticky-list top-[120px] max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar pr-[10px]">
                 <li className="cursor-pointer">
-                  <a href="#about" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#about" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     About Us
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a href="#eligibility" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#eligibility" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Eligibility
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a href="#service" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#service" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Scope of Services
-                  </a>
+                  </Link>
 
                 </li>
                 <li className="cursor-pointer">
-                  <a href="#responsibilities" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#responsibilities" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     User Responsibilities
-                  </a>
+                  </Link>
 
                 </li>
                 <li className="cursor-pointer">
 
-                  <a href="#property" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#property" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Intellectual Property
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a href="#payment" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#payment" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Payments and Invoicing
-                  </a>
+                  </Link>
 
                 </li>
                 <li className="cursor-pointer">
-                  <a href="#confidentiality" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#confidentiality" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Confidentiality
-                  </a>
+                  </Link>
 
                 </li>
                 <li className="cursor-pointer">
 
-                  <a href="#rivision" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#rivision" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Revisions and Support
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
 
-                  <a href="#termination" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#termination" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Termination
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
 
-                  <a href="#warranties" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#warranties" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Disclaimer of Warranties
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
 
-                  <a href="#limitation" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#limitation" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Limitation of Liability
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
 
-                  <a href="#third" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#third" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Third-Party Services
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
 
-                  <a href="#modification" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#modification" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Modifications to Terms
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
 
-                  <a href="#governing" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#governing" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Governing Laws
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
 
-                  <a href="#contact" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
+                  <Link href="#contact" className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex">
                     Contact
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -303,7 +304,7 @@ const termsandconditions = () => {
                 <section id="contact">
                   <div className="flex flex-col gap-[16px] scroll-mt-[100px]">
                     <h3 className="h4 text-white">15. Contact Information</h3>
-                    <p>For questions, feedback, or legal matters related to these Terms, please contact us at: <a href="mailto:info@concatstring.com" className="text-white w-max">info@concatstring.com</a>.</p>
+                    <p>For questions, feedback, or legal matters related to these Terms, please contact us at: <Link href="mailto:info@concatstring.com" className="text-white w-max">info@concatstring.com</Link>.</p>
                   </div>
                 </section>
               </div>

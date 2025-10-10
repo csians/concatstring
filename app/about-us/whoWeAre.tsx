@@ -15,7 +15,10 @@ const WhoWeAre = () => {
   const [isAnimationActive, setIsAnimationActive] = useState(false);
   const [imageState, setImageState] = useState('initial'); // 'initial', 'active', 'animation-stop'
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { data, error } = useQuery(GET_WHO_WE_ARE);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data, error } = useQuery(GET_WHO_WE_ARE, {
+    skip: !!cachedData,
+  });
 
   // Get fresh data from query
   const freshData = data?.page?.flexibleContent?.flexibleContent?.find(
