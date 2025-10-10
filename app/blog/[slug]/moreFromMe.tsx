@@ -156,16 +156,18 @@ const MoreFromMe: React.FC<Props> = ({ post }) => {
                   ))}
                   
                 </div>
-                <Link
-                  href={post?.blogDetail?.viewAllBlog?.url}
-                  className="inline-block group"
-                >
-                  <div className="btn-primary-outline">
-                    <div className="btn-primary 2xl:px-[40px] xl:px-[40px] lg:px-[30px] md:px-[30px] sm:px-[20px] px-[20px]">
-                      {post?.blogDetail?.viewAllBlog?.title}
+                {post?.blogDetail?.viewAllBlog?.url && (
+                  <Link
+                    href={post?.blogDetail?.viewAllBlog?.url}
+                    className="inline-block group"
+                  >
+                    <div className="btn-primary-outline">
+                      <div className="btn-primary 2xl:px-[40px] xl:px-[40px] lg:px-[30px] md:px-[30px] sm:px-[20px] px-[20px]">
+                        {post?.blogDetail?.viewAllBlog?.title}
+                      </div>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                )}
               </div>
             </div>
           </section>
