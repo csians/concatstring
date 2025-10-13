@@ -14,7 +14,10 @@ const Technology = () => {
   const cachedData = useSelector(
     (state: RootState) => state.about.aboutTechnologies
   );
-  const { data, error } = useQuery(GET_ABOUT_TECHNOLOGIES);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data, error } = useQuery(GET_ABOUT_TECHNOLOGIES, {
+    skip: !!cachedData,
+  });
 
   // Get fresh data from query
   const freshData = data?.page?.flexibleContent?.flexibleContent?.find(

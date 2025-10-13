@@ -6,6 +6,7 @@ import { setCsianData } from "@/store/slices/homeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { CultureSkeleton } from "@/components/skeletons";
+import Link from "next/link";
 
 const decodeHtmlEntities = (text: string) => {
   const textarea = document.createElement("textarea");
@@ -40,7 +41,10 @@ const useIsTouchDevice = () => {
 const Culture = () => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.csian);
-  const { data, loading } = useQuery(GET_CSIAN_CULTURE);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data, loading } = useQuery(GET_CSIAN_CULTURE, {
+    skip: !!cachedData,
+  });
   const isTouchDevice = useIsTouchDevice();
   const freshData = data?.page?.flexibleContent?.flexibleContent?.find(
     (block: any) => block?.csianTitle
@@ -124,11 +128,11 @@ const Culture = () => {
             ))}
         </div>
         <div className="flex justify-center items-center pt-[60px]">
-          <a href={csianData.becomeCsian?.url} target="_blank" className="inline-block group">
+          <Link href={csianData.becomeCsian?.url} target="_blank" className="inline-block group">
             <div className="btn-primary-outline">
               <div className="btn-primary">{csianData.becomeCsian?.title}</div>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
     </section>

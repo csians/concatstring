@@ -11,7 +11,10 @@ import { WhyChooseSkeleton } from "@/components/skeletons";
 const WhyChoose = () => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.whyChoose);
-  const { data, loading } = useQuery(GET_WHY_CHOOSE_US);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data, loading } = useQuery(GET_WHY_CHOOSE_US, {
+    skip: !!cachedData,
+  });
 
   const freshData = data?.page?.flexibleContent?.flexibleContent?.find(
     (block: any) => block?.whyChooseUsTitle

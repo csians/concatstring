@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import "@/css/home.css";
 import { RootState } from "@/store";
 import { useQuery } from "@apollo/client";
@@ -12,7 +14,10 @@ import LoadingProvider from "@/components/LoadingContext";
 
 const Banner = () => {
   const cachedData = useSelector((state: RootState) => state.home.banner);
-  const { data } = useQuery(GET_BANNER_CONTENT);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data } = useQuery(GET_BANNER_CONTENT, {
+    skip: !!cachedData,
+  });
   const [loading, setLoading] = React.useState(true);
   const dispatch = useDispatch();
   const column =
@@ -30,6 +35,7 @@ const Banner = () => {
     if (title && content) {
       setLoading(false);
       const banner = document.querySelector(".banner");
+      // console.log('jaimin')
       if (banner) {
         // Small delay to ensure content is rendered
         setTimeout(() => {
@@ -49,14 +55,24 @@ const Banner = () => {
       cachedData={cachedData ?? data}
     >
     <section className="banner relative min-h-screen max-lg:min-h-[auto] overflow-hidden">
+      <Image
+        src="/images/home_banner.webp"
+        alt="Home Banner"
+        width={1920}
+        height={1080}
+        priority
+        className="absolute top-0 left-0 w-full h-full object-cover object-center z-0"
+      />
       <video
         muted
         autoPlay
         loop
         playsInline
+        // preload="none"
+        // poster="/images/home_banner.webp"
         className="absolute top-[42px] left-0 w-full h-full object-cover object-center z-0"
       >
-        <source src="/video/banner_background.mp4" type="video/mp4" />
+        <source src="/video/banner_background.webm" type="video/webm" />
         Your browser does not support the video tag.
       </video>
 
@@ -67,21 +83,21 @@ const Banner = () => {
       <div className="relative z-10 max-w-[1432px] px-4 mx-auto pt-[200px] md:pt-[200px] lg:pt-[267px] pb-[100px] px-4 lg:pb-[227px]">
         <div className="text-left px-4 md:px-0">
           <h1 className="title h1 tracking-normal text-white max-w-full md:max-w-[970px] lg:max-w-[1200px] mx-auto md:mx-0">
-            {title}
+            {title || "High-Performance Websites That Convert"}
           </h1>
 
           <div className="description max-w-full md:max-w-[677px] mb-[30px] md:mb-[60px] mx-auto md:mx-0">
             <p className="font-lato font-medium text-[16px] md:text-[18px] lg:text-[20px] text-white">
-              {content}
+              {content || "Deliver seamless digital experiences with responsive, SEO-optimized websites. Whether it's corporate, eCommerce, or custom platforms, we design with performance and results in mind."}
             </p>
           </div>
 
           {link && (
-            <a href={link.url} className="inline-block group button">
+            <Link href={link.url} className="inline-block group button">
               <div className="btn-primary-outline">
                 <div className="btn-primary">{link.title}</div>
               </div>
-            </a>
+            </Link>
           )}
         </div>
       </div>

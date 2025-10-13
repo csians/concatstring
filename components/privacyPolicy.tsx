@@ -1,6 +1,7 @@
 'use client'
 import { useEffect } from "react";
 import "../css/privacyPolicy.css";
+import Link from "next/link";
 
 const privacypolicy = () => {
   useEffect(() => {
@@ -78,108 +79,108 @@ const privacypolicy = () => {
             <nav className="2xl:block xl:block lg:hidden md:hidden sm:hidden hidden 2xl:w-[400px] xl:w-[300px] lg:w-[300px] sticky top-[436px]  pr-[20px] box-content">
               <ul className="flex flex-col gap-[16px] 2xl:w-[400px] xl:w-[300px] lg:w-[300px] sticky sticky-list top-[120px] max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar pr-[10px]">
                 <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#about"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     About Us
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#information"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     Information We Collect
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#service"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     Services
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#limitation"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     Limitation
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#data-security"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     Data Security
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#data-retention"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     Data Retention
-                  </a>
+                  </Link>
                 </li>
                 {/* <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#security"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     Data Security
-                  </a>
+                  </Link>
                 </li> */}
                 <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#user-right"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     User Rights
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#cross"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     Cross-border Data Flow
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#links"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     Links from Other Websites
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#parental"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     Parental Control
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#update"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     Updates to the Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer">
-                  <a
+                  <Link
                     href="#inquiries"
                     className="p-[20px] rounded-[10px] bg-[#292929] text-[24px] leading-[32px] font-bold font-denton leading-[100%] hover:bg-[#E7212580] text-left !text-white w-full flex"
                   >
                     Inquiries
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -365,7 +366,7 @@ const privacypolicy = () => {
                       </li>
                     </ol>
                     <p>
-                      We can be contacted via email at <a href="mailto:info@concatstring.com">info@concatstring.com</a> to exercise any of the above rights
+                      We can be contacted via email at <Link href="mailto:info@concatstring.com">info@concatstring.com</Link> to exercise any of the above rights
                     </p>
                   </div>
                 </section>
@@ -429,7 +430,7 @@ const privacypolicy = () => {
                     <p>
                       For any inquiries, concerns, or changes regarding the
                       privacy policy and data collection procedures, reach out
-                      to us through: Please feel free to <a href="https://concatstring.com/contact-us" className="text-white w-max">contact us</a> or email us directly at <a href="mailto:info@concatstring.com" className="text-white w-max">info@concatstring.com</a>.
+                      to us through: Please feel free to <Link href="https://concatstring.com/contact-us" className="text-white w-max">contact us</Link> or email us directly at <Link href="mailto:info@concatstring.com" className="text-white w-max">info@concatstring.com</Link>.
                     </p>
                     
                     

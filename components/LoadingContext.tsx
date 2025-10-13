@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
 interface LoadingOverlayProps {
   variant?: 'fullscreen' | 'inline' | 'overlay';
@@ -7,32 +7,49 @@ interface LoadingOverlayProps {
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   children: React.ReactNode;
-  cachedData?: any
+  cachedData?: any;
+  isLoading?: boolean; // Add explicit loading prop
+  minimumLoadTime?: number; // Optional minimum load time
 }
 
-export default function LoadingWrapper({
+function LoadingWrapper({
   children,
   background = 'black',
   size = 'md',
   variant = "fullscreen",
   className = '',
-  cachedData
+  cachedData,
+  isLoading = false,
+  minimumLoadTime = 0,
 }: LoadingOverlayProps) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Start with false instead of true
 
     useEffect(() => {
-      // console.log(cachedData)
+      // If explicit loading prop is provided, use it
+      if (isLoading !== undefined && typeof isLoading === 'boolean') {
+        setLoading(isLoading);
+        return;
+      }
+
+      // If cachedData is provided and exists, don't show loader
       if (cachedData) {
         setLoading(false);
         return;
       }
-  
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-      return () => clearTimeout(timer);
-    // }
-  }, [cachedData]);
+      
+      // Only show loader if minimumLoadTime is set and there's no cached data
+      if (minimumLoadTime > 0) {
+        setLoading(true);
+        const timeout = setTimeout(() => {
+          setLoading(false);
+        }, minimumLoadTime);
+        
+        return () => clearTimeout(timeout);
+      }
+      
+      // Default: don't show loader
+      setLoading(false);
+    }, [cachedData, isLoading, minimumLoadTime]);
 
 
   const sizeClasses = {
@@ -76,6 +93,7 @@ export default function LoadingWrapper({
                 viewBox="0 0 120 132"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                aria-label="Loading"
               >
                 <path d="M54.5173 83.8258C56.0901 82.2091 57.2117 80.2067 57.7697 78.0189C58.3278 75.831 58.3028 73.5348 57.6972 71.3597C57.0916 69.1846 55.9266 67.2073 54.3189 65.6253C52.7114 64.0434 50.7174 62.9125 48.5366 62.3458L26.8868 56.8513L11.866 72.0506C11.3183 72.609 10.9253 73.3009 10.7259 74.0581C10.5266 74.8152 10.5276 75.6114 10.7289 76.368C10.9303 77.1247 11.325 77.8156 11.8742 78.3725C12.4233 78.9295 13.1079 79.3333 13.8604 79.5442L42.0523 87.1806C44.2383 87.8069 46.5529 87.8256 48.7486 87.2346C50.9443 86.6437 52.9384 85.4654 54.5173 83.8258Z" fill="url(#paint0_linear_5473_5899)" />
                 <path d="M66.8991 28.0094L58.2869 25.5949L30.0926 17.9584L6.59108 41.08C3.52808 44.0997 1.41145 47.9503 0.501018 52.1589C-0.409411 56.3675 -0.074004 60.751 1.46606 64.7712L4.31378 72.1218C4.96914 73.8358 6.02045 75.3698 7.38153 76.5977C8.7426 77.8258 10.3747 78.7129 12.1439 79.1865L15.9877 80.2563C12.926 79.258 7.94363 76.2606 13.1399 70.9805L52.7318 31.3038C54.6738 29.686 56.9661 28.5456 59.4259 27.9736C61.8857 27.4016 64.4449 27.4139 66.8991 28.0094Z" fill="url(#paint1_linear_5473_5899)" />
@@ -135,3 +153,6 @@ export default function LoadingWrapper({
 
   return <>{children}</>;
 }
+
+// Export memoized version to prevent unnecessary re-renders
+export default memo(LoadingWrapper);

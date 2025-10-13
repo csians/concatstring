@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setServiceStartBuilding } from "@/store/slices/serviceDetailsSlice";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 interface Props {
   data: any;
@@ -51,7 +52,7 @@ const StartBuilding: React.FC<Props> = ({ data }) => {
               <p className="font-normal font-lato 2xl:text-[25px] xl:text-[25px] lg:text-[20px] md:text-[20px] sm:text-[18px] text-[18px] leading-[100%] text-white mb-[32px]">
                 {techSettings.getInTouchTitle}
               </p>
-              <a
+              <Link
                 href={techSettings.getInTouchButton?.url}
                 className="inline-block group"
               >
@@ -60,7 +61,7 @@ const StartBuilding: React.FC<Props> = ({ data }) => {
                     {techSettings.getInTouchButton?.title}
                   </div>
                 </div>
-              </a>
+              </Link>
               <ul className="flex flex-col gap-[16px] hidden">
                 {techSettings.contactDetails?.map(
                   (
@@ -94,12 +95,12 @@ const StartBuilding: React.FC<Props> = ({ data }) => {
                           </linearGradient>
                         </defs>
                       </svg>
-                      <a
+                      <Link
                         href={item.contactTitle.url}
                         className="font-lato font-bold text-[18px] leading-[100%] text-white hover:text-red-500 transition-colors duration-300"
                       >
                         {item.contactTitle.title}
-                      </a>
+                      </Link>
                     </li>
                   )
                 )}
@@ -115,12 +116,12 @@ const StartBuilding: React.FC<Props> = ({ data }) => {
                     height={26}
                     className="md:w-[26px] md:h-[auto] w-[26px] h-[auto]"
                   />
-                  <a
+                  <Link
                     href={`tel:${techSettings.contactNumber}`}
                     className="font-lato text-white font-bold text-[20px] leading-[100%] hover:underline"
                   >
                     {techSettings.contactNumber}
-                  </a>
+                  </Link>
                 </li>
                 <li className="flex items-center 2xl:gap-[15px] xl:gap-[15px] lg:gap-[15px] md:gap-[15px] sm:gap-[10px] gap-[10px]">
                   <img
@@ -130,12 +131,12 @@ const StartBuilding: React.FC<Props> = ({ data }) => {
                     height={26}
                     className="md:w-[26px] md:h-[auto] w-[26px] h-[auto]"
                   />
-                  <a
+                  <Link
                     href={`mailto:${techSettings.emailAddress}`}
                     className="font-lato text-white font-bold text-[20px] leading-[100%] hover:underline"
                   >
                     {techSettings.emailAddress}
-                  </a>
+                  </Link>
                 </li>
               </ul>
               

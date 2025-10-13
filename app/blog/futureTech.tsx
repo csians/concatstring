@@ -17,6 +17,7 @@ import {
 } from "@/store/slices/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 const FutureTech = () => {
   const dispatch = useDispatch();
@@ -332,7 +333,7 @@ const FutureTech = () => {
                 >
                   <div className="flex flex-col justify-between gap-[32px] h-full">
                     <div className="flex flex-col flex-grow height-full">
-                      <a
+                      <Link
                         href={`/blog/${post.slug}`}
                         className="block hover:opacity-80 transition-opacity"
                       >
@@ -343,7 +344,7 @@ const FutureTech = () => {
                           height="270"
                           className="2xl:rounded-[16px] xl:rounded-[16px] lg:rounded-[16px] md:rounded-[15px] sm:rounded-[10px] rounded-[10px] mb-[16px] w-full object-cover"
                         />
-                      </a>
+                      </Link>
                       <div className="flex flex-row flex-wrap justify-between gap-[10px] mb-[20px] items-start">
                         <div className="flex flex-row flex-wrap gap-[14px] max-w-[calc(100%-130px)]">
                           {post.categories?.nodes?.map(
@@ -372,14 +373,14 @@ const FutureTech = () => {
                           {formatDate(post.date)}
                         </span>
                       </div>
-                      <a
+                      <Link
                         href={`/blog/${post.slug}`}
                         className="block hover:text-[#E72125] transition-colors"
                       >
                         <h3 className="font-denton text-[24px] font-bold leading-[32px] text-white mb-[6px]">
                           {post.title}
                         </h3>
-                      </a>
+                      </Link>
                       {/* <div className="flex items-center justify-between gap-[10px] w-full mb-[16px]">
                         <div className="flex gap-[8px] items-center">
                           {blogIcons?.viewIcon?.node?.sourceUrl && (
@@ -414,7 +415,7 @@ const FutureTech = () => {
                         {stripHtml(post.blogDetail?.blogDetailShotDesc || '')}
                       </p>
                     </div>
-                    <a
+                    <Link
                       href={`/blog/${post.slug}`}
                       className="flex items-center gap-[10px] text-white font-denton font-bold text-[18px] leading-[100%] hover:text-[#E72125] transition-opacity w-max"
                     >
@@ -428,18 +429,18 @@ const FutureTech = () => {
                           className="w-[15px] h-[20px]"
                         />
                       )}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               ))}
             </div>
-          ) : (
+          ) : !loading && !allPostsLoading && searchTerm && currentPosts.length === 0 ? (
             <div className="text-center md:py-[100px] py-[60px] px-[20px] bg-[#2e0707] md:rounded-[20px] rounded-[15px]">
               <h3 className="font-denton md:text-[66px] text-[24px] md:leading-[87px] leading-[36px] font-bold text-white mb-[0]">
                 No Blog Found
               </h3>
             </div>
-          )}
+          ) : null}
 
           {/* Pagination Controls */}
           {totalPages > 1 && (
@@ -454,7 +455,7 @@ const FutureTech = () => {
 
                 {/* <!-- Page Number Input --> */}
                 <div className="relative">
-                  <div className="flex items-center justify-center 2xl:w-[60px] 2xl:h-[62px] xl:w-[55px] xl:h-[57px] lg:w-[50px] lg:h-[52px] md:w-[45px] md:h-[47px] sm:w-[40px] sm:h-[42px] w-[35px] h-[37px] border border-white 2xl:rounded-[10px] xl:rounded-[10px] lg:rounded-[8px] md:rounded-[6px] sm:rounded-[5px] rounded-[4px] bg-transparent">
+                  <div className="custom-pagination flex items-center justify-center 2xl:w-[60px] 2xl:h-[62px] xl:w-[55px] xl:h-[57px] lg:w-[50px] lg:h-[52px] md:w-[45px] md:h-[47px] sm:w-[40px] sm:h-[42px] w-[35px] h-[37px] border border-white 2xl:rounded-[10px] xl:rounded-[10px] lg:rounded-[8px] md:rounded-[6px] sm:rounded-[5px] rounded-[4px] bg-transparent">
                     <div className="flex items-center gap-[12px]">
                       <span className="font-lato font-normal text-[#E9E9E9] text-center 2xl:text-[17px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[14px] text-[14px] 2xl:leading-[20px] xl:leading-[19px] lg:leading-[18px] md:leading-[17px] sm:leading-[16px] leading-[14px]">
                         {currentPage}

@@ -6,6 +6,7 @@ import { GET_BLOG_POSTS, GET_BLOG_ICONS } from "@/lib/queries";
 import { setTechTalksData } from "@/store/slices/homeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import Link from "next/link";
 
 const TechTalks = () => {
   const dispatch = useDispatch();
@@ -88,15 +89,17 @@ const TechTalks = () => {
                 >
                   <div className="flex flex-col justify-between gap-[32px] h-full">
                     <div className="flex flex-col flex-grow height-full">
-                      <a href={`/blog/${post.slug}`} className="block hover:opacity-80 transition-opacity">
+                      <Link href={`/blog/${post.slug}`} className="block hover:opacity-80 transition-opacity">
                         <img
                           src={getFeaturedImageUrl(post)}
-                          width="399"
-                          height="270"
+                          width={399}
+                          height={270}
                           className="2xl:rounded-[16px] xl:rounded-[16px] lg:rounded-[16px] md:rounded-[15px] sm:rounded-[10px] rounded-[10px] mb-[16px] w-full h-[270px] object-fit object-cover"
                           alt={post?.title}
+                          loading="lazy"
+                          decoding="async"
                         />
-                      </a>
+                      </Link>
                       <div className="flex flex-row flex-wrap justify-between gap-[10px] mb-[20px] items-start">
                         <div className="flex flex-row flex-wrap gap-[14px] max-w-[calc(100%-130px)]">
                           {getCategories &&
@@ -118,48 +121,22 @@ const TechTalks = () => {
                             <img
                               src={blogIcons.dateIcon.node.sourceUrl}
                               alt={blogIcons.dateIcon.node.altText}
-                              width="18"
-                              height="18"
+                              width={18}
+                              height={18}
+                              loading="lazy"
+                              decoding="async"
                             />
                           )}
                           {formatDate && formatDate(post?.date)}
                         </span>
                       </div>
                       {post?.title && (
-                        <a href={`/blog/${post.slug}`} className="block hover:text-[#E72125] transition-colors">
+                        <Link href={`/blog/${post.slug}`} className="block hover:text-[#E72125] transition-colors">
                           <h3 className="font-denton text-[24px] font-bold leading-[32px] text-white mb-[6px]">
                             {post?.title}
                           </h3>
-                        </a>
+                        </Link>
                       )}
-                      {/* <div className="flex items-center justify-between gap-[10px] w-full mb-[16px]">
-                        <div className="flex gap-[8px] items-center">
-                          {blogIcons?.viewIcon?.node?.sourceUrl && (
-                            <img
-                              src={blogIcons.viewIcon.node.sourceUrl}
-                              alt={blogIcons.viewIcon.node.altText}
-                              width="18"
-                              height="18"
-                            />
-                          )}
-                          <span className="font-lato text-[16px] text-[#E9E9E9] font-normal leading-[100%]">
-                            1,020 View
-                          </span>
-                        </div>
-                        <div className="flex gap-[8px] items-center">
-                          {blogIcons?.commentIcon?.node?.sourceUrl && (
-                            <img
-                              src={blogIcons.commentIcon.node.sourceUrl}
-                              alt={blogIcons.commentIcon.node.altText}
-                              width="18"
-                              height="18"
-                            />
-                          )}
-                          <span className="text-center text-white font-denton font-normal text-[16px] leading-[100%]">
-                            {post?.commentCount || 0} Comments
-                          </span>
-                        </div>
-                      </div> */}
                       {(post?.blogDetail?.blogDetailShotDesc) && (
                         <p className="font-lato text-[17px] font-normal leading-[26px] text-[#C3C3C3] line-clamp-3">
                           {stripHtml(post?.blogDetail?.blogDetailShotDesc || '')}
@@ -167,7 +144,7 @@ const TechTalks = () => {
                       )}
                     </div>
                     {blogIcons?.readMore && (
-                      <a
+                      <Link
                         href={`/blog/${post?.slug}`}
                         className="flex items-center gap-[10px] text-white font-denton font-bold text-[18px] leading-[100%] hover:text-[#E72125] w-max"
                       >
@@ -176,11 +153,13 @@ const TechTalks = () => {
                           <img
                             src={blogIcons.readMoreIcon.node.sourceUrl}
                             alt={blogIcons.readMoreIcon.node.altText}
-                            width="15"
-                            height="20"
+                            width={15}
+                            height={20}
+                            loading="lazy"
+                            decoding="async"
                           />
                         )}
-                      </a>
+                      </Link>
                     )}
                   </div>
                 </div>
@@ -189,13 +168,13 @@ const TechTalks = () => {
           {/*
            */}
           {posts[0]?.blogDetail?.viewAllBlog?.title && (
-            <a href={posts[0]?.blogDetail?.viewAllBlog?.url} className="group">
+            <Link href={posts[0]?.blogDetail?.viewAllBlog?.url} className="group">
               <div className="btn-primary-outline">
                 <div className="btn-primary">
                   {posts[0]?.blogDetail?.viewAllBlog?.title}
                 </div>
               </div>
-            </a>
+            </Link>
           )}
         </div>
       </div>

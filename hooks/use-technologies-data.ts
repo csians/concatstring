@@ -5,7 +5,7 @@ import { GET_OUR_TECHNOLOGIES } from '@/lib/queries';
 import { RootState } from '@/store';
 import { setTechnologies } from '@/store/slices/homeSlice';
 
-export const useTechnologiesData = () => {
+export const useTechnologiesData = (initialData?: any) => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.technologies);
 
@@ -13,6 +13,7 @@ export const useTechnologiesData = () => {
     fetchPolicy: 'cache-first',
     errorPolicy: 'all',
     notifyOnNetworkStatusChange: false,
+    skip: !!initialData, // Skip query if we have initial data
   });
 
   // Memoize the dispatch function to prevent unnecessary re-renders
@@ -20,15 +21,17 @@ export const useTechnologiesData = () => {
     dispatch(setTechnologies(data));
   }, [dispatch]);
 
-  // Cache data in Redux when it's fetched
+  // Cache data in Redux when it's fetched or when initial data is provided
   useEffect(() => {
-    if (data && !cachedData) {
+    if (initialData && !cachedData) {
+      dispatchTechnologies({ page: { flexibleContent: { flexibleContent: [initialData] } } });
+    } else if (data && !cachedData) {
       dispatchTechnologies(data);
     }
-  }, [data, cachedData, dispatchTechnologies]);
+  }, [data, cachedData, dispatchTechnologies, initialData]);
 
-  // Use cached data if available, otherwise use fresh data
-  const content = cachedData || data;
+  // Use cached data if available, otherwise use fresh data or initial data
+  const content = cachedData || data || (initialData ? { page: { flexibleContent: { flexibleContent: [initialData] } } } : null);
   
   // Memoize the tech section extraction to prevent unnecessary re-computations
   const techSection = useMemo(() => {

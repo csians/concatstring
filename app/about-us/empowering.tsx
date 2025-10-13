@@ -10,7 +10,10 @@ import { RootState } from "@/store";
 const Empowering = () => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.about.empowering);
-  const { data, loading, error } = useQuery(GET_ABOUT_BANNER);
+  // Skip query if cached data exists to prevent unnecessary refetches
+  const { data, loading, error } = useQuery(GET_ABOUT_BANNER, {
+    skip: !!cachedData,
+  });
 
   // Get fresh data from query
   const freshData = data?.page?.flexibleContent?.flexibleContent?.find(
@@ -66,7 +69,7 @@ const Empowering = () => {
           <source src={videoUrl} type={videoType} />
           Your browser does not support the video tag.
         </video>
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 mx-auto px-[20px] flex flex-col items-center justify-center">
           <h1 className="h1 text-center text-white text-[45px] sm:text-[60px] md:text-[70px] lg:text-[80px] xl:text-[100px] 2xl:text-[100px] max-w-[1272px] max-h-[244px]">
             {title}

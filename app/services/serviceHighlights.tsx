@@ -1,12 +1,15 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { useQuery } from "@apollo/client";
 import { GET_DISCOVER_OUR_SERVICES } from "@/lib/queries";
 import { RootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setDiscoverOurServices } from "@/store/slices/servicesSlice";
+import Link from "next/link";
 
 const ServiceHighlights = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const cachedData = useSelector(
@@ -50,7 +53,7 @@ const ServiceHighlights = () => {
     setSelected(service);
     setIsOpen(false);
     if (serviceSlug) {
-      window.location.href = `/services/${serviceSlug}`;
+      router.push(`/services/${serviceSlug}`);
     }
   };
   return (
@@ -176,7 +179,7 @@ const ServiceHighlights = () => {
                                       </div>
                                     </div>
                                   )}
-                                <a
+                                <Link
                                   // href={
                                   //   settings.ourServiceLink?.url || "/service-detail"
                                   // }
@@ -197,7 +200,7 @@ const ServiceHighlights = () => {
                                     height="46"
                                   /> */}
                                   <img alt="view more" width="15" height="20" className="w-[15px] h-[20px]" src="https://staging1.concatstring.com/wp-content/uploads/2025/07/svgviewer-png-output.png"></img>
-                                </a>
+                                </Link>
                               </div>
                             </div>
                             <div className="flex 2xl:w-[298px] xl:w-[298px] lg:w-[298px] md:w-[298px] md:justify-end md:items-end items-center justify-center sm:w-full w-full 2xl:order-2 xl:order-2 lg:order-2 md:order-2 sm:order-1 order-1">
@@ -316,7 +319,7 @@ const ServiceHighlights = () => {
                                     </div>
                                   </div>
                                 )}
-                              <a
+                              <Link
                                 href={`/services/${service?.slug}`}
                                 // href={
                                 //   settings.ourServiceLink?.url || "/service-detail"
@@ -336,7 +339,7 @@ const ServiceHighlights = () => {
                                   height="46"
                                 /> */}
                                 <img alt="view more" width="15" height="20" className="w-[15px] h-[20px]" src="https://staging1.concatstring.com/wp-content/uploads/2025/07/svgviewer-png-output.png"></img>
-                              </a>
+                              </Link>
                             </div>
                           </>
                         )}

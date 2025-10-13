@@ -9,7 +9,7 @@ import Technology from "@/app/about-us/technology";
 import Timeline from "@/app/about-us/timeline";
 import VisionSlider from "@/components/visionSlider";
 
-import LoadingProvider from "@/components/LoadingContext";
+// import LoadingProvider from "@/components/LoadingContext";
 
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const page = () => {
   return (
     <>
-      <LoadingProvider>
+      {/* <LoadingProvider> */}
         <Empowering />
         <WhoWeAre />
         <Technology />
@@ -27,7 +27,7 @@ const page = () => {
         <WorkingMethod />
         <MeetTheMind />
         <VisionSlider padding="pb-[173px]" />
-      </LoadingProvider>
+      {/* </LoadingProvider> */}
     </>
   );
 };
