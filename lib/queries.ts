@@ -1623,6 +1623,10 @@ export const GET_TEAM_LISTING = gql`
                           sourceUrl
                         }
                       }
+                      memberExperienceInfo {
+                        experienceTitle
+                        experienceDate
+                      }
                     }
                   }
                 }
@@ -2268,7 +2272,7 @@ export const GET_AUTHORS = gql`
             }
           }
         }
-        posts {
+        posts(first: 100) {
           nodes {
             id
             title
