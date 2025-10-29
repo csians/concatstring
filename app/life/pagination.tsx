@@ -7,8 +7,15 @@ import { formatEventDate } from "@/lib/utils";
 import { setLifeAtCompanyData } from "@/store/slices/eventsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
+import EventGalleryModal from "@/components/EventGalleryModal";
 
 const Pagination = () => {
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<any[]>([]);
+  const [selectedTitle, setSelectedTitle] = useState<string | undefined>(
+    undefined
+  );
+  const [initialIndex, setInitialIndex] = useState(0);
   const dispatch = useDispatch();
   const cachedData = useSelector(
     (state: RootState) => state.events.lifeAtCompany
@@ -33,8 +40,15 @@ const Pagination = () => {
     lifeAtCompanyData?.page?.flexibleContent?.flexibleContent?.find(
       (item: any) => item.lifeAtCompanyTitle
     )?.events?.nodes || [];
+
+  // Sort by most recent first to ensure newest events appear first
+  const sortedEvents = [...allEvents].sort((a: any, b: any) => {
+    const dateA = new Date(a?.eventSettings?.eventDate || 0).getTime();
+    const dateB = new Date(b?.eventSettings?.eventDate || 0).getTime();
+    return dateB - dateA;
+  });
   // Show events from 4th onwards (skip first 3)
-  const remainingEvents = allEvents.slice(3);
+  const remainingEvents = sortedEvents.slice(3);
 
   // Return null if no remaining events (4th onwards)
   if (!remainingEvents || remainingEvents.length === 0) {
@@ -53,22 +67,23 @@ const Pagination = () => {
       setCurrentPage(page);
       // Scroll to the category section after page change
       setTimeout(() => {
-      const categoryElement = document.getElementById('most-recent-events');
-      if (categoryElement) {
-        // Get the element's position and scroll to show it with some offset
-        const elementRect = categoryElement.getBoundingClientRect();
-        const absoluteElementTop = elementRect.top + window.pageYOffset;
-        const offset = 100; // Add some offset to show the categories clearly
-        window.scrollTo({
-          top: absoluteElementTop - offset,
+        const categoryElement = document.getElementById('most-recent-events');
+        if (categoryElement) {
+          // Get the element's position and scroll to show it with some offset
+          const elementRect = categoryElement.getBoundingClientRect();
+          const absoluteElementTop = elementRect.top + window.pageYOffset;
+          const offset = 100; // Add some offset to show the categories clearly
+          window.scrollTo({
+            top: absoluteElementTop - offset,
             behavior: 'smooth'
-        });
-      }
+          });
+        }
       }, 100); // Small delay to ensure DOM is updated
     }
   };
 
   return (
+    <>
     <section
       id="collage"
       className="2xl:py-[120px] xl:py-[100px] lg:py-[80px] md:py-[60px] sm:py-[50px] py-[40px]"
@@ -106,6 +121,23 @@ const Pagination = () => {
                     className={`relative w-full ${getGridClasses()} rounded-[10px] overflow-hidden group ${index === 3 || index === 4 ? "max-h-[500px]" : ""
                       }`}
                   >
+                    {/* Top-right gallery trigger */}
+                    <button
+                      type="button"
+                      aria-label="Open gallery"
+                      onClick={() => {
+                        setSelectedImages(event.eventSettings?.eventImages || []);
+                        setSelectedTitle(event.eventSettings?.eventTitle);
+                        setInitialIndex(0);
+                        setIsGalleryOpen(true);
+                      }}
+                      className="absolute z-10 top-3 right-3 bg-white/90 hover:bg-white text-black rounded-md p-2 shadow transition opacity-0 group-hover:opacity-100"
+                    >
+                      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6">
+                        <path d="M22 42H6V26" stroke="#000000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <path d="M26 6H42V22" stroke="#000000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path>
+                      </svg>
+                    </button>
                     <img
                       src={
                         event.eventSettings?.eventImages?.[0]?.eventImage?.node
@@ -248,6 +280,14 @@ const Pagination = () => {
           </div>
       </div>
     </section>
+    <EventGalleryModal
+      isOpen={isGalleryOpen}
+      title={selectedTitle}
+      images={selectedImages}
+      initialIndex={initialIndex}
+      onClose={() => setIsGalleryOpen(false)}
+    />
+    </>
   );
 };
 
