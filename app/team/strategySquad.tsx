@@ -57,6 +57,10 @@ interface TeamMember {
         sourceUrl: string;
       };
     } | null;
+    memberExperienceInfo: Array<{
+      experienceTitle: string;
+      experienceDate: string;
+    }> | null;
   };
 }
 
@@ -97,6 +101,55 @@ const StrategySquad = () => {
         {firstName} <span style={{ color: 'rgb(231 33 37 / var(--tw-text-opacity, 1))' }}>{lastName}</span>
       </>
     );
+  };
+
+  // Helper function to calculate experience duration from date
+  const calculateExperience = (startDate: string): string => {
+    // Parse date assuming format is yyyy-dd-mm from WordPress
+    const dateStr = startDate.split('T')[0]; // Get just the date part (2025-01-10)
+    const [year, day, month] = dateStr.split('-').map(Number);
+    
+    // Create date object with correct format: yyyy-mm-dd
+    const start = new Date(year, month - 1, day); // month - 1 because JS months are 0-indexed
+    const now = new Date();
+    
+    // Calculate difference in milliseconds
+    const diffTime = Math.abs(now.getTime() - start.getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    // If less than 30 days, show days
+    if (diffDays < 30) {
+      return diffDays === 0 ? "Today" : diffDays === 1 ? "1 Day" : `${diffDays} Days`;
+    }
+    
+    let years = now.getFullYear() - start.getFullYear();
+    let months = now.getMonth() - start.getMonth();
+    let days = now.getDate() - start.getDate();
+    
+    // Adjust if days is negative
+    if (days < 0) {
+      months--;
+      // Get days in previous month
+      const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+      days += prevMonth.getDate();
+    }
+    
+    // Adjust if months is negative
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+    
+    // Format the output
+    if (years === 0) {
+      return months === 1 ? "1 Month" : `${months} Months`;
+    } else if (months === 0) {
+      return years === 1 ? "1 Year" : `${years} Years`;
+    } else {
+      const yearText = years === 1 ? "1 Year" : `${years} Years`;
+      const monthText = months === 1 ? "1 Month" : `${months} Months`;
+      return `${yearText} and ${monthText}`;
+    }
   };
 
   // Prefetch data for better performance
@@ -393,32 +446,45 @@ const StrategySquad = () => {
                         </p>
                       )}
 
-                      {/*  Details  */}
-                      {selectedMember?.teamSetting?.memberInfo && (
-                        <div className="space-y-2">
-                          {selectedMember.teamSetting.memberInfo.map(
-                            (info: any, index: number) => (
+                    {/*  Details  */}
+                    <div className="space-y-2">
+                      {/* Dynamic Experience Info */}
+                      {selectedMember?.teamSetting?.memberExperienceInfo?.map(
+                        (info: any, index: number) => (
+                          <p
+                            key={index}
+                            className="font-lato text-[17px] leading-[1.647] text-[#E9E9E9]"
+                          >
+                            {info.experienceTitle}: {calculateExperience(info.experienceDate)}
+                          </p>
+                        )
+                      )}
+                      
+                      {/* Email Info */}
+                      {selectedMember?.teamSetting?.memberInfo?.map(
+                        (info: any, index: number) => {
+                          // Only show email info
+                          if (info.infoTitle.toLowerCase().includes('email')) {
+                            return (
                               <p
                                 key={index}
                                 className="font-lato text-[17px] leading-[1.647] text-[#E9E9E9]"
                               >
                                 {info.infoTitle}: {
-                                  info.infoTitle.toLowerCase().includes('email') ? (
-                                    <Link
-                                      href={`mailto:${info.infoValue}`}
-                                      className="hover:underline transition-all duration-300"
-                                    >
-                                      {info.infoValue}
-                                    </Link>
-                                  ) : (
-                                    info.infoValue
-                                  )
+                                  <Link
+                                    href={`mailto:${info.infoValue}`}
+                                    className="hover:underline transition-all duration-300"
+                                  >
+                                    {info.infoValue}
+                                  </Link>
                                 }
                               </p>
-                            )
-                          )}
-                        </div>
+                            );
+                          }
+                          return null;
+                        }
                       )}
+                    </div>
 
                       {/*  Social Links  */}
                       {selectedMember?.teamSetting?.socialLinkTitle &&

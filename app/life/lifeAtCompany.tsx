@@ -65,6 +65,13 @@ export default function LifeAtCompany() {
     lifeAtCompanyData?.page?.flexibleContent?.flexibleContent?.find(
       (item: any) => item.lifeAtCompanyTitle
     )?.events?.nodes || [];
+
+      // Ensure events are sorted by most recent date first
+  const sortedEvents = [...allEvents].sort((a: any, b: any) => {
+    const dateA = new Date(a?.eventSettings?.eventDate || 0).getTime();
+    const dateB = new Date(b?.eventSettings?.eventDate || 0).getTime();
+    return dateB - dateA;
+  });
   // Show loading state while data is being fetched and no cached data exists
   if (loading && !cachedData) {
     return (
@@ -88,7 +95,7 @@ export default function LifeAtCompany() {
   }
 
   // Show only first 3 events
-  const events = allEvents.slice(0, 3);
+  const events =sortedEvents.slice(0, 3);
 
   // Return null if no events to display (only after loading is complete)
   if (!allEvents || allEvents.length === 0) {
