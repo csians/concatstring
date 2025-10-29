@@ -285,6 +285,7 @@ const Pagination = () => {
       title={selectedTitle}
       images={selectedImages}
       initialIndex={initialIndex}
+      // initialIndex={initialIndex}
       onClose={() => setIsGalleryOpen(false)}
     />
     </>
