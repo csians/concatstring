@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useQuery } from "@apollo/client";
 import { GET_LIFE_AT_COMPANY_WITH_EVENTS } from "@/lib/queries";
 import { formatEventDate } from "@/lib/utils";
@@ -10,6 +11,7 @@ import { RootState } from "@/store";
 
 const LifeAtCompany = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const cachedData = useSelector(
     (state: RootState) => state.home.lifeAtCompany
   );
@@ -98,22 +100,18 @@ const LifeAtCompany = () => {
                               {events.length > 0 && (
                   <div
                     className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
-                      events[0]?.eventSettings?.eventViewMoreLink?.url ? 'cursor-pointer' : 'cursor-default'
+                      events[0]?.slug ? 'cursor-pointer' : 'cursor-default'
                     }`}
-                  onClick={events[0]?.eventSettings?.eventViewMoreLink?.url ? 
-                    () => window.location.href = events[0].eventSettings.eventViewMoreLink.url : 
+                  onClick={events[0]?.slug ? 
+                    () => router.push(`/life/${events[0].slug}`) : 
                     undefined
                   }
-                  title={events[0]?.eventSettings?.eventViewMoreLink?.url ? 
-                    `View ${events[0]?.eventSettings?.eventTitle || "Event"} details` : 
-                    ""
-                  }
-                  role={events[0]?.eventSettings?.eventViewMoreLink?.url ? "button" : undefined}
-                  tabIndex={events[0]?.eventSettings?.eventViewMoreLink?.url ? 0 : undefined}
-                  onKeyDown={events[0]?.eventSettings?.eventViewMoreLink?.url ? 
+                  role={events[0]?.slug ? "button" : undefined}
+                  tabIndex={events[0]?.slug ? 0 : undefined}
+                  onKeyDown={events[0]?.slug ? 
                     (e) => {
                       if (e.key === "Enter" || e.key === " ") {
-                        window.location.href = events[0].eventSettings.eventViewMoreLink.url;
+                        router.push(`/life/${events[0].slug}`);
                       }
                     } : 
                     undefined
@@ -146,12 +144,12 @@ const LifeAtCompany = () => {
                       </p>
                     </div>
                     <div className="flex items-center 2xl:gap-[10px] xl:gap-[10px] lg:gap-[8px] md:gap-[7px] sm:gap-[6px] gap-[5px] cursor-pointer hover:opacity-80 transition-opacity opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      {/* Only show View More button if both URL and title exist */}
-                      {events[0]?.eventSettings?.eventViewMoreLink?.url && events[0]?.eventSettings?.eventViewMoreLink?.title ? (
+                      {/* Only show View More button if title exists */}
+                      {events[0]?.eventSettings?.eventViewMoreLink?.title ? (
                         <>
-                          <span className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]">
+                          <Link href={`/life/${events[0].slug}`} className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]">
                             {events[0].eventSettings.eventViewMoreLink.title}
-                          </span>
+                          </Link>
                           <svg
                             width="15"
                             height="20"
@@ -190,22 +188,18 @@ const LifeAtCompany = () => {
                                   {events.length > 1 && (
                     <div
                       className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
-                        events[1]?.eventSettings?.eventViewMoreLink?.url ? 'cursor-pointer' : 'cursor-default'
+                        events[1]?.slug ? 'cursor-pointer' : 'cursor-default'
                       }`}
-                    onClick={events[1]?.eventSettings?.eventViewMoreLink?.url ? 
-                      () => window.location.href = events[1].eventSettings.eventViewMoreLink.url : 
+                    onClick={events[1]?.slug ? 
+                      () => router.push(`/life/${events[1].slug}`) : 
                       undefined
                     }
-                    title={events[1]?.eventSettings?.eventViewMoreLink?.url ? 
-                      `View ${events[1]?.eventSettings?.eventTitle || "Event"} details` : 
-                      ""
-                    }
-                    role={events[1]?.eventSettings?.eventViewMoreLink?.url ? "button" : undefined}
-                    tabIndex={events[1]?.eventSettings?.eventViewMoreLink?.url ? 0 : undefined}
-                    onKeyDown={events[1]?.eventSettings?.eventViewMoreLink?.url ? 
+                    role={events[1]?.slug ? "button" : undefined}
+                    tabIndex={events[1]?.slug ? 0 : undefined}
+                    onKeyDown={events[1]?.slug ? 
                       (e) => {
                         if (e.key === "Enter" || e.key === " ") {
-                          window.location.href = events[1].eventSettings.eventViewMoreLink.url;
+                          router.push(`/life/${events[1].slug}`);
                         }
                       } : 
                       undefined
@@ -239,12 +233,12 @@ const LifeAtCompany = () => {
                         </p>
                       </div>
                       <div className="flex items-center 2xl:gap-[10px] xl:gap-[10px] lg:gap-[8px] md:gap-[7px] sm:gap-[6px] gap-[5px] cursor-pointer hover:opacity-80 transition-opacity opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        {/* Only show View More button if both URL and title exist */}
-                        {events[1]?.eventSettings?.eventViewMoreLink?.url && events[1]?.eventSettings?.eventViewMoreLink?.title ? (
+                        {/* Only show View More button if title exists */}
+                        {events[1]?.eventSettings?.eventViewMoreLink?.title ? (
                           <>
-                            <span className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]">
+                            <Link href={`/life/${events[1].slug}`} className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]">
                               {events[1].eventSettings.eventViewMoreLink.title}
-                            </span>
+                            </Link>
                             <svg
                               width="15"
                               height="20"
@@ -282,22 +276,18 @@ const LifeAtCompany = () => {
                 {events.length > 2 && (
                   <div
                     className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
-                      events[2]?.eventSettings?.eventViewMoreLink?.url ? 'cursor-pointer' : 'cursor-default'
+                      events[2]?.slug ? 'cursor-pointer' : 'cursor-default'
                     }`}
-                    onClick={events[2]?.eventSettings?.eventViewMoreLink?.url ? 
-                      () => window.location.href = events[2].eventSettings.eventViewMoreLink.url : 
+                    onClick={events[2]?.slug ? 
+                      () => router.push(`/life/${events[2].slug}`) : 
                       undefined
                     }
-                    title={events[2]?.eventSettings?.eventViewMoreLink?.url ? 
-                      `View ${events[2]?.eventSettings?.eventTitle || "Event"} details` : 
-                      ""
-                    }
-                    role={events[2]?.eventSettings?.eventViewMoreLink?.url ? "button" : undefined}
-                    tabIndex={events[2]?.eventSettings?.eventViewMoreLink?.url ? 0 : undefined}
-                    onKeyDown={events[2]?.eventSettings?.eventViewMoreLink?.url ? 
+                    role={events[2]?.slug ? "button" : undefined}
+                    tabIndex={events[2]?.slug ? 0 : undefined}
+                    onKeyDown={events[2]?.slug ? 
                       (e) => {
                         if (e.key === "Enter" || e.key === " ") {
-                          window.location.href = events[2].eventSettings.eventViewMoreLink.url;
+                          router.push(`/life/${events[2].slug}`);
                         }
                       } : 
                       undefined
@@ -331,12 +321,12 @@ const LifeAtCompany = () => {
                         </p>
                       </div>
                       <div className="flex items-center 2xl:gap-[10px] xl:gap-[10px] lg:gap-[8px] md:gap-[7px] sm:gap-[6px] gap-[5px] cursor-pointer hover:opacity-80 transition-opacity opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        {/* Only show View More button if both URL and title exist */}
-                        {events[2]?.eventSettings?.eventViewMoreLink?.url && events[2]?.eventSettings?.eventViewMoreLink?.title ? (
+                        {/* Only show View More button if title exists */}
+                        {events[2]?.eventSettings?.eventViewMoreLink?.title ? (
                           <>
-                            <span className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]">
+                            <Link href={`/life/${events[2].slug}`} className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]">
                               {events[2].eventSettings.eventViewMoreLink.title}
-                            </span>
+                            </Link>
                             <svg
                               width="15"
                               height="20"
@@ -374,23 +364,19 @@ const LifeAtCompany = () => {
               </div>
                               {events.length > 3 && (
                   <div
-                  className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
-                      events[3]?.eventSettings?.eventViewMoreLink?.url ? 'cursor-pointer' : 'cursor-default'
+                    className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
+                      events[3]?.slug ? 'cursor-pointer' : 'cursor-default'
                     }`}
-                  onClick={events[3]?.eventSettings?.eventViewMoreLink?.url ? 
-                    () => window.location.href = events[3].eventSettings.eventViewMoreLink.url : 
+                  onClick={events[3]?.slug ? 
+                    () => router.push(`/life/${events[3].slug}`) : 
                     undefined
                   }
-                  title={events[3]?.eventSettings?.eventViewMoreLink?.url ? 
-                    `View ${events[3]?.eventSettings?.eventTitle || "Event"} details` : 
-                    ""
-                  }
-                  role={events[3]?.eventSettings?.eventViewMoreLink?.url ? "button" : undefined}
-                  tabIndex={events[3]?.eventSettings?.eventViewMoreLink?.url ? 0 : undefined}
-                  onKeyDown={events[3]?.eventSettings?.eventViewMoreLink?.url ? 
+                  role={events[3]?.slug ? "button" : undefined}
+                  tabIndex={events[3]?.slug ? 0 : undefined}
+                  onKeyDown={events[3]?.slug ? 
                     (e) => {
                       if (e.key === "Enter" || e.key === " ") {
-                        window.location.href = events[3].eventSettings.eventViewMoreLink.url;
+                        router.push(`/life/${events[3].slug}`);
                       }
                     } : 
                     undefined
@@ -422,12 +408,12 @@ const LifeAtCompany = () => {
                       </p>
                     </div>
                     <div className="flex items-center 2xl:gap-[10px] xl:gap-[10px] lg:gap-[8px] md:gap-[7px] sm:gap-[6px] gap-[5px] cursor-pointer hover:opacity-80 transition-opacity opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      {/* Only show View More button if both URL and title exist */}
-                      {events[3]?.eventSettings?.eventViewMoreLink?.url && events[3]?.eventSettings?.eventViewMoreLink?.title ? (
+                      {/* Only show View More button if title exists */}
+                      {events[3]?.eventSettings?.eventViewMoreLink?.title ? (
                         <>
-                          <span className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]">
+                          <Link href={`/life/${events[3].slug}`} className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]">
                             {events[3].eventSettings.eventViewMoreLink.title}
-                          </span>
+                          </Link>
                           <svg
                             width="15"
                             height="20"
@@ -466,13 +452,13 @@ const LifeAtCompany = () => {
           ) : null}
           {/* Event Page Link Button - Only show if it has both URL and title */}
           {lifeAtCompanyData?.eventPageLink?.url && lifeAtCompanyData?.eventPageLink?.title && (
-            <a href={lifeAtCompanyData.eventPageLink.url} className="group">
+            <Link href={lifeAtCompanyData.eventPageLink.url} className="group">
               <div className="btn-primary-outline">
                 <div className="btn-primary">
                   {lifeAtCompanyData.eventPageLink.title}
                 </div>
               </div>
-            </a>
+            </Link>
           )}
         </div>
       </div>
