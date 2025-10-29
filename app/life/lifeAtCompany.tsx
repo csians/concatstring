@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import Slider from "react-slick";
 import type { Settings } from "react-slick";
@@ -12,8 +12,15 @@ import { setLifeAtCompanyData } from "@/store/slices/eventsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import Link from "next/link";
+import EventGalleryModal from "@/components/EventGalleryModal";
 
 export default function LifeAtCompany() {
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<any[]>([]);
+  const [selectedTitle, setSelectedTitle] = useState<string | undefined>(
+    undefined
+  );
+  const [initialIndex, setInitialIndex] = useState(0);
   const dispatch = useDispatch();
   const cachedData = useSelector(
     (state: RootState) => state.events.lifeAtCompany
@@ -66,7 +73,7 @@ export default function LifeAtCompany() {
       (item: any) => item.lifeAtCompanyTitle
     )?.events?.nodes || [];
 
-      // Ensure events are sorted by most recent date first
+  // Ensure events are sorted by most recent date first
   const sortedEvents = [...allEvents].sort((a: any, b: any) => {
     const dateA = new Date(a?.eventSettings?.eventDate || 0).getTime();
     const dateB = new Date(b?.eventSettings?.eventDate || 0).getTime();
@@ -94,8 +101,8 @@ export default function LifeAtCompany() {
     return null;
   }
 
-  // Show only first 3 events
-  const events =sortedEvents.slice(0, 3);
+  // Show only first 3 most recent events
+  const events = sortedEvents.slice(0, 3);
 
   // Return null if no events to display (only after loading is complete)
   if (!allEvents || allEvents.length === 0) {
@@ -103,6 +110,7 @@ export default function LifeAtCompany() {
   }
 
   return (
+    <>
     <section className="2xl:pt-[120px] xl:pt-[100px] lg:pt-[80px] md:pt-[60px] sm:pt-[50px] pt-[40px] 2xl:pb-[60px] xl:pb-[50px] lg:pb-[40px] md:pb-[30px] sm:pb-[25px] pb-[20px]">
       <div className="container max-w-[1440px] 2xl:px-[20px] xl:px-[20px] lg:px-[20px] md:px-[15px] sm:px-[12px] px-[10px] mx-auto">
         {/* <div className="flex flex-col items-center justify-center 2xl:gap-[16px] xl:gap-[14px] lg:gap-[12px] md:gap-[10px] sm:gap-[8px] gap-[6px] 2xl:mb-[60px] xl:mb-[50px] lg:mb-[40px] md:mb-[35px] sm:mb-[30px] mb-[25px]">
@@ -149,13 +157,13 @@ export default function LifeAtCompany() {
                           }}
                         />
                         {/* Only show View More button if both URL and title exist */}
-                        {event.eventSettings?.eventViewMoreLink?.url && event.eventSettings?.eventViewMoreLink?.title ? (
+                        {event.eventSettings?.eventViewMoreLink?.title && (
                           <Link
-                            href={event.eventSettings.eventViewMoreLink.url}
+                            href={`/life/${event.slug}`}
                             className="flex items-center gap-[10px] cursor-pointer hover:opacity-80 transition-opacity"
                           >
                             <span className="text-white 2xl:text-[18px] xl:text-[18px] lg:text-[16px] md:text-[15px] sm:text-[14px] text-[13px] font-bold 2xl:leading-[24px] xl:leading-[24px] lg:leading-[20px] md:leading-[19px] sm:leading-[18px] leading-[17px] font-denton hover:opacity-80 transition-opacity">
-                              {event.eventSettings.eventViewMoreLink.title}
+                              {event.eventSettings?.eventViewMoreLink?.title}
                             </span>
                             <svg
                               width="15"
@@ -184,11 +192,28 @@ export default function LifeAtCompany() {
                               </defs>
                             </svg>
                           </Link>
-                        ) : null}
+                        )}
                       </div>
                       {/* Right Image */}
-                      <div className="flex-1 2xl:max-w-[590px] xl:max-w-[590px] lg:max-w-[50%] max-w-full relative">
-                        <div className="w-full 2xl:h-[380px] xl:h-[380px] lg:h-[300px] md:h-[350px] sm:h-[300px] h-[300px] rounded-[14px] overflow-hidden bg-[#D9D9D9]">
+                      <div className="flex-1 2xl:max-w-[590px] xl:max-w-[590px] lg:max-w-[50%] max-w-full relative group">
+                        {/* Top-right gallery trigger (visible on hover) */}
+                        <button
+                          type="button"
+                          aria-label="Open gallery"
+                          onClick={() => {
+                            setSelectedImages(event.eventSettings?.eventImages || []);
+                            setSelectedTitle(event.eventSettings?.eventTitle);
+                            setInitialIndex(0);
+                            setIsGalleryOpen(true);
+                          }}
+                          className="absolute z-10 top-3 right-3 bg-white/90 hover:bg-white text-black rounded-md p-2 shadow transition opacity-0 group-hover:opacity-100"
+                        >
+                          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6">
+                            <path d="M22 42H6V26" stroke="#000000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path>
+                            <path d="M26 6H42V22" stroke="#000000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path>
+                          </svg>
+                        </button>
+                        <div className="w-full 2xl:h-[380px] xl:h-[380px] lg:h-[300px] md:h-[350px] sm:h-[300px] h-[300px] rounded-[14px] overflow-hidden bg-[#D9D9D9] relative">
                           <img
                             src={
                               event.eventSettings?.eventImages?.[0]?.eventImage
@@ -198,8 +223,10 @@ export default function LifeAtCompany() {
                               event.eventSettings?.eventImages?.[0]?.eventImage
                                 ?.node?.altText
                             }
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
+                          {/* Hover overlay to match pagination behavior */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         </div>
                       </div>
                     </div>
@@ -211,5 +238,13 @@ export default function LifeAtCompany() {
         )}
       </div>
     </section>
+    <EventGalleryModal
+      isOpen={isGalleryOpen}
+      title={selectedTitle}
+      images={selectedImages}
+      initialIndex={initialIndex}
+      onClose={() => setIsGalleryOpen(false)}
+    />
+    </>
   );
 }
