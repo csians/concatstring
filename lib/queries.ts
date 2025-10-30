@@ -1447,36 +1447,36 @@ export const GET_EVENTS_BANNER = gql`
 `;
 
 export const GET_LIFE_AT_COMPANY = gql`
-  query GetLifeAtCompany {
-    page(id: "cG9zdDo5NzM=") {
+query GetLifeAtCompany {
+  page(id: "cG9zdDo5NzM=") {
+    flexibleContent {
       flexibleContent {
-        flexibleContent {
-          ... on FlexibleContentFlexibleContentLifeAtCompanyLayout {
-            lifeAtCompanyTitle
-            lifeAtCompanyContent
-            mostRecentEventsTitle
-            events {
-              nodes {
-                ... on Event {
-                  id
-                  slug
-                  eventSettings {
-                    eventTitle
-                    eventDate
-                    eventDescription
-                    eventViewMoreLink {
-                      title
-                      url
-                    }
-                    eventImages {
-                      eventImage {
-                        node {
-                          altText
-                          sourceUrl
-                        }
+        ... on FlexibleContentFlexibleContentLifeAtCompanyLayout {
+          lifeAtCompanyTitle
+          lifeAtCompanyContent
+          mostRecentEventsTitle
+          events {
+            nodes {
+              ... on Event {
+                id
+                slug
+                eventSettings {
+                  eventTitle
+                  eventDate
+                  eventDescription
+                  eventViewMoreLink {
+                    title
+                    url
+                  }
+                  eventImages {
+                    eventImage {
+                      node {
+                        altText
+                        sourceUrl
                       }
                     }
                   }
+                  eventCategory
                 }
               }
             }
@@ -1485,41 +1485,42 @@ export const GET_LIFE_AT_COMPANY = gql`
       }
     }
   }
+}
 `;
 
 export const GET_LIFE_AT_COMPANY_WITH_EVENTS = gql`
   query GetLifeAtCompany {
-    page(id: "cG9zdDoyMA==") {
+  page(id: "cG9zdDoyMA==") {
+    flexibleContent {
       flexibleContent {
-        flexibleContent {
-          ... on FlexibleContentFlexibleContentLifeAtCompanyLayout {
-            lifeAtCompanyTitle
-            eventPageLink {
-              title
-              url
-            }
-            events {
-              nodes {
-                ... on Event {
-                  id
-                  slug
-                  eventSettings {
-                    eventDate
-                    eventDescription
-                    eventTitle
-                    eventImages {
-                      eventImage {
-                        node {
-                          altText
-                          sourceUrl
-                        }
+        ... on FlexibleContentFlexibleContentLifeAtCompanyLayout {
+          lifeAtCompanyTitle
+          eventPageLink {
+            title
+            url
+          }
+          events {
+            nodes {
+              ... on Event {
+                id
+                slug
+                eventSettings {
+                  eventDate
+                  eventDescription
+                  eventTitle
+                  eventImages {
+                    eventImage {
+                      node {
+                        altText
+                        sourceUrl
                       }
                     }
-                    eventViewMoreLink {
-                      title
-                      url
-                    }
                   }
+                  eventViewMoreLink {
+                    title
+                    url
+                  }
+                  eventCategory
                 }
               }
             }
@@ -1528,6 +1529,7 @@ export const GET_LIFE_AT_COMPANY_WITH_EVENTS = gql`
       }
     }
   }
+}
 `;
 
 export const GET_EVENT_RECENT_IMAGES = gql`
