@@ -40,8 +40,6 @@ const LifeAtCompany = () => {
   //   return null;
   // }
 
- 
-
   // if (error)
   //   return (
   //     <section className="py-[120px]">
@@ -56,8 +54,25 @@ const LifeAtCompany = () => {
   //     </section>
   //   );
 
-  const events = lifeAtCompanyData?.events?.nodes || [];
-  
+  const rawEvents = lifeAtCompanyData?.events?.nodes || [];
+
+  const events = rawEvents
+    .filter((e: any) => {
+      const { eventDate, eventCategory } = e?.eventSettings || {};
+      if (!eventDate || !eventCategory) return false;
+
+      const categories = []
+        .concat(eventCategory)
+        .map((c: string) => c.toLowerCase());
+      return categories.includes("main");
+    })
+
+    .sort((a: any, b: any) => {
+      const dateA = new Date(a.eventSettings.eventDate).getTime();
+      const dateB = new Date(b.eventSettings.eventDate).getTime();
+      return dateB - dateA; // latest first
+    });
+
   // // Return null if no events exist
   // if (!events || events.length === 0) {
   //   return null;
@@ -82,7 +97,6 @@ const LifeAtCompany = () => {
       </section>
     );
 
-
   return (
     <section className="py-[120px]">
       <div className="container max-w-[1400px] px-[20px] mx-auto">
@@ -97,24 +111,26 @@ const LifeAtCompany = () => {
           )}
           {events.length > 0 ? (
             <div className="grid 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-[30px]">
-                              {events.length > 0 && (
-                  <div
-                    className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
-                      events[0]?.slug ? 'cursor-pointer' : 'cursor-default'
-                    }`}
-                  onClick={events[0]?.slug ? 
-                    () => router.push(`/life/${events[0].slug}`) : 
-                    undefined
+              {events.length > 0 && (
+                <div
+                  className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
+                    events[0]?.slug ? "cursor-pointer" : "cursor-default"
+                  }`}
+                  onClick={
+                    events[0]?.slug
+                      ? () => router.push(`/life/${events[0].slug}`)
+                      : undefined
                   }
                   role={events[0]?.slug ? "button" : undefined}
                   tabIndex={events[0]?.slug ? 0 : undefined}
-                  onKeyDown={events[0]?.slug ? 
-                    (e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        router.push(`/life/${events[0].slug}`);
-                      }
-                    } : 
-                    undefined
+                  onKeyDown={
+                    events[0]?.slug
+                      ? (e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            router.push(`/life/${events[0].slug}`);
+                          }
+                        }
+                      : undefined
                   }
                 >
                   <img
@@ -147,7 +163,10 @@ const LifeAtCompany = () => {
                       {/* Only show View More button if title exists */}
                       {events[0]?.eventSettings?.eventViewMoreLink?.title ? (
                         <>
-                          <Link href={`/life/${events[0].slug}`} className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]">
+                          <Link
+                            href={`/life/${events[0].slug}`}
+                            className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]"
+                          >
                             {events[0].eventSettings.eventViewMoreLink.title}
                           </Link>
                           <svg
@@ -181,28 +200,29 @@ const LifeAtCompany = () => {
                       ) : null}
                     </div>
                   </div>
-
                 </div>
               )}
               <div className="flex flex-col gap-[30px]">
-                                  {events.length > 1 && (
-                    <div
-                      className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
-                        events[1]?.slug ? 'cursor-pointer' : 'cursor-default'
-                      }`}
-                    onClick={events[1]?.slug ? 
-                      () => router.push(`/life/${events[1].slug}`) : 
-                      undefined
+                {events.length > 1 && (
+                  <div
+                    className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
+                      events[1]?.slug ? "cursor-pointer" : "cursor-default"
+                    }`}
+                    onClick={
+                      events[1]?.slug
+                        ? () => router.push(`/life/${events[1].slug}`)
+                        : undefined
                     }
                     role={events[1]?.slug ? "button" : undefined}
                     tabIndex={events[1]?.slug ? 0 : undefined}
-                    onKeyDown={events[1]?.slug ? 
-                      (e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          router.push(`/life/${events[1].slug}`);
-                        }
-                      } : 
-                      undefined
+                    onKeyDown={
+                      events[1]?.slug
+                        ? (e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              router.push(`/life/${events[1].slug}`);
+                            }
+                          }
+                        : undefined
                     }
                   >
                     <img
@@ -236,7 +256,10 @@ const LifeAtCompany = () => {
                         {/* Only show View More button if title exists */}
                         {events[1]?.eventSettings?.eventViewMoreLink?.title ? (
                           <>
-                            <Link href={`/life/${events[1].slug}`} className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]">
+                            <Link
+                              href={`/life/${events[1].slug}`}
+                              className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]"
+                            >
                               {events[1].eventSettings.eventViewMoreLink.title}
                             </Link>
                             <svg
@@ -261,7 +284,10 @@ const LifeAtCompany = () => {
                                   gradientUnits="userSpaceOnUse"
                                 >
                                   <stop stopColor="#EA070B"></stop>
-                                  <stop offset="0.158" stopColor="#DF1418"></stop>
+                                  <stop
+                                    offset="0.158"
+                                    stopColor="#DF1418"
+                                  ></stop>
                                   <stop offset="1" stopColor="#FF686B"></stop>
                                 </linearGradient>
                               </defs>
@@ -270,27 +296,28 @@ const LifeAtCompany = () => {
                         ) : null}
                       </div>
                     </div>
-
                   </div>
                 )}
                 {events.length > 2 && (
                   <div
                     className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
-                      events[2]?.slug ? 'cursor-pointer' : 'cursor-default'
+                      events[2]?.slug ? "cursor-pointer" : "cursor-default"
                     }`}
-                    onClick={events[2]?.slug ? 
-                      () => router.push(`/life/${events[2].slug}`) : 
-                      undefined
+                    onClick={
+                      events[2]?.slug
+                        ? () => router.push(`/life/${events[2].slug}`)
+                        : undefined
                     }
                     role={events[2]?.slug ? "button" : undefined}
                     tabIndex={events[2]?.slug ? 0 : undefined}
-                    onKeyDown={events[2]?.slug ? 
-                      (e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          router.push(`/life/${events[2].slug}`);
-                        }
-                      } : 
-                      undefined
+                    onKeyDown={
+                      events[2]?.slug
+                        ? (e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              router.push(`/life/${events[2].slug}`);
+                            }
+                          }
+                        : undefined
                     }
                   >
                     <img
@@ -324,7 +351,10 @@ const LifeAtCompany = () => {
                         {/* Only show View More button if title exists */}
                         {events[2]?.eventSettings?.eventViewMoreLink?.title ? (
                           <>
-                            <Link href={`/life/${events[2].slug}`} className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]">
+                            <Link
+                              href={`/life/${events[2].slug}`}
+                              className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]"
+                            >
                               {events[2].eventSettings.eventViewMoreLink.title}
                             </Link>
                             <svg
@@ -349,7 +379,10 @@ const LifeAtCompany = () => {
                                   gradientUnits="userSpaceOnUse"
                                 >
                                   <stop stopColor="#EA070B"></stop>
-                                  <stop offset="0.158" stopColor="#DF1418"></stop>
+                                  <stop
+                                    offset="0.158"
+                                    stopColor="#DF1418"
+                                  ></stop>
                                   <stop offset="1" stopColor="#FF686B"></stop>
                                 </linearGradient>
                               </defs>
@@ -358,28 +391,29 @@ const LifeAtCompany = () => {
                         ) : null}
                       </div>
                     </div>
-
                   </div>
                 )}
               </div>
-                              {events.length > 3 && (
-                  <div
-                    className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
-                      events[3]?.slug ? 'cursor-pointer' : 'cursor-default'
-                    }`}
-                  onClick={events[3]?.slug ? 
-                    () => router.push(`/life/${events[3].slug}`) : 
-                    undefined
+              {events.length > 3 && (
+                <div
+                  className={`relative w-full 2xl:h-[100%] xl:h-[100%] lg:h-[100%] md:h-[100%] sm:h-[100%] h-[100%] rounded-[10px] overflow-hidden group ${
+                    events[3]?.slug ? "cursor-pointer" : "cursor-default"
+                  }`}
+                  onClick={
+                    events[3]?.slug
+                      ? () => router.push(`/life/${events[3].slug}`)
+                      : undefined
                   }
                   role={events[3]?.slug ? "button" : undefined}
                   tabIndex={events[3]?.slug ? 0 : undefined}
-                  onKeyDown={events[3]?.slug ? 
-                    (e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        router.push(`/life/${events[3].slug}`);
-                      }
-                    } : 
-                    undefined
+                  onKeyDown={
+                    events[3]?.slug
+                      ? (e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            router.push(`/life/${events[3].slug}`);
+                          }
+                        }
+                      : undefined
                   }
                 >
                   <img
@@ -411,7 +445,10 @@ const LifeAtCompany = () => {
                       {/* Only show View More button if title exists */}
                       {events[3]?.eventSettings?.eventViewMoreLink?.title ? (
                         <>
-                          <Link href={`/life/${events[3].slug}`} className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]">
+                          <Link
+                            href={`/life/${events[3].slug}`}
+                            className="text-white font-denton font-bold 2xl:text-[18px] xl:text-[16px] lg:text-[15px] md:text-[14px] sm:text-[13px] text-[12px] 2xl:leading-[24px] xl:leading-[22px] lg:leading-[20px] md:leading-[18px] sm:leading-[22px] leading-[20px] hover:text-[#E72125]"
+                          >
                             {events[3].eventSettings.eventViewMoreLink.title}
                           </Link>
                           <svg
@@ -442,24 +479,27 @@ const LifeAtCompany = () => {
                             </defs>
                           </svg>
                         </>
-                                              ) : null}
+                      ) : null}
                     </div>
                   </div>
-                  
                 </div>
               )}
             </div>
           ) : null}
           {/* Event Page Link Button - Only show if it has both URL and title */}
-          {lifeAtCompanyData?.eventPageLink?.url && lifeAtCompanyData?.eventPageLink?.title && (
-            <Link href={lifeAtCompanyData.eventPageLink.url} className="group">
-              <div className="btn-primary-outline">
-                <div className="btn-primary">
-                  {lifeAtCompanyData.eventPageLink.title}
+          {lifeAtCompanyData?.eventPageLink?.url &&
+            lifeAtCompanyData?.eventPageLink?.title && (
+              <Link
+                href={lifeAtCompanyData.eventPageLink.url}
+                className="group"
+              >
+                <div className="btn-primary-outline">
+                  <div className="btn-primary">
+                    {lifeAtCompanyData.eventPageLink.title}
+                  </div>
                 </div>
-              </div>
-            </Link>
-          )}
+              </Link>
+            )}
         </div>
       </div>
     </section>

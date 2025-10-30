@@ -59,7 +59,7 @@ const TechTalks = () => {
 
   // Get featured image URL with fallback
   const getFeaturedImageUrl = (post: any) => {
-    console.log(post?.featuredImage?.node)
+    // console.log(post?.featuredImage?.node)
     return post?.featuredImage?.node?.sourceUrl;
   };
 
@@ -89,7 +89,10 @@ const TechTalks = () => {
                 >
                   <div className="flex flex-col justify-between gap-[32px] h-full">
                     <div className="flex flex-col flex-grow height-full">
-                      <Link href={`/blog/${post.slug}`} className="block hover:opacity-80 transition-opacity">
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        className="block hover:opacity-80 transition-opacity"
+                      >
                         <img
                           src={getFeaturedImageUrl(post)}
                           width={399}
@@ -103,18 +106,18 @@ const TechTalks = () => {
                       <div className="flex flex-row flex-wrap justify-between gap-[10px] mb-[20px] items-start">
                         <div className="flex flex-row flex-wrap gap-[14px] max-w-[calc(100%-130px)]">
                           {getCategories &&
-                            getCategories(post).slice(0, 2).map(
-                              (category: any, catIndex: number) => (
+                            getCategories(post)
+                              .slice(0, 2)
+                              .map((category: any, catIndex: number) => (
                                 <div
                                   key={category.slug || catIndex}
                                   className="blog-gr flex items-center justify-center bg-[#E7212599] rounded-[84px] py-[5px] leading-[100%] md:leading-[21px] px-[13px] relative"
                                 >
                                   <span className="text-center text-white font-denton font-normal text-[16px] leading-[100%]">
-                                    {category.name.split(' ')[0]}
+                                    {category.name.split(" ")[0]}
                                   </span>
                                 </div>
-                              )
-                            )}
+                              ))}
                         </div>
                         <span className="flex items-center gap-[8px] text-[16px] font-lato font-normal leading-[100%] text-[#E9E9E9] mt-[6px]">
                           {blogIcons?.dateIcon?.node?.sourceUrl && (
@@ -131,15 +134,20 @@ const TechTalks = () => {
                         </span>
                       </div>
                       {post?.title && (
-                        <Link href={`/blog/${post.slug}`} className="block hover:text-[#E72125] transition-colors">
+                        <Link
+                          href={`/blog/${post.slug}`}
+                          className="block hover:text-[#E72125] transition-colors"
+                        >
                           <h3 className="font-denton text-[24px] font-bold leading-[32px] text-white mb-[6px]">
                             {post?.title}
                           </h3>
                         </Link>
                       )}
-                      {(post?.blogDetail?.blogDetailShotDesc) && (
+                      {post?.blogDetail?.blogDetailShotDesc && (
                         <p className="font-lato text-[17px] font-normal leading-[26px] text-[#C3C3C3] line-clamp-3">
-                          {stripHtml(post?.blogDetail?.blogDetailShotDesc || '')}
+                          {stripHtml(
+                            post?.blogDetail?.blogDetailShotDesc || ""
+                          )}
                         </p>
                       )}
                     </div>
@@ -168,7 +176,10 @@ const TechTalks = () => {
           {/*
            */}
           {posts[0]?.blogDetail?.viewAllBlog?.title && (
-            <Link href={posts[0]?.blogDetail?.viewAllBlog?.url} className="group">
+            <Link
+              href={posts[0]?.blogDetail?.viewAllBlog?.url}
+              className="group"
+            >
               <div className="btn-primary-outline">
                 <div className="btn-primary">
                   {posts[0]?.blogDetail?.viewAllBlog?.title}
