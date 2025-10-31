@@ -41,6 +41,27 @@ const FutureOfAi: React.FC<Props> = ({ post }) => {
     }
   }, [postData]);
 
+  // Wrap all content inside .blog-content into a single div wrapper
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const container = document.querySelector(".blog-content");
+    if (!container) return;
+
+    // Avoid double-wrapping if it already exists
+    const alreadyWrapped = container.querySelector(":scope > .blog-content-inner");
+    if (alreadyWrapped) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "blog-content-inner";
+
+    // Move all existing child nodes into the wrapper
+    while (container.firstChild) {
+      wrapper.appendChild(container.firstChild);
+    }
+
+    container.appendChild(wrapper);
+  }, [postData]);
+
   // Table responsiveness script
   useEffect(() => {
     // Add a small delay to ensure content is fully rendered
@@ -79,6 +100,18 @@ const FutureOfAi: React.FC<Props> = ({ post }) => {
               if (headers[i]) {
                 cell.setAttribute("data-label", headers[i]);
                 console.log(`Applied data-label "${headers[i]}" to cell ${i} in row ${rowIndex}`);
+              }
+
+              // Wrap cell contents in a div for better mobile styling (td > div)
+              const firstChild = cell.firstElementChild;
+              const alreadyWrapped = firstChild && firstChild.classList.contains("cell-inner");
+              if (!alreadyWrapped) {
+                const wrapper = document.createElement("div");
+                wrapper.className = "cell-inner";
+                while (cell.firstChild) {
+                  wrapper.appendChild(cell.firstChild);
+                }
+                cell.appendChild(wrapper);
               }
             });
           });
