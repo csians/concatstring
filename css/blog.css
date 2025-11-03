@@ -495,7 +495,7 @@ height: 150px;
   .blog-content thead { display: none; }
   .blog-content table, .blog-content tbody, .blog-content tr, .blog-content td { display: block; width: 100%; }
   .blog-content tr { margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px; }
-  .blog-content td {display: flex;padding: 0 !important; align-items: center;}
+  .blog-content td {display: flex;padding: 0 !important; align-items: stretch;}
   .blog-content td::before {
     content: attr(data-label);
     flex: 0 0 40%;
@@ -504,6 +504,8 @@ height: 150px;
     padding: 5px;
     border-right: 1px solid #fff;
     margin-right: 10px;
+    display: flex;
+    align-items: center;
   }
  
   .blog-content td span, .blog-content td b{
