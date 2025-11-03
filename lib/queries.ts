@@ -1477,6 +1477,15 @@ query GetLifeAtCompany {
                     }
                   }
                   eventCategory
+                  eventVideos {
+                    eventVideo {
+                      node {
+                        mediaType
+                        sourceUrl
+                        mediaItemUrl
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -1521,6 +1530,14 @@ export const GET_LIFE_AT_COMPANY_WITH_EVENTS = gql`
                     url
                   }
                   eventCategory
+                  eventVideos {
+                    eventVideo {
+                      node {
+                        sourceUrl
+                        mediaType
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -2438,39 +2455,46 @@ export const GET_SERVICE_SEO = gql`
 
 export const GET_EVENT_BY_SLUG = gql`
   query GetEventBySlug($slug: ID!) {
-    event(id: $slug, idType: SLUG) {
-      id
-      slug
-      title
-      date
-      eventSettings {
-        eventDate
-        eventTitle
-        eventDescription
-        eventViewMoreLink {
-          title
-          url
-        }
-        eventImages {
-          eventImage {
-            node {
-              altText
-              sourceUrl
-            }
+  event(id: $slug, idType: SLUG) {
+    id
+    slug
+    title
+    date
+    eventSettings {
+      eventDate
+      eventTitle
+      eventDescription
+      eventViewMoreLink {
+        title
+        url
+      }
+      eventImages {
+        eventImage {
+          node {
+            altText
+            sourceUrl
           }
         }
       }
-      seo {
-        focuskw
-        title
-        metaDesc
-        opengraphImage {
-          altText
-          sourceUrl
+      eventVideos {
+        eventVideo {
+          node {
+            mediaType
+            sourceUrl
+            mediaItemUrl
+          }
         }
       }
     }
+    seo {
+      focuskw
+      title
+      metaDesc
+      opengraphImage {
+        altText
+        sourceUrl
+      }
+    }
   }
+}
 `;
-
-

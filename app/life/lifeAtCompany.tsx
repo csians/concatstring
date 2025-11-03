@@ -17,6 +17,7 @@ import EventGalleryModal from "@/components/EventGalleryModal";
 export default function LifeAtCompany() {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [selectedImages, setSelectedImages] = useState<any[]>([]);
+  const [selectedVideos, setSelectedVideos] = useState<any[]>([]);
   const [selectedTitle, setSelectedTitle] = useState<string | undefined>(
     undefined
   );
@@ -202,6 +203,7 @@ export default function LifeAtCompany() {
                           aria-label="Open gallery"
                           onClick={() => {
                             setSelectedImages(event.eventSettings?.eventImages || []);
+                            setSelectedVideos(event.eventSettings?.eventVideos || []);
                             setSelectedTitle(event.eventSettings?.eventTitle);
                             setInitialIndex(0);
                             setIsGalleryOpen(true);
@@ -242,6 +244,7 @@ export default function LifeAtCompany() {
       isOpen={isGalleryOpen}
       title={selectedTitle}
       images={selectedImages}
+      videos={selectedVideos}
       initialIndex={initialIndex}
       onClose={() => setIsGalleryOpen(false)}
     />
