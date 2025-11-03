@@ -24,6 +24,7 @@ const EventDetailPage = ({ params }: PageProps) => {
     null
   );
   const thumbnailContainerRef = React.useRef<HTMLDivElement>(null);
+  const modalVideoRef = React.useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (isGalleryOpen) {
@@ -36,7 +37,7 @@ const EventDetailPage = ({ params }: PageProps) => {
     };
   }, [isGalleryOpen]);
 
-  // Slick Slider Syncing: Auto-scroll thumbnail to current image
+  // Slick Slider Syncing: Auto-scroll thumbnail to current media
   useEffect(() => {
     if (thumbnailContainerRef.current && isGalleryOpen) {
       const container = thumbnailContainerRef.current;
@@ -44,17 +45,53 @@ const EventDetailPage = ({ params }: PageProps) => {
       const gap = 8; // gap-2 = 8px
       const totalThumbnailWidth = thumbnailWidth + gap;
       const scrollPosition = currentImageIndex * totalThumbnailWidth;
-      
+
       container.scrollTo({
-        left: scrollPosition - (container.clientWidth / 2) + (thumbnailWidth / 2),
-        behavior: 'smooth'
+        left: scrollPosition - container.clientWidth / 2 + thumbnailWidth / 2,
+        behavior: "smooth",
       });
     }
   }, [currentImageIndex, isGalleryOpen]);
+
   const { data, loading, error } = useQuery(GET_EVENT_BY_SLUG, {
     variables: { slug },
     skip: !slug,
   });
+
+  // Compute media arrays safely (before early returns to maintain hook order)
+  const event = data?.event;
+  const eventSettings = event?.eventSettings;
+  const eventImages = eventSettings?.eventImages || [];
+  const eventVideos = eventSettings?.eventVideos || [];
+
+  // Filter out any null/undefined videos and ensure sourceUrl or mediaItemUrl exists
+  const validVideos = eventVideos.filter((videoData: any) => {
+    const video = videoData?.eventVideo?.node;
+    return video && (video.sourceUrl || video.mediaItemUrl);
+  });
+
+  // Combine images and videos into a single array for the gallery
+  const allMedia = [
+    ...eventImages.map((img: any) => ({ type: "image" as const, data: img })),
+    ...validVideos.map((vid: any) => ({ type: "video" as const, data: vid })),
+  ];
+  
+  // Auto-play video when navigating to it (must be before early returns)
+  useEffect(() => {
+    if (isGalleryOpen && modalVideoRef.current && allMedia.length > 0) {
+      const currentMedia = allMedia[currentImageIndex];
+      if (currentMedia?.type === "video") {
+        // Small delay to ensure video element is ready
+        const playPromise = modalVideoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            // Auto-play was prevented, user can manually play
+            console.log("Video autoplay prevented:", error);
+          });
+        }
+      }
+    }
+  }, [currentImageIndex, isGalleryOpen, allMedia.length]);
 
   // Show loading state
   if (loading) {
@@ -133,10 +170,6 @@ const EventDetailPage = ({ params }: PageProps) => {
     notFound();
   }
 
-  const event = data.event;
-  const eventSettings = event.eventSettings;
-  const eventImages = eventSettings?.eventImages || [];
-
   // Functions for gallery modal
   const openGallery = (index: number) => {
     setCurrentImageIndex(index);
@@ -144,17 +177,31 @@ const EventDetailPage = ({ params }: PageProps) => {
   };
 
   const closeGallery = () => {
+    // Pause video when closing modal
+    if (modalVideoRef.current) {
+      modalVideoRef.current.pause();
+    }
     setIsGalleryOpen(false);
   };
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % eventImages.length);
+  const nextMedia = () => {
+    if (allMedia.length === 0) return;
+    setCurrentImageIndex((prev) => (prev + 1) % allMedia.length);
+    // Pause current video if playing
+    if (modalVideoRef.current) {
+      modalVideoRef.current.pause();
+    }
   };
 
-  const prevImage = () => {
+  const prevMedia = () => {
+    if (allMedia.length === 0) return;
     setCurrentImageIndex(
-      (prev) => (prev - 1 + eventImages.length) % eventImages.length
+      (prev) => (prev - 1 + allMedia.length) % allMedia.length
     );
+    // Pause current video if playing
+    if (modalVideoRef.current) {
+      modalVideoRef.current.pause();
+    }
   };
 
   // Touch handlers for swipe navigation (mobile/tablet)
@@ -175,9 +222,9 @@ const EventDetailPage = ({ params }: PageProps) => {
     const deltaY = touchEnd.y - touchStart.y;
     if (Math.abs(deltaX) > 50 && Math.abs(deltaY) < 80) {
       if (deltaX < 0) {
-        nextImage();
+        nextMedia();
       } else {
-        prevImage();
+        prevMedia();
       }
     }
     setTouchStart(null);
@@ -212,19 +259,19 @@ const EventDetailPage = ({ params }: PageProps) => {
         break;
       case "ArrowLeft":
         e.preventDefault();
-        prevImage();
+        prevMedia();
         break;
       case "ArrowRight":
         e.preventDefault();
-        nextImage();
+        nextMedia();
         break;
     }
   };
 
   // Get images to display
-  const displayedImages =
-    eventImages.length > 6 ? eventImages.slice(0, 6) : eventImages;
-  const remainingCount = eventImages.length > 6 ? eventImages.length - 5 : 0;
+  const displayedItems = allMedia.length > 6 ? allMedia.slice(0, 6) : allMedia;
+  const remainingCount = allMedia.length > 6 ? allMedia.length - 6 : 0;
+  console.log("displayedImages", displayedItems);
 
   return (
     <>
@@ -343,12 +390,21 @@ const EventDetailPage = ({ params }: PageProps) => {
           </div>
 
           {/* Event Images Gallery */}
-          {eventImages.length > 0 && (
+          {allMedia.length > 0 && (
             <div className="relative w-full 2xl:mt-[100px] xl:mt-[100px] lg:mt-[80px] md:mt-[60px] sm:mt-[50px] mt-[40px]">
               <div className="grid grid-cols-12 2xl:gap-[30px] xl:gap-[25px] lg:gap-[20px] md:gap-[15px] sm:gap-[12px] gap-[8px] auto-rows-[150px]">
-                {displayedImages.map((imageData: any, index: number) => {
-                  const image = imageData?.eventImage?.node;
-                  if (!image?.sourceUrl) return null;
+                {displayedItems.map((mediaItem: any, index: number) => {
+                  // Handle both images and videos
+                  const isImage = mediaItem.type === "image";
+                  const mediaData = isImage
+                    ? mediaItem.data?.eventImage?.node
+                    : mediaItem.data?.eventVideo?.node;
+
+                  const mediaUrl = isImage
+                    ? mediaData?.sourceUrl
+                    : mediaData?.sourceUrl || mediaData?.mediaItemUrl;
+
+                  if (!mediaUrl) return null;
 
                   // Get grid layout classes based on index to match HTML exactly
                   const getGridLayout = (index: number) => {
@@ -403,11 +459,38 @@ const EventDetailPage = ({ params }: PageProps) => {
                       className={`${layout.gridClasses} rounded-[10px] overflow-hidden group ${layout.maxHeight} cursor-pointer relative`}
                       onClick={() => openGallery(index)}
                     >
-                      <img
-                        src={image.sourceUrl}
-                        alt={image.altText || `Event image ${index + 1}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
+                      {isImage ? (
+                        <img
+                          src={mediaUrl}
+                          alt={mediaData?.altText || `Event image ${index + 1}`}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="relative w-full h-full">
+                          <video
+                            src={mediaUrl}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            muted
+                            playsInline
+                            preload="metadata"
+                            controlsList="nodownload"
+                            onContextMenu={(e) => e.preventDefault()}
+                          />
+                          {/* Play indicator for videos */}
+                          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm border border-white/40">
+                              <svg
+                                className="w-5 h-5 text-white"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                              >
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                       {isLastImage && (
                         <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center rounded-[10px]">
                           <div className="text-center text-white">
@@ -487,7 +570,7 @@ const EventDetailPage = ({ params }: PageProps) => {
                 </span>
               </h2>
 
-              {/* Main Image Container */}
+              {/* Main Media Container */}
               <div className="flex flex-col items-center justify-center">
                 <div
                   className="relative w-full max-w-[800px] mb-6"
@@ -498,69 +581,130 @@ const EventDetailPage = ({ params }: PageProps) => {
                   onPointerMove={handlePointerMove}
                   onPointerUp={handlePointerUp}
                 >
-                  <img
-                    src={
-                      eventImages[currentImageIndex]?.eventImage?.node
-                        ?.sourceUrl
-                    }
-                    alt={
-                      eventImages[currentImageIndex]?.eventImage?.node
-                        ?.altText || `Event image ${currentImageIndex + 1}`
-                    }
-                    className="w-full h-auto max-h-[60vh] object-contain aspect-[16/9] object-center rounded-[10px] select-none pointer-events-none"
-                    id="gallery-popup-description"
-                    draggable={false}
-                  />
+                  {allMedia[currentImageIndex]?.type === "video" ? (
+                    <video
+                      ref={modalVideoRef}
+                      src={
+                        allMedia[currentImageIndex]?.data?.eventVideo?.node
+                          ?.sourceUrl ||
+                        allMedia[currentImageIndex]?.data?.eventVideo?.node
+                          ?.mediaItemUrl
+                      }
+                      className="w-full h-auto max-h-[60vh] object-contain aspect-[16/9] object-center rounded-[10px]"
+                      controls
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      controlsList="nodownload"
+                      onContextMenu={(e) => e.preventDefault()}
+                      id="gallery-popup-description"
+                    />
+                  ) : (
+                    <img
+                      src={
+                        allMedia[currentImageIndex]?.data?.eventImage?.node
+                          ?.sourceUrl
+                      }
+                      alt={
+                        allMedia[currentImageIndex]?.data?.eventImage?.node
+                          ?.altText || `Event image ${currentImageIndex + 1}`
+                      }
+                      className="w-full h-auto max-h-[60vh] object-contain aspect-[16/9] object-center rounded-[10px] select-none pointer-events-none"
+                      id="gallery-popup-description"
+                      draggable={false}
+                    />
+                  )}
 
-                  {/* Image Counter */}
+                  {/* Media Counter */}
                   <div className="absolute top-4 left-4 bg-black/50 rounded-full px-3 py-1 hidden">
                     <div className="text-sm font-medium text-white">
-                      {currentImageIndex + 1} of {eventImages.length}
+                      {currentImageIndex + 1} of {allMedia.length}
                     </div>
                   </div>
 
-                  {eventImages.length > 1 && (
+                  {allMedia.length > 1 && (
                     <>
                       <button
-                        onClick={prevImage}
+                        onClick={prevMedia}
                         onPointerDown={(e) => e.stopPropagation()}
                         onMouseDown={(e) => e.stopPropagation()}
                         onTouchStart={(e) => e.stopPropagation()}
                         className="hidden lg:flex absolute left-2 top-1/2 -translate-y-1/2 z-50 w-[50px] h-[50px] rounded-full border border-white/50 items-center justify-center text-white transition-all duration-300 group -rotate-90 hover:border-white"
                         id="previousArrow"
-                        aria-label="Previous image"
+                        aria-label="Previous media"
                         type="button"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="22" viewBox="0 0 11 22" fill="none">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="11"
+                          height="22"
+                          viewBox="0 0 11 22"
+                          fill="none"
+                        >
                           <defs>
-                            <linearGradient id="prevArrowGradient" x1="100%" y1="0%" x2="0%" y2="0%">
+                            <linearGradient
+                              id="prevArrowGradient"
+                              x1="100%"
+                              y1="0%"
+                              x2="0%"
+                              y2="0%"
+                            >
                               <stop offset="-10.69%" stopColor="#2C3894" />
                               <stop offset="94.92%" stopColor="#54A3DA" />
                             </linearGradient>
                           </defs>
-                          <path className="group-hover:opacity-0 transition-opacity duration-300" d="M4.67916 0.913869L4.67839 0.914595L0.484838 5.12847C0.170685 5.44415 0.171854 5.95476 0.48758 6.26899C0.803265 6.58319 1.31387 6.58198 1.62806 6.26629L4.44355 3.4371L4.44355 20.5161C4.44355 20.9615 4.8046 21.3225 5.25 21.3225C5.6954 21.3225 6.05645 20.9615 6.05645 20.5161L6.05645 3.43714L8.87194 6.26625C9.18613 6.58194 9.69674 6.58315 10.0124 6.26895C10.3282 5.95472 10.3293 5.44407 10.0152 5.12843L5.82162 0.914553L5.82085 0.913829C5.50561 0.597981 4.99335 0.59899 4.67916 0.913869Z" fill="white" />
-                          <path className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" d="M4.67916 0.913869L4.67839 0.914595L0.484838 5.12847C0.170685 5.44415 0.171854 5.95476 0.48758 6.26899C0.803265 6.58319 1.31387 6.58198 1.62806 6.26629L4.44355 3.4371L4.44355 20.5161C4.44355 20.9615 4.8046 21.3225 5.25 21.3225C5.6954 21.3225 6.05645 20.9615 6.05645 20.5161L6.05645 3.43714L8.87194 6.26625C9.18613 6.58194 9.69674 6.58315 10.0124 6.26895C10.3282 5.95472 10.3293 5.44407 10.0152 5.12843L5.82162 0.914553L5.82085 0.913829C5.50561 0.597981 4.99335 0.59899 4.67916 0.913869Z" fill="url(#prevArrowGradient)" />
+                          <path
+                            className="group-hover:opacity-0 transition-opacity duration-300"
+                            d="M4.67916 0.913869L4.67839 0.914595L0.484838 5.12847C0.170685 5.44415 0.171854 5.95476 0.48758 6.26899C0.803265 6.58319 1.31387 6.58198 1.62806 6.26629L4.44355 3.4371L4.44355 20.5161C4.44355 20.9615 4.8046 21.3225 5.25 21.3225C5.6954 21.3225 6.05645 20.9615 6.05645 20.5161L6.05645 3.43714L8.87194 6.26625C9.18613 6.58194 9.69674 6.58315 10.0124 6.26895C10.3282 5.95472 10.3293 5.44407 10.0152 5.12843L5.82162 0.914553L5.82085 0.913829C5.50561 0.597981 4.99335 0.59899 4.67916 0.913869Z"
+                            fill="white"
+                          />
+                          <path
+                            className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            d="M4.67916 0.913869L4.67839 0.914595L0.484838 5.12847C0.170685 5.44415 0.171854 5.95476 0.48758 6.26899C0.803265 6.58319 1.31387 6.58198 1.62806 6.26629L4.44355 3.4371L4.44355 20.5161C4.44355 20.9615 4.8046 21.3225 5.25 21.3225C5.6954 21.3225 6.05645 20.9615 6.05645 20.5161L6.05645 3.43714L8.87194 6.26625C9.18613 6.58194 9.69674 6.58315 10.0124 6.26895C10.3282 5.95472 10.3293 5.44407 10.0152 5.12843L5.82162 0.914553L5.82085 0.913829C5.50561 0.597981 4.99335 0.59899 4.67916 0.913869Z"
+                            fill="url(#prevArrowGradient)"
+                          />
                         </svg>
                       </button>
                       <button
-                        onClick={nextImage}
+                        onClick={nextMedia}
                         onPointerDown={(e) => e.stopPropagation()}
                         onMouseDown={(e) => e.stopPropagation()}
                         onTouchStart={(e) => e.stopPropagation()}
                         className="hidden lg:flex absolute right-2 top-1/2 -translate-y-1/2 z-50 w-[50px] h-[50px] rounded-full border border-white/50 items-center justify-center text-white transition-all duration-300 group -rotate-90 hover:border-white"
                         id="nextArrow"
-                        aria-label="Next image"
+                        aria-label="Next media"
                         type="button"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="22" viewBox="0 0 11 22" fill="none">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="11"
+                          height="22"
+                          viewBox="0 0 11 22"
+                          fill="none"
+                        >
                           <defs>
-                            <linearGradient id="nextArrowGradient" x1="100%" y1="0%" x2="0%" y2="0%">
+                            <linearGradient
+                              id="nextArrowGradient"
+                              x1="100%"
+                              y1="0%"
+                              x2="0%"
+                              y2="0%"
+                            >
                               <stop offset="-10.69%" stopColor="#2C3894" />
                               <stop offset="94.92%" stopColor="#54A3DA" />
                             </linearGradient>
                           </defs>
-                          <path className="group-hover:opacity-0 transition-opacity duration-300" d="M4.67916 21.0861L4.67839 21.0854L0.484838 16.8715C0.170685 16.5558 0.171854 16.0452 0.48758 15.731C0.803265 15.4168 1.31387 15.418 1.62806 15.7337L4.44355 18.5629L4.44355 1.48394C4.44355 1.03854 4.8046 0.67749 5.25 0.67749C5.6954 0.67749 6.05645 1.03854 6.05645 1.48394L6.05645 18.5629L8.87194 15.7337C9.18613 15.4181 9.69674 15.4169 10.0124 15.731C10.3282 16.0453 10.3293 16.5559 10.0152 16.8716L5.82162 21.0854L5.82085 21.0862C5.50561 21.402 4.99335 21.401 4.67916 21.0861Z" fill="white" />
-                          <path className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" d="M4.67916 21.0861L4.67839 21.0854L0.484838 16.8715C0.170685 16.5558 0.171854 16.0452 0.48758 15.731C0.803265 15.4168 1.31387 15.418 1.62806 15.7337L4.44355 18.5629L4.44355 1.48394C4.44355 1.03854 4.8046 0.67749 5.25 0.67749C5.6954 0.67749 6.05645 1.03854 6.05645 1.48394L6.05645 18.5629L8.87194 15.7337C9.18613 15.4181 9.69674 15.4169 10.0124 15.731C10.3282 16.0453 10.3293 16.5559 10.0152 16.8716L5.82162 21.0854L5.82085 21.0862C5.50561 21.402 4.99335 21.401 4.67916 21.0861Z" fill="url(#nextArrowGradient)" />
+                          <path
+                            className="group-hover:opacity-0 transition-opacity duration-300"
+                            d="M4.67916 21.0861L4.67839 21.0854L0.484838 16.8715C0.170685 16.5558 0.171854 16.0452 0.48758 15.731C0.803265 15.4168 1.31387 15.418 1.62806 15.7337L4.44355 18.5629L4.44355 1.48394C4.44355 1.03854 4.8046 0.67749 5.25 0.67749C5.6954 0.67749 6.05645 1.03854 6.05645 1.48394L6.05645 18.5629L8.87194 15.7337C9.18613 15.4181 9.69674 15.4169 10.0124 15.731C10.3282 16.0453 10.3293 16.5559 10.0152 16.8716L5.82162 21.0854L5.82085 21.0862C5.50561 21.402 4.99335 21.401 4.67916 21.0861Z"
+                            fill="white"
+                          />
+                          <path
+                            className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            d="M4.67916 21.0861L4.67839 21.0854L0.484838 16.8715C0.170685 16.5558 0.171854 16.0452 0.48758 15.731C0.803265 15.4168 1.31387 15.418 1.62806 15.7337L4.44355 18.5629L4.44355 1.48394C4.44355 1.03854 4.8046 0.67749 5.25 0.67749C5.6954 0.67749 6.05645 1.03854 6.05645 1.48394L6.05645 18.5629L8.87194 15.7337C9.18613 15.4181 9.69674 15.4169 10.0124 15.731C10.3282 16.0453 10.3293 16.5559 10.0152 16.8716L5.82162 21.0854L5.82085 21.0862C5.50561 21.402 4.99335 21.401 4.67916 21.0861Z"
+                            fill="url(#nextArrowGradient)"
+                          />
                         </svg>
                       </button>
                     </>
@@ -568,82 +712,164 @@ const EventDetailPage = ({ params }: PageProps) => {
                 </div>
 
                 {/* Thumbnail Strip */}
-                {eventImages.length > 1 && (
+                {allMedia.length > 1 && (
                   <div className="w-full max-w-[600px] mx-auto flex justify-center">
                     <div className="flex gap-2 items-center pb-2">
                       {/* Previous Arrow - Mobile Only */}
                       <button
-                        onClick={prevImage}
+                        onClick={prevMedia}
                         className="flex lg:hidden w-8 h-8 rounded-full border border-white/50 items-center justify-center text-white transition-all duration-300 group -rotate-90 hover:border-white"
-                        aria-label="Previous image"
+                        aria-label="Previous media"
                         type="button"
                         id="previousArrow"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="22" viewBox="0 0 11 22" fill="none">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="11"
+                          height="22"
+                          viewBox="0 0 11 22"
+                          fill="none"
+                        >
                           <defs>
-                            <linearGradient id="prevArrowThumbGradient" x1="100%" y1="0%" x2="0%" y2="0%">
+                            <linearGradient
+                              id="prevArrowThumbGradient"
+                              x1="100%"
+                              y1="0%"
+                              x2="0%"
+                              y2="0%"
+                            >
                               <stop offset="-10.69%" stopColor="#2C3894" />
                               <stop offset="94.92%" stopColor="#54A3DA" />
                             </linearGradient>
                           </defs>
-                          <path className="group-hover:opacity-0 transition-opacity duration-300" d="M4.67916 0.913869L4.67839 0.914595L0.484838 5.12847C0.170685 5.44415 0.171854 5.95476 0.48758 6.26899C0.803265 6.58319 1.31387 6.58198 1.62806 6.26629L4.44355 3.4371L4.44355 20.5161C4.44355 20.9615 4.8046 21.3225 5.25 21.3225C5.6954 21.3225 6.05645 20.9615 6.05645 20.5161L6.05645 3.43714L8.87194 6.26625C9.18613 6.58194 9.69674 6.58315 10.0124 6.26895C10.3282 5.95472 10.3293 5.44407 10.0152 5.12843L5.82162 0.914553L5.82085 0.913829C5.50561 0.597981 4.99335 0.59899 4.67916 0.913869Z" fill="white" />
-                          <path className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" d="M4.67916 0.913869L4.67839 0.914595L0.484838 5.12847C0.170685 5.44415 0.171854 5.95476 0.48758 6.26899C0.803265 6.58319 1.31387 6.58198 1.62806 6.26629L4.44355 3.4371L4.44355 20.5161C4.44355 20.9615 4.8046 21.3225 5.25 21.3225C5.6954 21.3225 6.05645 20.9615 6.05645 20.5161L6.05645 3.43714L8.87194 6.26625C9.18613 6.58194 9.69674 6.58315 10.0124 6.26895C10.3282 5.95472 10.3293 5.44407 10.0152 5.12843L5.82162 0.914553L5.82085 0.913829C5.50561 0.597981 4.99335 0.59899 4.67916 0.913869Z" fill="url(#prevArrowThumbGradient)" />
+                          <path
+                            className="group-hover:opacity-0 transition-opacity duration-300"
+                            d="M4.67916 0.913869L4.67839 0.914595L0.484838 5.12847C0.170685 5.44415 0.171854 5.95476 0.48758 6.26899C0.803265 6.58319 1.31387 6.58198 1.62806 6.26629L4.44355 3.4371L4.44355 20.5161C4.44355 20.9615 4.8046 21.3225 5.25 21.3225C5.6954 21.3225 6.05645 20.9615 6.05645 20.5161L6.05645 3.43714L8.87194 6.26625C9.18613 6.58194 9.69674 6.58315 10.0124 6.26895C10.3282 5.95472 10.3293 5.44407 10.0152 5.12843L5.82162 0.914553L5.82085 0.913829C5.50561 0.597981 4.99335 0.59899 4.67916 0.913869Z"
+                            fill="white"
+                          />
+                          <path
+                            className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            d="M4.67916 0.913869L4.67839 0.914595L0.484838 5.12847C0.170685 5.44415 0.171854 5.95476 0.48758 6.26899C0.803265 6.58319 1.31387 6.58198 1.62806 6.26629L4.44355 3.4371L4.44355 20.5161C4.44355 20.9615 4.8046 21.3225 5.25 21.3225C5.6954 21.3225 6.05645 20.9615 6.05645 20.5161L6.05645 3.43714L8.87194 6.26625C9.18613 6.58194 9.69674 6.58315 10.0124 6.26895C10.3282 5.95472 10.3293 5.44407 10.0152 5.12843L5.82162 0.914553L5.82085 0.913829C5.50561 0.597981 4.99335 0.59899 4.67916 0.913869Z"
+                            fill="url(#prevArrowThumbGradient)"
+                          />
                         </svg>
                       </button>
 
                       {/* Thumbnails Container - Scrollable */}
-                      <div ref={thumbnailContainerRef} className="flex gap-2 overflow-x-auto items-center px-2 lg:px-4 max-w-[calc(100vw-200px)] lg:max-w-[600px]" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                      <div
+                        ref={thumbnailContainerRef}
+                        className="flex gap-2 overflow-x-auto items-center px-2 lg:px-4 max-w-[calc(100vw-200px)] lg:max-w-[600px]"
+                        style={{
+                          scrollbarWidth: "none",
+                          msOverflowStyle: "none",
+                        }}
+                      >
                         <style jsx>{`
                           .thumbnail-container::-webkit-scrollbar {
                             display: none;
                           }
                         `}</style>
-                      {eventImages.map((imageData: any, index: number) => {
-                        const image = imageData?.eventImage?.node;
-                        if (!image?.sourceUrl) return null;
-                        return (
-                          <button
-                            key={index}
-                            onClick={() => setCurrentImageIndex(index)}
-                              className={`flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border-2 transition-all duration-300 transform hover:scale-105 ${
-                              index === currentImageIndex
-                                  ? "border-[#E72125] ring-2 ring-[#E72125]/30 shadow-lg"
-                                  : "border-white/30 hover:border-white/50"
-                            }`}
-                          >
-                            <img
-                              src={image.sourceUrl}
-                              alt={`Thumbnail ${index + 1}`}
-                              className="w-full h-full object-cover"
-                            />
-                          </button>
-                        );
-                      })}
-                    </div>
+                        {allMedia.map((mediaItem: any, index: number) => {
+                          if (mediaItem.type === "image") {
+                            const image = mediaItem.data?.eventImage?.node;
+                            if (!image?.sourceUrl) return null;
+                            return (
+                              <button
+                                key={`img-${index}`}
+                                onClick={() => setCurrentImageIndex(index)}
+                                className={`flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border-2 transition-all duration-300 transform hover:scale-105 relative ${
+                                  index === currentImageIndex
+                                    ? "border-[#E72125] ring-2 ring-[#E72125]/30 shadow-lg"
+                                    : "border-white/30 hover:border-white/50"
+                                }`}
+                              >
+                                <img
+                                  src={image.sourceUrl}
+                                  alt={`Thumbnail ${index + 1}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              </button>
+                            );
+                          } else {
+                            const video = mediaItem.data?.eventVideo?.node;
+                            const videoUrl =
+                              video?.sourceUrl || video?.mediaItemUrl;
+                            if (!videoUrl) return null;
+                            return (
+                              <button
+                                key={`vid-${index}`}
+                                onClick={() => setCurrentImageIndex(index)}
+                                className={`flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border-2 transition-all duration-300 transform hover:scale-105 relative ${
+                                  index === currentImageIndex
+                                    ? "border-[#E72125] ring-2 ring-[#E72125]/30 shadow-lg"
+                                    : "border-white/30 hover:border-white/50"
+                                }`}
+                              >
+                                <video
+                                  src={videoUrl}
+                                  className="w-full h-full object-cover"
+                                  muted
+                                  playsInline
+                                  preload="metadata"
+                                />
+                                {/* Video indicator */}
+                                <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                                  <svg
+                                    className="w-4 h-4 text-white"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path d="M8 5v14l11-7z" />
+                                  </svg>
+                                </div>
+                              </button>
+                            );
+                          }
+                        })}
+                      </div>
 
                       {/* Next Arrow - Mobile Only */}
                       <button
-                        onClick={nextImage}
+                        onClick={nextMedia}
                         className="flex lg:hidden w-8 h-8 rounded-full border border-white/50 items-center justify-center text-white transition-all duration-300 group -rotate-90 hover:border-white "
-                        aria-label="Next image"
+                        aria-label="Next media"
                         type="button"
                         id="nextArrow"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="22" viewBox="0 0 11 22" fill="none">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="11"
+                          height="22"
+                          viewBox="0 0 11 22"
+                          fill="none"
+                        >
                           <defs>
-                            <linearGradient id="nextArrowThumbGradient" x1="100%" y1="0%" x2="0%" y2="0%">
+                            <linearGradient
+                              id="nextArrowThumbGradient"
+                              x1="100%"
+                              y1="0%"
+                              x2="0%"
+                              y2="0%"
+                            >
                               <stop offset="-10.69%" stopColor="#2C3894" />
                               <stop offset="94.92%" stopColor="#54A3DA" />
                             </linearGradient>
                           </defs>
-                          <path className="group-hover:opacity-0 transition-opacity duration-300" d="M4.67916 21.0861L4.67839 21.0854L0.484838 16.8715C0.170685 16.5558 0.171854 16.0452 0.48758 15.731C0.803265 15.4168 1.31387 15.418 1.62806 15.7337L4.44355 18.5629L4.44355 1.48394C4.44355 1.03854 4.8046 0.67749 5.25 0.67749C5.6954 0.67749 6.05645 1.03854 6.05645 1.48394L6.05645 18.5629L8.87194 15.7337C9.18613 15.4181 9.69674 15.4169 10.0124 15.731C10.3282 16.0453 10.3293 16.5559 10.0152 16.8716L5.82162 21.0854L5.82085 21.0862C5.50561 21.402 4.99335 21.401 4.67916 21.0861Z" fill="white" />
-                          <path className="opacity-0 group-hover:opacity-100 transition-opacity duration-300" d="M4.67916 21.0861L4.67839 21.0854L0.484838 16.8715C0.170685 16.5558 0.171854 16.0452 0.48758 15.731C0.803265 15.4168 1.31387 15.418 1.62806 15.7337L4.44355 18.5629L4.44355 1.48394C4.44355 1.03854 4.8046 0.67749 5.25 0.67749C5.6954 0.67749 6.05645 1.03854 6.05645 1.48394L6.05645 18.5629L8.87194 15.7337C9.18613 15.4181 9.69674 15.4169 10.0124 15.731C10.3282 16.0453 10.3293 16.5559 10.0152 16.8716L5.82162 21.0854L5.82085 21.0862C5.50561 21.402 4.99335 21.401 4.67916 21.0861Z" fill="url(#nextArrowThumbGradient)" />
+                          <path
+                            className="group-hover:opacity-0 transition-opacity duration-300"
+                            d="M4.67916 21.0861L4.67839 21.0854L0.484838 16.8715C0.170685 16.5558 0.171854 16.0452 0.48758 15.731C0.803265 15.4168 1.31387 15.418 1.62806 15.7337L4.44355 18.5629L4.44355 1.48394C4.44355 1.03854 4.8046 0.67749 5.25 0.67749C5.6954 0.67749 6.05645 1.03854 6.05645 1.48394L6.05645 18.5629L8.87194 15.7337C9.18613 15.4181 9.69674 15.4169 10.0124 15.731C10.3282 16.0453 10.3293 16.5559 10.0152 16.8716L5.82162 21.0854L5.82085 21.0862C5.50561 21.402 4.99335 21.401 4.67916 21.0861Z"
+                            fill="white"
+                          />
+                          <path
+                            className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                            d="M4.67916 21.0861L4.67839 21.0854L0.484838 16.8715C0.170685 16.5558 0.171854 16.0452 0.48758 15.731C0.803265 15.4168 1.31387 15.418 1.62806 15.7337L4.44355 18.5629L4.44355 1.48394C4.44355 1.03854 4.8046 0.67749 5.25 0.67749C5.6954 0.67749 6.05645 1.03854 6.05645 1.48394L6.05645 18.5629L8.87194 15.7337C9.18613 15.4181 9.69674 15.4169 10.0124 15.731C10.3282 16.0453 10.3293 16.5559 10.0152 16.8716L5.82162 21.0854L5.82085 21.0862C5.50561 21.402 4.99335 21.401 4.67916 21.0861Z"
+                            fill="url(#nextArrowThumbGradient)"
+                          />
                         </svg>
                       </button>
                     </div>
                   </div>
                 )}
-
               </div>
             </div>
           </div>

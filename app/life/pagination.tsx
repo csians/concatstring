@@ -12,6 +12,7 @@ import EventGalleryModal from "@/components/EventGalleryModal";
 const Pagination = () => {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [selectedImages, setSelectedImages] = useState<any[]>([]);
+  const [selectedVideos, setSelectedVideos] = useState<any[]>([]);
   const [selectedTitle, setSelectedTitle] = useState<string | undefined>(
     undefined
   );
@@ -67,7 +68,7 @@ const Pagination = () => {
       setCurrentPage(page);
       // Scroll to the category section after page change
       setTimeout(() => {
-        const categoryElement = document.getElementById('most-recent-events');
+        const categoryElement = document.getElementById("most-recent-events");
         if (categoryElement) {
           // Get the element's position and scroll to show it with some offset
           const elementRect = categoryElement.getBoundingClientRect();
@@ -75,7 +76,7 @@ const Pagination = () => {
           const offset = 100; // Add some offset to show the categories clearly
           window.scrollTo({
             top: absoluteElementTop - offset,
-            behavior: 'smooth'
+            behavior: "smooth",
           });
         }
       }, 100); // Small delay to ensure DOM is updated
@@ -84,13 +85,13 @@ const Pagination = () => {
 
   return (
     <>
-    <section
-      id="collage"
-      className="2xl:py-[120px] xl:py-[100px] lg:py-[80px] md:py-[60px] sm:py-[50px] py-[40px]"
-    >
-      <div className="container max-w-[1440px] 2xl:px-[20px] xl:px-[20px] lg:px-[20px] md:px-[15px] sm:px-[12px] px-[10px] mx-auto">
-        {/* <!-- Photo Gallery Grid --> */}
-        <div className="relative w-full max-w-[1401px] mx-auto">
+      <section
+        id="collage"
+        className="2xl:py-[120px] xl:py-[100px] lg:py-[80px] md:py-[60px] sm:py-[50px] py-[40px]"
+      >
+        <div className="container max-w-[1440px] 2xl:px-[20px] xl:px-[20px] lg:px-[20px] md:px-[15px] sm:px-[12px] px-[10px] mx-auto">
+          {/* <!-- Photo Gallery Grid --> */}
+          <div className="relative w-full max-w-[1401px] mx-auto">
             {/* <!-- Main Grid Container --> */}
             <div className="grid grid-cols-12 2xl:gap-[30px] xl:gap-[25px] lg:gap-[20px] md:gap-[15px] sm:gap-[12px] gap-[8px]">
               {currentEvents.map((event: any, index: number) => {
@@ -118,24 +119,47 @@ const Pagination = () => {
                 return (
                   <div
                     key={event.id}
-                    className={`relative w-full ${getGridClasses()} rounded-[10px] overflow-hidden group ${index === 3 || index === 4 ? "max-h-[500px]" : ""
-                      }`}
+                    className={`relative w-full ${getGridClasses()} rounded-[10px] overflow-hidden group ${
+                      index === 3 || index === 4 ? "max-h-[500px]" : ""
+                    }`}
                   >
                     {/* Top-right gallery trigger */}
                     <button
                       type="button"
                       aria-label="Open gallery"
                       onClick={() => {
-                        setSelectedImages(event.eventSettings?.eventImages || []);
+                        setSelectedImages(
+                          event.eventSettings?.eventImages || []
+                        );
+                        setSelectedVideos(
+                          event.eventSettings?.eventVideos || []
+                        );
                         setSelectedTitle(event.eventSettings?.eventTitle);
                         setInitialIndex(0);
                         setIsGalleryOpen(true);
                       }}
                       className="absolute z-10 top-3 right-3 bg-white/90 hover:bg-white text-black rounded-md p-2 shadow transition opacity-0 group-hover:opacity-100"
                     >
-                      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6">
-                        <path d="M22 42H6V26" stroke="#000000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path>
-                        <path d="M26 6H42V22" stroke="#000000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path>
+                      <svg
+                        viewBox="0 0 48 48"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          d="M22 42H6V26"
+                          stroke="#000000"
+                          strokeWidth="4"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        ></path>
+                        <path
+                          d="M26 6H42V22"
+                          stroke="#000000"
+                          strokeWidth="4"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        ></path>
                       </svg>
                     </button>
                     <img
@@ -228,10 +252,11 @@ const Pagination = () => {
                           <button
                             onClick={() => goToPage(currentPage - 1)}
                             disabled={currentPage === 1}
-                            className={`cursor-pointer hover:opacity-70 transition-opacity ${currentPage === 1
+                            className={`cursor-pointer hover:opacity-70 transition-opacity ${
+                              currentPage === 1
                                 ? "opacity-50 cursor-not-allowed"
                                 : ""
-                              }`}
+                            }`}
                           >
                             <svg
                               width="15"
@@ -247,10 +272,11 @@ const Pagination = () => {
                           <button
                             onClick={() => goToPage(currentPage + 1)}
                             disabled={currentPage === totalPages}
-                            className={`cursor-pointer hover:opacity-70 transition-opacity rotate-180 ${currentPage === totalPages
+                            className={`cursor-pointer hover:opacity-70 transition-opacity rotate-180 ${
+                              currentPage === totalPages
                                 ? "opacity-50 cursor-not-allowed"
                                 : ""
-                              }`}
+                            }`}
                           >
                             <svg
                               width="15"
@@ -278,16 +304,16 @@ const Pagination = () => {
               </div>
             )}
           </div>
-      </div>
-    </section>
-    <EventGalleryModal
-      isOpen={isGalleryOpen}
-      title={selectedTitle}
-      images={selectedImages}
-      initialIndex={initialIndex}
-      // initialIndex={initialIndex}
-      onClose={() => setIsGalleryOpen(false)}
-    />
+        </div>
+      </section>
+      <EventGalleryModal
+        isOpen={isGalleryOpen}
+        title={selectedTitle}
+        images={selectedImages}
+        videos={selectedVideos}
+        initialIndex={initialIndex}
+        onClose={() => setIsGalleryOpen(false)}
+      />
     </>
   );
 };
