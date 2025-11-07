@@ -868,7 +868,7 @@ export const BannerSkeleton = () => (
       playsInline
       className="absolute top-[42px] left-0 w-full h-full object-cover object-center z-0"
     >
-      <source src="/video/banner_background.webm" type="video/webm" />
+      {/* <source src="/video/banner_background.webm" type="video/webm" /> */}
       Your browser does not support the video tag.
     </video>
 
