@@ -30,29 +30,29 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onAccept, onDecline }) =>
   }, [dispatch]);
 
   // Disable body scroll when cookie popup is visible
-  useEffect(() => {
-    if (isVisible) {
-      // Store current scroll position
-      const scrollY = window.scrollY;
+  // useEffect(() => {
+  //   if (isVisible) {
+  //     // Store current scroll position
+  //     const scrollY = window.scrollY;
       
-      // Disable scroll
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-      document.documentElement.style.overflow = 'hidden';
+  //     // Disable scroll
+  //     document.body.style.position = 'fixed';
+  //     document.body.style.top = `-${scrollY}px`;
+  //     document.body.style.width = '100%';
+  //     document.documentElement.style.overflow = 'hidden';
       
-      return () => {
-        // Re-enable scroll
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        document.documentElement.style.overflow = '';
+  //     return () => {
+  //       // Re-enable scroll
+  //       document.body.style.position = '';
+  //       document.body.style.top = '';
+  //       document.body.style.width = '';
+  //       document.documentElement.style.overflow = '';
         
-        // Restore scroll position
-        window.scrollTo(0, scrollY);
-      };
-    }
-  }, [isVisible]);
+  //       // Restore scroll position
+  //       window.scrollTo(0, scrollY);
+  //     };
+  //   }
+  // }, [isVisible]);
 
   const handleAccept = () => {
     const defaultPreferences = {
