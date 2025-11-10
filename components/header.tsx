@@ -329,6 +329,7 @@ export default function Header() {
           <Link
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse 2xl:w-[286px] xl:w-[286px] lg:w-[286px] md:w-[250px] sm:w-[200px] w-[200px]"
+            aria-label="Home - ConcatString Solutions"
           >
             <svg
               width="286"
@@ -336,6 +337,7 @@ export default function Header() {
               viewBox="0 0 286 70"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
             >
               <g clipPath="url(#clip0_423_2149)">
                 <path
