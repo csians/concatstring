@@ -99,12 +99,14 @@ const ServiceHighlights = () => {
                                         onClick={toggleDropdown}
                                         aria-haspopup="listbox"
                                         aria-expanded={isOpen}
+                                        aria-controls={`services-listbox-${index}`}
+                                        aria-labelledby={`selected-service-${index}`}
                                         className={`cursor-pointer flex items-center font-denton justify-between w-full px-[20px] py-[14px] rounded-full text-white text-[17px] font-normal leading-[18px] bg-gradient-to-r from-[#E72125] to-[#8E1D1D] transition-all duration-300 ${isOpen ? "bg-[#E72125]" : "bg-[#E72125]/20"
                                           }`}
                                       >
                                         <div className="absolute inset-0 bg-[#1a3141] top-[1px] left-[1px] right-[1px] bottom-[1px] rounded-full z-[0]"></div>
                                         <div className="absolute inset-0 bg-[#e7212533] top-[1px] left-[1px] right-[1px] bottom-[1px] rounded-full z-[2]"></div>
-                                        <span id="selected-service" className="z-[3]">{selected}</span>
+                                        <span id={`selected-service-${index}`} className="z-[3]">{selected}</span>
                                         <svg
                                           className={`w-4 h-4 transition-transform duration-300 z-[3] ${isOpen ? "rotate-180" : ""
                                             }`}
@@ -133,9 +135,10 @@ const ServiceHighlights = () => {
                                         role="listbox"
                                         tabIndex={-1}
                                         aria-label="Services dropdown"
+                                        id={`services-listbox-${index}`}
                                       >
                                         <div className="p-[20px]">
-                                          <ul className="flex flex-col gap-[8px] text-[18px] font-medium text-white">
+                                          <ul role="presentation" className="flex flex-col gap-[8px] text-[18px] font-medium text-white">
                                             {webServicesList.map((serviceItem) => (
                                               <li
                                                 key={serviceItem.id}
@@ -241,10 +244,12 @@ const ServiceHighlights = () => {
                                       onClick={toggleDropdown}
                                       aria-haspopup="listbox"
                                       aria-expanded={isOpen}
+                                      aria-controls={`services-listbox-${index}`}
+                                      aria-labelledby={`selected-service-${index}`}
                                       className={`cursor-pointer flex items-center justify-between w-full px-[20px] py-[12px] rounded-full text-white text-[17px] font-normal leading-[100%] border border-[#E72125] transition-all duration-300 ${isOpen ? "bg-[#E72125]" : "bg-[#E72125]/20"
                                         }`}
                                     >
-                                      <span id="selected-service">{selected}</span>
+                                      <span id={`selected-service-${index}`}>{selected}</span>
                                       <svg
                                         className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-180" : ""
                                           }`}
@@ -273,9 +278,10 @@ const ServiceHighlights = () => {
                                       role="listbox"
                                       tabIndex={-1}
                                       aria-label="Services dropdown"
+                                      id={`services-listbox-${index}`}
                                     >
                                       <div className="p-[20px]">
-                                        <ul className="flex flex-col gap-[8px] text-[18px] font-medium text-white">
+                                        <ul role="presentation" className="flex flex-col gap-[8px] text-[18px] font-medium text-white">
                                           {webServicesList.map((serviceItem) => (
                                             <li
                                               key={serviceItem.id}

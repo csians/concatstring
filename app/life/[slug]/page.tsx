@@ -268,10 +268,9 @@ const EventDetailPage = ({ params }: PageProps) => {
     }
   };
 
-  // Get images to display
+  // Get Items to display
   const displayedItems = allMedia.length > 6 ? allMedia.slice(0, 6) : allMedia;
   const remainingCount = allMedia.length > 6 ? allMedia.length - 6 : 0;
-  console.log("displayedImages", displayedItems);
 
   return (
     <>
