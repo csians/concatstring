@@ -85,12 +85,12 @@ const OurProcess: React.FC<Props> = ({ data }) => {
                             : ""
                           }`}
                       >
-                        <h5
+                        <h3
                           className={`font-denton font-bold 2xl:text-[26px] xl:text-[26px] lg:text-[25px] md:text-[25px] sm:text-[20px] text-[18px] leading-[38px] text-white text-${isEven ? "right" : "left"
                             }`}
                         >
                           {step.processTitle}
-                        </h5>
+                        </h3>
                         <p
                           className={`font-lato text-[16px] leading-[26px] font-medium text-[#C3C3C3] text-${isEven ? "right" : "left"
                             }`}

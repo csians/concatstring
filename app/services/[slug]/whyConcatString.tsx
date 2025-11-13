@@ -97,9 +97,9 @@ const WhyConcatString: React.FC<Props> = ({ data }) => {
                     className="p-[1px] rounded-[14px] bg-[linear-gradient(180deg,_#54A3DA_0%,_#E72125_100%)] w-full"
                   >
                     <div className="flex flex-col gap-[16px] items-start justify-start bg-black rounded-[14px] h-full w-full 2xl:p-[30px] xl:p-[30px] lg:p-[30px] md:p-[25px] sm:p-[20px] p-[20px]">
-                      <h5 className="font-denton font-bold 2xl:text-[27px] xl:text-[27px] lg:text-[25px] md:text-[25px] sm:text-[20px] text-[18px] leading-[100%] text-white">
+                      <h3 className="font-denton font-bold 2xl:text-[27px] xl:text-[27px] lg:text-[25px] md:text-[25px] sm:text-[20px] text-[18px] leading-[100%] text-white">
                         {feature.featureTitle}
-                      </h5>
+                      </h3>
                       <div
                         className="font-lato text-[17px] leading-[28px] font-normal text-[#E9E9E9]"
                         dangerouslySetInnerHTML={{
