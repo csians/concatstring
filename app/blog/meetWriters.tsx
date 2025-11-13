@@ -143,9 +143,9 @@ const MeetWriters = () => {
                         height="84"
                         className="rounded-full object-cover w-[84px] h-[84px] object-top"
                       />
-                      <h4 className="font-denton font-bold text-[24px] text-white leading-[100%]">
+                      <h3 className="font-denton font-bold text-[24px] text-white leading-[100%]">
                         {user.name}
-                      </h4>
+                      </h3>
                     </div>
                     <p className="font-lato font-normal text-[22px] leading-[36px] text-[#C3C3C3] text-center clamp-4">
                       {user.description}

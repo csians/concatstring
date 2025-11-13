@@ -102,6 +102,8 @@ const MoreFromMe: React.FC<Props> = ({ post }) => {
                               className="rounded-[10px] h-full w-full object-cover object-center"
                               width="272"
                               height="186"
+                              loading="lazy"         
+                              decoding="async"
                             />
                           </Link>
                         </div>
@@ -145,6 +147,8 @@ const MoreFromMe: React.FC<Props> = ({ post }) => {
                                   width="15"
                                   height="20"
                                   className="w-[15px] h-[20px]"
+                                  loading="lazy"         
+                                  decoding="async"
                                 />
                               )}
                             </Link>

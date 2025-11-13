@@ -140,7 +140,11 @@ const FutureOfAi: React.FC<Props> = ({ userId }) => {
                     >
                       <div className="flex flex-col justify-between gap-[32px] h-full">
                         <div className="flex flex-col flex-grow height-full">
-                          <Link href={`/blog/${post.slug}`} className="block hover:opacity-80 transition-opacity">
+                          <Link 
+                            href={`/blog/${post.slug}`} 
+                            className="block hover:opacity-80 transition-opacity"
+                            aria-label={`Read article: ${post.title}`}
+                          >
                             <img
                               src={post.featuredImage?.node?.sourceUrl}
                               alt={post.featuredImage?.node?.altText}
@@ -222,7 +226,11 @@ const FutureOfAi: React.FC<Props> = ({ userId }) => {
                                 >
                                   <div className="flex flex-col justify-between gap-[32px] h-full">
                                     <div className="flex flex-col flex-grow height-full">
-                                      <Link href={`/blog/${post.slug}`} className="block hover:opacity-80 transition-opacity">
+                                      <Link 
+                                        href={`/blog/${post.slug}`} 
+                                        className="block hover:opacity-80 transition-opacity"
+                                        aria-label={`Read article: ${post.title}`}
+                                      >
                                         <img
                                           src={
                                             post.featuredImage?.node?.sourceUrl

@@ -174,13 +174,15 @@ const AboutTheAuthor: React.FC<Props> = ({ post }) => {
                       width="90"
                       height="90"
                       className="h-[90px] w-[90px] rounded-full object-fit object-cover object-top"
+                      loading="lazy"          
+                      decoding="async"
                     />
                     <div className="flex flex-col gap-[40px] 2xl:max-w-[400px] xl:max-w-[400px] lg:max-w-[400px] md:max-w-full sm:max-w-full max-w-full pt-[16px]">
                       <div className="flex flex-col gap-[40px] items-start">
                         <div className="flex flex-col items-start">
-                          <h5 className="font-denton font-bold text-center text-white mb-[2px] text-[24px] leading-[32px]">
+                          <h4 className="font-denton font-bold text-center text-white mb-[2px] text-[24px] leading-[32px]">
                             {postData?.author?.node?.name}
-                          </h5>
+                          </h4>
                           <p className="font-denton font-normal text-white text-[18px] leading-[24px] text-center mb-[6px]">
                             {postData?.author?.node?.userProfileImage?.userRole}
                           </p>
@@ -222,7 +224,9 @@ const AboutTheAuthor: React.FC<Props> = ({ post }) => {
                                   ?.node?.altText
                               }
                               className="w-[15px] h-[20px]"
-                            />
+                              loading="lazy"          
+                              decoding="async"                            />
+
                           </a>
                           <ul className="flex items-center 2xl:gap-[40px] xl:gap-[40px] lg:gap-[30px] md:gap-[20px] sm:gap-[20px] gap-[10px] mb-[44px]">
                             {postData?.author?.node?.userProfileImage?.socialMedia?.map(
@@ -238,6 +242,8 @@ const AboutTheAuthor: React.FC<Props> = ({ post }) => {
                                       src={term?.socialSvg?.node?.sourceUrl}
                                       alt={term?.socialSvg?.node?.altText}
                                       className="w-[20px] h-[20px] hover:scale-105 transition-all duration-300 ease-in-out"
+                                      loading="lazy"         
+                                      decoding="async"
                                     />
                                   </Link>
                                 </li>
@@ -275,6 +281,7 @@ const AboutTheAuthor: React.FC<Props> = ({ post }) => {
                               type="submit"
                               disabled={isSubmitting}
                               className="absolute z-[99] right-[24px] top-0 bottom-0 flex items-center cursor-pointer disabled:opacity-50 hover:scale-110 transition-all duration-300 rounded-full p-2"
+                              aria-label="Submit newsletter subscription"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -282,6 +289,7 @@ const AboutTheAuthor: React.FC<Props> = ({ post }) => {
                                 height="20"
                                 viewBox="0 0 30 30"
                                 fill="none"
+                                aria-hidden="true"
                               >
                                 <path
                                   fillRule="evenodd"
