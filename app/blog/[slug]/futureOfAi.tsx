@@ -4,6 +4,7 @@ import { setBlogPostsData } from "@/store/slices/blogDetailSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import Breadcrumb from "@/components/Breadcrumb";
+import Image from "next/image";
 
 interface Props {
   post: any;
@@ -218,13 +219,19 @@ const FutureOfAi: React.FC<Props> = ({ post }) => {
           <div className="flex items-start 2xl:gap-[60px] xl:gap-[60px] lg:gap-[50px] md:gap-[40px] sm:gap-[30px] gap-[30px] flex-col">
             <div className="blog-img w-full rounded-[24px] overflow-hidden relative">
               
-              <img
-                src={postData?.featuredImage?.node?.sourceUrl}
-                alt={postData?.featuredImage?.node?.altText}
-                width="670"
-                height="400"
-                className="w-full"
-              />
+                <Image
+                  src={
+                    postData?.featuredImage?.node?.sourceUrl}
+                  alt={
+                    postData?.featuredImage?.node?.altText}
+                  width={670}
+                  height={400}
+                  className="w-full h-auto"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1896px"
+                  priority
+                  fetchPriority="high"
+                  quality={85}
+                />              
             </div>
             <div className="container max-w-[1400px] px-[20px] mx-auto">
             {/* Breadcrumb Navigation */}
@@ -312,6 +319,8 @@ const FutureOfAi: React.FC<Props> = ({ post }) => {
                         src="/images/service-page/bullet.svg"
                         width="10"
                         height="10"
+                        loading="lazy"
+                        decoding="async"
                       />
                       <button
                         onClick={() => scrollToHeading(heading)}
@@ -346,9 +355,9 @@ const FutureOfAi: React.FC<Props> = ({ post }) => {
                           style={{ borderImageSlice: 1 }}
                         >
                           <div className="faq-head flex justify-between items-center w-full cursor-pointer gap-[5px]">
-                            <h4 className="font-denton text-white font-bold 2xl:text-[22px] xl:text-[22px] lg:text-[20px] md:text-[20px] sm:text-[18px] text-[18px] 2xl:leading-[34px] xl:leading-[34px] lg:leading-[30px] md:leading-[30px] sm:leading-[25px] leading-[25px]">
+                            <h3 className="font-denton text-white font-bold 2xl:text-[22px] xl:text-[22px] lg:text-[20px] md:text-[20px] sm:text-[18px] text-[18px] 2xl:leading-[34px] xl:leading-[34px] lg:leading-[30px] md:leading-[30px] sm:leading-[25px] leading-[25px]">
                               {faq.title}
-                            </h4>
+                            </h3>
                             <span className="faq-icon cursor-pointer">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"

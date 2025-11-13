@@ -744,9 +744,9 @@ const StoryToShare = () => {
                     >
                       <div className="flex flex-col items-center justify-center 2xl:gap-[50px] xl:gap-[50px] lg:gap-[40px] md:gap-[30px] sm:gap-[20px] gap-[20px]">
                         <div className="flex flex-col items-center justify-center gap-[7px]">
-                          <h4 className="font-denton 2xl:text-[34px] xl:text-[34px] lg:text-[30px] md:text-[25px] sm:text-[25px] text-[20px] text-white 2xl:leading-[45px] xl:leading-[45px] lg:leading-[40px] md:leading-[30px] sm:leading-[30px]leading-[30px] font-bold text-center">
+                          <h3 className="font-denton 2xl:text-[34px] xl:text-[34px] lg:text-[30px] md:text-[25px] sm:text-[25px] text-[20px] text-white 2xl:leading-[45px] xl:leading-[45px] lg:leading-[40px] md:leading-[30px] sm:leading-[30px]leading-[30px] font-bold text-center">
                             {card.title}
-                          </h4>
+                          </h3>
                           <p className="font-lato font-normal text-[17px] leading-[26px] text-center text-[#C3C3C3]">
                             {card.description}
                           </p>

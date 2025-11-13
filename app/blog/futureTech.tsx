@@ -156,7 +156,10 @@ const FutureTech = () => {
   const filteredPosts = allPosts.filter(
     (post) =>
       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (post.blogDetail?.blogDetailContent && post.blogDetail.blogDetailContent.toLowerCase().includes(searchTerm.toLowerCase()))
+      (post.blogDetail?.blogDetailContent &&
+        post.blogDetail.blogDetailContent
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()))
   );
 
   // Calculate pagination
@@ -207,7 +210,7 @@ const FutureTech = () => {
       setCurrentPage(newPage);
       // Scroll to the category section after page change
       setTimeout(() => {
-        const categoryElement = document.getElementById('blog-categories');
+        const categoryElement = document.getElementById("blog-categories");
         if (categoryElement) {
           // Get the element's position and scroll to show it with some offset
           const elementRect = categoryElement.getBoundingClientRect();
@@ -215,7 +218,7 @@ const FutureTech = () => {
           const offset = 100; // Add some offset to show the categories clearly
           window.scrollTo({
             top: absoluteElementTop - offset,
-            behavior: 'smooth'
+            behavior: "smooth",
           });
         }
       }, 100); // Small delay to ensure DOM is updated
@@ -258,8 +261,9 @@ const FutureTech = () => {
                       <button
                         key={category.slug || "all"}
                         onClick={() => handleCategoryChange(category.slug)}
-                        className={`flex items-center justify-center rounded-[84px] leading-[100%] md:leading-[21px] md:py-[22px] py-[15px] md:px-[24px] px-[16px] relative blog-ct hover:bg-[#E721254D] ${selectedCategory === category.slug ? "active" : ""
-                          }`}
+                        className={`flex items-center justify-center rounded-[84px] leading-[100%] md:leading-[21px] md:py-[22px] py-[15px] md:px-[24px] px-[16px] relative blog-ct hover:bg-[#E721254D] ${
+                          selectedCategory === category.slug ? "active" : ""
+                        }`}
                       >
                         <span className="text-center text-white font-denton font-normal md:text-[16px] text-[14px] leading-[100%]">
                           {category.name}
@@ -297,22 +301,46 @@ const FutureTech = () => {
                   {searchTerm ? (
                     <button
                       type="button"
-                      onClick={() => setSearchTerm('')}
+                      onClick={() => setSearchTerm("")}
+                      aria-label="Clear search"
                       className="absolute right-[19px] top-1/2 bottom-0 group bg-[#292929] h-[80%] translate-y-[-50%] transition-colors duration-200 rounded-full p-0 text-white hover:text-[#E721254D]"
                     >
-                      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M10.9608 10.9611C11.7418 10.18 12.9055 10.0774 13.5599 10.7318L33.1104 30.2823C33.7648 30.9367 33.6621 32.1003 32.8811 32.8814C32.1 33.6624 30.9364 33.7651 30.282 33.1107L10.7315 13.5602C10.0771 12.9058 10.1797 11.7421 10.9608 10.9611Z" fill="currentColor"/>
-                      <path d="M32.8827 10.9608C33.6637 11.7418 33.7664 12.9055 33.112 13.5599L13.5614 33.1104C12.9071 33.7648 11.7434 33.6621 10.9623 32.8811C10.1813 32.1 10.0786 30.9364 10.733 30.282L30.2836 10.7315C30.938 10.0771 32.1016 10.1797 32.8827 10.9608Z" fill="currentColor"/>
+                      <svg
+                        width="44"
+                        height="44"
+                        viewBox="0 0 44 44"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M10.9608 10.9611C11.7418 10.18 12.9055 10.0774 13.5599 10.7318L33.1104 30.2823C33.7648 30.9367 33.6621 32.1003 32.8811 32.8814C32.1 33.6624 30.9364 33.7651 30.282 33.1107L10.7315 13.5602C10.0771 12.9058 10.1797 11.7421 10.9608 10.9611Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M32.8827 10.9608C33.6637 11.7418 33.7664 12.9055 33.112 13.5599L13.5614 33.1104C12.9071 33.7648 11.7434 33.6621 10.9623 32.8811C10.1813 32.1 10.0786 30.9364 10.733 30.282L30.2836 10.7315C30.938 10.0771 32.1016 10.1797 32.8827 10.9608Z"
+                          fill="currentColor"
+                        />
                       </svg>
-
                     </button>
                   ) : (
                     <button
                       type="button"
+                      aria-label="Search"
                       className="absolute right-[24px] top-1/2 bottom-0 group bg-[#292929] h-[80%] translate-y-[-50%]"
                     >
-                      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M29.0429 27.3252L21.9028 19.8992C23.7393 17.7203 24.7459 14.9621 24.7445 12.1125C24.7445 5.43377 19.3107 0 12.632 0C5.9533 0 0.519531 5.43377 0.519531 12.1125C0.519531 18.7912 5.9533 24.225 12.632 24.225C15.1393 24.225 17.5286 23.4687 19.5714 22.0331L26.7657 29.5155C27.0664 29.8278 27.4709 30 27.9043 30C28.3145 30 28.7037 29.8436 28.9992 29.5592C29.3007 29.2685 29.4746 28.87 29.4828 28.4513C29.491 28.0325 29.3328 27.6275 29.0429 27.3252ZM12.632 3.15978C17.5686 3.15978 21.5847 7.17586 21.5847 12.1125C21.5847 17.0491 17.5686 21.0652 12.632 21.0652C7.69539 21.0652 3.67931 17.0491 3.67931 12.1125C3.67931 7.17586 7.69539 3.15978 12.632 3.15978Z" fill="white"/>
+                      <svg
+                        width="30"
+                        height="30"
+                        viewBox="0 0 30 30"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M29.0429 27.3252L21.9028 19.8992C23.7393 17.7203 24.7459 14.9621 24.7445 12.1125C24.7445 5.43377 19.3107 0 12.632 0C5.9533 0 0.519531 5.43377 0.519531 12.1125C0.519531 18.7912 5.9533 24.225 12.632 24.225C15.1393 24.225 17.5286 23.4687 19.5714 22.0331L26.7657 29.5155C27.0664 29.8278 27.4709 30 27.9043 30C28.3145 30 28.7037 29.8436 28.9992 29.5592C29.3007 29.2685 29.4746 28.87 29.4828 28.4513C29.491 28.0325 29.3328 27.6275 29.0429 27.3252ZM12.632 3.15978C17.5686 3.15978 21.5847 7.17586 21.5847 12.1125C21.5847 17.0491 17.5686 21.0652 12.632 21.0652C7.69539 21.0652 3.67931 17.0491 3.67931 12.1125C3.67931 7.17586 7.69539 3.15978 12.632 3.15978Z"
+                          fill="white"
+                        />
                       </svg>
                     </button>
                   )}
@@ -354,7 +382,7 @@ const FutureTech = () => {
                                 className="blog-gr flex items-center justify-center bg-[#E7212599] rounded-[84px] py-[5px] leading-[100%] md:leading-[21px] px-[13px] relative "
                               >
                                 <span className="text-center text-white font-denton font-normal text-[16px] leading-[100%] md:leading-[21px]">
-                                  {category.name.split(' ')[0]}
+                                  {category.name.split(" ")[0]}
                                 </span>
                               </div>
                             )
@@ -412,7 +440,7 @@ const FutureTech = () => {
                         </div>
                       </div> */}
                       <p className="font-lato text-[17px] font-normal leading-[26px] text-[#C3C3C3] line-clamp-3">
-                        {stripHtml(post.blogDetail?.blogDetailShotDesc || '')}
+                        {stripHtml(post.blogDetail?.blogDetailShotDesc || "")}
                       </p>
                     </div>
                     <Link
@@ -434,7 +462,10 @@ const FutureTech = () => {
                 </div>
               ))}
             </div>
-          ) : !loading && !allPostsLoading && searchTerm && currentPosts.length === 0 ? (
+          ) : !loading &&
+            !allPostsLoading &&
+            searchTerm &&
+            currentPosts.length === 0 ? (
             <div className="text-center md:py-[100px] py-[60px] px-[20px] bg-[#2e0707] md:rounded-[20px] rounded-[15px]">
               <h3 className="font-denton md:text-[66px] text-[24px] md:leading-[87px] leading-[36px] font-bold text-white mb-[0]">
                 No Blog Found
@@ -465,6 +496,9 @@ const FutureTech = () => {
                         <button
                           onClick={() => goToPage(currentPage - 1)}
                           disabled={currentPage === 1}
+                          aria-label={`Go to previous page, page ${
+                            currentPage - 1
+                          }`}
                           className={`cursor-pointer hover:opacity-70 transition-opacity ${
                             currentPage === 1
                               ? "opacity-50 cursor-not-allowed"
@@ -478,6 +512,7 @@ const FutureTech = () => {
                             viewBox="0 0 15 9"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
                           >
                             <path
                               d="M7.46577 -5.21571e-05C7.60734 -0.000870397 7.74768 0.0262636 7.87874 0.0797952C8.0098 0.133327 8.129 0.212201 8.22951 0.311898L14.6836 6.76603C14.8862 6.96859 15 7.24331 15 7.52977C15 7.81623 14.8862 8.09096 14.6836 8.29351C14.4811 8.49607 14.2064 8.60986 13.9199 8.60986C13.6335 8.60986 13.3587 8.49607 13.1562 8.29351L7.46577 2.59236L1.77538 8.28275C1.5696 8.45898 1.3049 8.55107 1.03417 8.54061C0.763446 8.53015 0.506637 8.41792 0.315062 8.22635C0.123488 8.03477 0.0112601 7.77796 0.00080309 7.50724C-0.00965393 7.23651 0.08243 6.97181 0.258657 6.76603L6.71279 0.311898C6.91315 0.11317 7.18358 0.0011361 7.46577 -5.21571e-05Z"
@@ -488,6 +523,9 @@ const FutureTech = () => {
                         <button
                           onClick={() => goToPage(currentPage + 1)}
                           disabled={currentPage === totalPages}
+                          aria-label={`Go to next page, page ${
+                            currentPage + 1
+                          }`}
                           className={`cursor-pointer hover:opacity-70 transition-opacity rotate-180 ${
                             currentPage === totalPages
                               ? "opacity-50 cursor-not-allowed"
@@ -501,6 +539,7 @@ const FutureTech = () => {
                             viewBox="0 0 15 9"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
                           >
                             <path
                               d="M7.46577 -5.21571e-05C7.60734 -0.000870397 7.74768 0.0262636 7.87874 0.0797952C8.0098 0.133327 8.129 0.212201 8.22951 0.311898L14.6836 6.76603C14.8862 6.96859 15 7.24331 15 7.52977C15 7.81623 14.8862 8.09096 14.6836 8.29351C14.4811 8.49607 14.2064 8.60986 13.9199 8.60986C13.6335 8.60986 13.3587 8.49607 13.1562 8.29351L7.46577 2.59236L1.77538 8.28275C1.5696 8.45898 1.3049 8.55107 1.03417 8.54061C0.763446 8.53015 0.506637 8.41792 0.315062 8.22635C0.123488 8.03477 0.0112601 7.77796 0.00080309 7.50724C-0.00965393 7.23651 0.08243 6.97181 0.258657 6.76603L6.71279 0.311898C6.91315 0.11317 7.18358 0.0011361 7.46577 -5.21571e-05Z"

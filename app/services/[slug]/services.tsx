@@ -173,9 +173,9 @@ const Service: React.FC<Props> = ({ data }) => {
                         }`}
                       data-content={feature?.featureTitle || idx}
                     >
-                      <h4 className="font-denton 2xl:text-[34px] xl:text-[34px] lg:text-[30px] font-bold leading-[100%] text-black mb-[12px]">
+                      <h3 className="font-denton 2xl:text-[34px] xl:text-[34px] lg:text-[30px] font-bold leading-[100%] text-black mb-[12px]">
                         {feature?.featureDescriptionTitle || ""}
-                      </h4>
+                      </h3>
                       <p className="font-lato font-normal text-[17px] leading-[28px] text-[rgb(108,108,108)]">
                         {feature?.featureDescription || ""}
                       </p>

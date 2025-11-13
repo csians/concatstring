@@ -107,9 +107,9 @@ const Founder: React.FC<FounderProps> = ({ userId }) => {
                   {socialMedia && socialMedia.length > 0 && (
                     <div className="flex flex-col gap-[16px] items-start">
                       <div className="flex items-center space-x-4">
-                        <h4 className="font-lato font-bold text-[28px] leading-[36px] text-white">
+                        <h3 className="font-lato font-bold text-[28px] leading-[36px] text-white">
                           {socialTitle}
-                        </h4>
+                        </h3>
                         <ul className="flex items-center 2xl:gap-[40px] xl:gap-[40px] lg:gap-[30px] md:gap-[20px] sm:gap-[20px] gap-[10px]">
                           {socialMedia.map((social: any, index: number) => (
                             <li key={index}>
@@ -117,6 +117,7 @@ const Founder: React.FC<FounderProps> = ({ userId }) => {
                                 href={social.socialLink?.url}
                                 target={social.socialLink?.target}
                                 className="group w-[25px] h-[25px] flex items-center justify-center"
+                                aria-label={social.socialLink?.title}
                               >
                                 {social.socialSvg?.node?.sourceUrl ? (
                                   <img
@@ -125,6 +126,7 @@ const Founder: React.FC<FounderProps> = ({ userId }) => {
                                     width="20"
                                     height="22"
                                     className="w-[22px] h-[22px] group-hover:scale-[1.1]"
+                                    aria-hidden="true"
                                   />
                                 ) : (
                                   <span className="text-white text-sm">

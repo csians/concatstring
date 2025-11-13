@@ -1480,7 +1480,6 @@ query GetLifeAtCompany {
                   eventVideos {
                     eventVideo {
                       node {
-                        mediaType
                         sourceUrl
                         mediaItemUrl
                       }
@@ -1530,14 +1529,6 @@ export const GET_LIFE_AT_COMPANY_WITH_EVENTS = gql`
                     url
                   }
                   eventCategory
-                  eventVideos {
-                    eventVideo {
-                      node {
-                        sourceUrl
-                        mediaType
-                      }
-                    }
-                  }
                 }
               }
             }
@@ -2479,7 +2470,7 @@ export const GET_EVENT_BY_SLUG = gql`
       eventVideos {
         eventVideo {
           node {
-            mediaType
+           
             sourceUrl
             mediaItemUrl
           }
