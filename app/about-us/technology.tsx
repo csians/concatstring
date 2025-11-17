@@ -186,7 +186,7 @@ const Technology = () => {
                     }}
                   ></div>
                   <div className="relative z-10 text-center">
-                    <h2 className="tab-title text-[22px] font-denton font-bold text-center text-black group-hover:text-white max-w-[168px]">
+                    <h2 className="tab-title text-[22px] font-denton font-bold text-center text-black group-hover:text-white max-w-[168px] block">
                       {tech.aboutTechnologyTitle}
                     </h2>
                   </div>
@@ -206,15 +206,15 @@ const Technology = () => {
                   }}
                 >
                   <div className="flex flex-col gap-[20px] items-start">
-                    <h4 className="text-[26px] font-denton font-bold text-black leading-[34px] text-white">
+                    <h3 className="text-[26px] font-denton font-bold text-black leading-[34px] text-white">
                       {tech.aboutTechnologiesDescriptionTitle}
-                    </h4>
+                    </h3>
                     <div className="flex flex-col items-start gap-[15px]">
                       {tech.description.map((desc: any, i: number) => (
                         <div key={i} className="flex flex-col gap-[15px]">
-                          <h5 className="font-lato font-bold 2xl:text-[20px] xl:text-[20px] lg:text-[20px] md:text-[20px] sm:text-[18px] text-[18px] leading-[100%] text-white">
+                          <h4 className="font-lato font-bold 2xl:text-[20px] xl:text-[20px] lg:text-[20px] md:text-[20px] sm:text-[18px] text-[18px] leading-[100%] text-white">
                             {desc.listTitle}
-                          </h5>
+                          </h4>
                           {desc.technologyList &&
                             desc.technologyList.some(
                               (item: any) => item.technologyName
