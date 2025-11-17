@@ -55,7 +55,12 @@ export default function LifeAtCompany() {
     slidesToShow: 1,
     slidesToScroll: 1,
     dotsClass: "slick-dots custom-slick-dots",
-    customPaging: (i: number) => <button type="button"></button>,
+    customPaging: (i: number) => (
+      <button 
+        type="button" 
+        aria-label={`Go to slide ${i + 1}`}
+      ></button>
+    ),
   };
 
   const title = lifeAtCompanyData?.page?.flexibleContent?.flexibleContent?.find(

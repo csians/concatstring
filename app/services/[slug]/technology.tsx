@@ -122,9 +122,9 @@ const Technology: React.FC<Props> = ({ data }) => {
                                 height="54"
                                 className="group-hover:scale-[1.1] transition-all duration-300 ease-in-out object-contain w-[auto] max-h-[54px] h-[54px]"
                               />
-                              <h5 className="font-denton font-medium text-[18px] leading-[100%] text-white">
+                              <h3 className="font-denton font-medium text-[18px] leading-[100%] text-white">
                                 {sub.techSubStackName}
-                              </h5>
+                              </h3>
                             </div>
                           </div>
                         ))}

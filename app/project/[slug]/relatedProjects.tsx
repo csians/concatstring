@@ -51,7 +51,7 @@ const RelatedProjects: React.FC<Props> = ({ project }) => {
                       className="flex items-start justify-between 2xl:flex-row xl:flex-row lg:flex-row md:flex-col sm:flex-col flex-col-reverse gap-[30px] w-full"
                     >
                       <div className="flex lg:flex-col md:gap-[40px] lg:justify-start gap-[20px] 2xl:order-1 xl:order-1 lg:order-1 md:order-2 sm:order-2 order-2 flex-row justify-between w-full lg:w-auto items-center lg:items-start">
-                        <h4 className="font-lato font-bold 2xl:text-[46px] xl:text-[46px] lg:text-[40px] md:text-[35px] sm:text-[30px] text-[26px] leading-[100%] text-white">
+                        <h3 className="font-lato font-bold 2xl:text-[46px] xl:text-[46px] lg:text-[40px] md:text-[35px] sm:text-[30px] text-[26px] leading-[100%] text-white">
                         {settings.arrowSvg?.node?.sourceUrl && settings.projectLink?.url && (
                           <Link
                             href={settings.projectLink.url}
@@ -59,10 +59,11 @@ const RelatedProjects: React.FC<Props> = ({ project }) => {
                           {settings.relatedProjectName}
                           </Link>
                         )}
-                        </h4>
+                        </h3>
                         {settings.arrowSvg?.node?.sourceUrl && settings.projectLink?.url && (
                           <Link
                             href={settings.projectLink.url}
+                            aria-label={`View project ${settings.relatedProjectName || 'details'}`}
                           >
                             <img
                               src={settings.arrowSvg.node.sourceUrl}
