@@ -6,7 +6,8 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start -p 3001"
+    "start": "next start -p 3001",
+    "convert:webp": "node convert-png-to-webp.js"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
@@ -39,6 +40,7 @@
     "@types/react-dom": "^19",
     "@types/react-slick": "^0.23.13",
     "postcss": "^8.5",
+    "sharp": "^0.33.5",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
   }

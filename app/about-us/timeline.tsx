@@ -429,6 +429,7 @@ const Timeline = () => {
                 <button
                   ref={scrollUpBtnRef}
                   id="scrollUp"
+                  aria-label="Scroll timeline up"
                   className="md:w-[64px] md:h-[64px] w-[50px] h-[50px] rounded-full border border-white/50 flex items-center justify-center text-white relative group"
                 >
                   <svg
@@ -437,6 +438,7 @@ const Timeline = () => {
                     height="22"
                     viewBox="0 0 11 22"
                     fill="none"
+                    
                   >
                     <defs>
                       <linearGradient
@@ -469,6 +471,7 @@ const Timeline = () => {
                 <button
                   ref={scrollDownBtnRef}
                   id="scrollDown"
+                  aria-label="Scroll timeline down"
                   className="md:w-[64px] md:h-[64px] w-[50px] h-[50px] rounded-full border border-white/50 flex items-center justify-center text-white relative group"
                 >
                   <svg
