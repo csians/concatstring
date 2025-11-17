@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setProjectData } from "@/store/slices/projectDetailsSlice";
 import { RootState } from "@/store";
+import Image from "next/image";
 
 interface Props {
   project: any;
@@ -55,11 +56,12 @@ const MarketOps: React.FC<Props> = ({ project, onLanguagesChange }) => {
           </div>
           <div className="flex 2xl:order-2 xl:order-2 lg:order-2 md:order-2 sm:order-1 order-1">
             {image && (
-              <img
+              <Image
                 src={image.sourceUrl}
                 alt={image.altText}
-                width="436"
-                height="259"
+                width={436}
+                height={259}
+                priority
                 className="2xl:w-[436px] xl:w-[436px] lg:w-[436px] md:w-[400px] sm:w-[300px] w-[250px]"
               />
             )}

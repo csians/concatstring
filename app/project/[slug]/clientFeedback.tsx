@@ -109,9 +109,9 @@ const ClientFeedback: React.FC<Props> = ({ project }) => {
                             
                             {/* Client Name and Designation */}
                             <div className="flex flex-col gap-[6px] items-start">
-                              <h4 className="font-denton font-bold 2xl:text-[30px] xl:text-[30px] lg:text-[25px] md:text-[25px] lg:text-[20px] sm:text-[18px] text-[18px] 2xl:leading-[42px] xl:leading-[42px] lg:leading-[40px] md:leading-[30px] sm:leading-[25px] leading-[20px] text-center text-white">
+                              <h3 className="font-denton font-bold 2xl:text-[30px] xl:text-[30px] lg:text-[25px] md:text-[25px] lg:text-[20px] sm:text-[18px] text-[18px] 2xl:leading-[42px] xl:leading-[42px] lg:leading-[40px] md:leading-[30px] sm:leading-[25px] leading-[20px] text-center text-white">
                                 {feedback.clientName}
-                              </h4>
+                              </h3>
                               {
                                 feedback.clientDesignation &&
                                 <p className="font-lato text-[16px] font-medium leading-[26px] text-[#C3C3C3] text-left">
