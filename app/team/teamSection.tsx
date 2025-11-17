@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_TEAM_LISTING } from "@/lib/queries";
 import "@/css/teamlisting.css";
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { setTeamData } from "@/store/slices/teamSlice";
 import Link from "next/link";
+import Image from "next/image";
 
 interface TeamMember {
   teamSetting: {
@@ -66,6 +67,12 @@ interface TeamGroup {
   teamMember: {
     nodes: TeamMember[];
   };
+  memberDetailBackgroundImage?: {
+    node: {
+      altText: string;
+      sourceUrl: string;
+    };
+  } | null;
 }
 
 const TeamSection: React.FC = () => {
@@ -77,23 +84,26 @@ const TeamSection: React.FC = () => {
   const [isPopupDataReady, setIsPopupDataReady] = useState(false);
 
   // Helper function to split name and return JSX with last name in red
-  const renderNameWithRedLastName = (fullName: string) => {
+  const renderNameWithRedLastName = useCallback((fullName: string) => {
     if (!fullName) return null;
-    
-    const nameParts = fullName.trim().split(' ');
+
+    const nameParts = fullName.trim().split(" ");
     if (nameParts.length <= 1) {
       return <span>{fullName}</span>;
     }
-    
-    const firstName = nameParts.slice(0, -1).join(' ');
+
+    const firstName = nameParts.slice(0, -1).join(" ");
     const lastName = nameParts[nameParts.length - 1];
-    
+
     return (
       <>
-        {firstName} <span style={{ color: 'rgb(231 33 37 / var(--tw-text-opacity, 1))' }}>{lastName}</span>
+        {firstName}{" "}
+        <span style={{ color: "rgb(231 33 37 / var(--tw-text-opacity, 1))" }}>
+          {lastName}
+        </span>
       </>
     );
-  };
+  }, []);
   useEffect(() => {
     if (teamListingData) {
       dispatch(setTeamData(teamListingData));
@@ -103,13 +113,13 @@ const TeamSection: React.FC = () => {
   // Use Redux data if available
   const finalData = cachedTeamData || teamListingData;
 
-  const teamListingLayout =
-    finalData?.page?.flexibleContent?.flexibleContent?.find(
+  // Memoize layout & group selection to avoid unnecessary recalculations on re-renders
+  const visionArchitectsGroup: TeamGroup | undefined = useMemo(() => {
+    const teamListingLayout = finalData?.page?.flexibleContent?.flexibleContent?.find(
       (item: any) => item?.teamListTitle
     );
-
-  // Get "The Vision Architects" group (first group)
-  const visionArchitectsGroup = teamListingLayout?.teamGroup?.[0];
+    return teamListingLayout?.teamGroup?.[0];
+  }, [finalData]);
 
   const handleMemberClick = (member: TeamMember) => {
     setSelectedMember(member);
@@ -177,11 +187,8 @@ const TeamSection: React.FC = () => {
   //   );
   // }
 
-  if (
-    visionArchitectsGroup?.length === 0 ||
-    !visionArchitectsGroup?.teamGroupTitle
-  ) {
-    return <TeamSectionSkeleton />; 
+  if (!visionArchitectsGroup?.teamGroupTitle) {
+    return <TeamSectionSkeleton />;
   }
 
   return (
@@ -189,9 +196,9 @@ const TeamSection: React.FC = () => {
       <section className="meet-the-mind bg-black py-[50px] sm:py-[60px] md:py-[80px] lg:py-[120px] lg:pt-[100px]">
         <div className="container max-w-[1640px] px-[10px] sm:px-[20px] mx-auto">
           <div className="flex flex-col items-center justify-center gap-[30px] sm:gap-[40px] md:gap-[60px] bg-[rgba(231,33,37,0.2)] rounded-[14px] p-[16px] sm:p-[40px] md:p-[60px] lg:p-[100px]">
-            <h3 className="h3 text-[22px] sm:text-[28px] md:text-[36px] lg:text-[48px] xl:text-[58px] 2xl:text-[66px] font-bold leading-[28px] sm:leading-[35px] md:leading-[45px] lg:leading-[60px] xl:leading-[75px] 2xl:leading-[87px] font-denton text-white text-center max-w-[1045px]">
+            <h2 className="h3 text-[22px] sm:text-[28px] md:text-[36px] lg:text-[48px] xl:text-[58px] 2xl:text-[66px] font-bold leading-[28px] sm:leading-[35px] md:leading-[45px] lg:leading-[60px] xl:leading-[75px] 2xl:leading-[87px] font-denton text-white text-center max-w-[1045px]">
               {visionArchitectsGroup.teamGroupTitle}
-            </h3>
+            </h2>
             <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-[16px] sm:gap-[24px] md:gap-[30px] w-full 2xl:pb-[100px] xl:pb-[100px] lg:pb-0 md:pb-0 sm:pb-0 pb-0">
               {visionArchitectsGroup.teamMember?.nodes?.map(
                 (member: TeamMember, memberIndex: number) => (
@@ -201,17 +208,32 @@ const TeamSection: React.FC = () => {
                     onClick={() => handleMemberClick(member)}
                   >
                     {/*  Static Background Image  */}
-                    <img
-                      src={member.teamSetting.memberImage?.node?.sourceUrl}
-                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0 object-top"
-                      alt={member.teamSetting.memberImage?.node?.altText}
-                    />
+                    {member.teamSetting.memberImage?.node?.sourceUrl && (
+                      <Image
+                        src={member.teamSetting.memberImage.node.sourceUrl}
+                        alt={
+                          member.teamSetting.memberImage.node.altText ||
+                          member.teamSetting.memberName
+                        }
+                        fill
+                        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0 object-top"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        priority={memberIndex === 0}
+                        fetchPriority={memberIndex === 0 ? "high" : undefined}
+                        loading={memberIndex === 0 ? undefined : "lazy"}
+                      />
+                    )}
                     {/*  GIF on Hover  */}
-                    <img
-                      src={member.teamSetting.memberGif?.node?.sourceUrl}
-                      className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      alt={member.teamSetting.memberGif?.node?.altText}
-                    />
+                    {member.teamSetting.memberGif?.node?.sourceUrl && (
+                      <Image
+                        src={member.teamSetting.memberGif.node.sourceUrl}
+                        alt={member.teamSetting.memberGif.node.altText || member.teamSetting.memberName}
+                        fill
+                        className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        loading="lazy"
+                      />
+                    )}
                     {/*  Content Area  */}
                     <div className="bg-white rounded-[12px] p-[8px] sm:p-[12px] md:p-[15px] relative w-full z-10 flex items-center gap-[6px] sm:gap-[10px]">
                       <span className="bg-gradient-to-b from-[#E72125] to-[#8E1D1D] text-white rounded-[6px] flex items-center justify-center text-[16px] sm:text-[18px] md:text-[22px] font-denton leading-[100%] p-[8px] sm:p-[10px] w-max">
@@ -232,10 +254,7 @@ const TeamSection: React.FC = () => {
 
       {/* Popup Modal */}
       {isPopupOpen && selectedMember && (
-        <div
-          className="fixed inset-0 z-50 z-[9999999]"
-          onClick={handleBackdropClick}
-        >
+        <div className="fixed inset-0 z-[9999999]" onClick={handleBackdropClick}>
           {/*  Backdrop with blur effect  */}
           <div
             className="absolute inset-0 bg-black bg-opacity-[0.02] backdrop-blur-[20px] bg-cover"
@@ -251,7 +270,7 @@ const TeamSection: React.FC = () => {
           {/*  Modal Container  */}
           <div className="relative flex items-center justify-center min-h-screen p-[20px]">
           <div className="fixed inset-0" onClick={closePopup}></div>
-          <div className="bg-[#292929] max-h-[calc(100vh-80px)] overflow-y-auto rounded-[20px] shadow-[0px_24px_54px_0px_rgba(0,0,0,0.65)] w-full max-w-[1400px] xl:h-[744px] xl:h-[auto] md:h-auto sm:h-auto h-auto relative overflow-hidden custom-scrollbar sm:pt-[20px] md:pt-[20px] lg:pt-0 ">
+          <div className="bg-[#292929] max-h-[calc(100vh-80px)] overflow-y-auto rounded-[20px] shadow-[0px_24px_54px_0px_rgba(0,0,0,0.65)] w-full max-w-[1400px] xl:h-[744px] md:h-auto sm:h-auto h-auto relative overflow-hidden custom-scrollbar sm:pt-[20px] md:pt-[20px] lg:pt-0 ">
               {/*  Close Button  */}
               <button
                 onClick={closePopup}
@@ -331,17 +350,25 @@ const TeamSection: React.FC = () => {
                 <div className="xl:w-[auto] lg:w-[auto] max-h-[calc(100vh-80px)] w-full xl:h-[auto] lg:h-[100%] h-[auto] relative  xl:pr-[20px] pr-[20px] lg:pr-[0px] rounded-[10px] overflow-hidden sm:max-w-[520px] lg:m-[0] sm:m-[auto] max-lg:pe-[0] aspect-[400/470]">
                   <div className="w-full h-full">
                     <div className="w-full h-full overflow-hidden rounded-[10px]">
-                      <img
-                        src={
-                          selectedMember?.teamSetting?.memberImage?.node
-                            ?.sourceUrl
-                        }
-                        alt={
-                          selectedMember?.teamSetting?.memberImage?.node
-                            ?.altText
-                        }
-                        className="w-full h-full object-cover object-top aspect-[400/470]"
-                      />
+                      {selectedMember?.teamSetting?.memberImage?.node
+                        ?.sourceUrl && (
+                        <Image
+                          src={
+                            selectedMember.teamSetting.memberImage.node
+                              .sourceUrl
+                          }
+                          alt={
+                            selectedMember.teamSetting.memberImage.node
+                              .altText ||
+                            selectedMember.teamSetting.memberName
+                          }
+                          width={400}
+                          height={470}
+                          className="w-full h-full object-cover object-top aspect-[400/470]"
+                          sizes="(max-width: 768px) 100vw, 400px"
+                          loading="lazy"
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -410,7 +437,7 @@ const TeamSection: React.FC = () => {
                               className="group w-[25px] h-[25px] flex items-center justify-center"
                             >
                               {selectedMember.teamSetting.socialSvg && (
-                                <img
+                                <Image
                                   src={
                                     selectedMember.teamSetting.socialSvg.node
                                       .sourceUrl
@@ -419,7 +446,10 @@ const TeamSection: React.FC = () => {
                                     selectedMember.teamSetting.socialSvg.node
                                       .altText
                                   }
+                                  width={20}
+                                  height={20}
                                   className="w-[20px] h-[20px] group-hover:scale-[1.1]"
+                                  loading="lazy"
                                 />
                               )}
                             </Link>
