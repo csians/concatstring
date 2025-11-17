@@ -126,13 +126,7 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
-		<loc>https://concatstring.com/blog/sales-team-needs-cpq-software-2025</loc>
-		<lastmod>2025-09-08T11:47:41.171Z</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>1.0</priority>
-	</url>
-	<url>
-		<loc>https://concatstring.com/blog/top-mobile-app-development-trends-2025</loc>
+		<loc>https://concatstring.com/blog/how-an-ai-chatbot-for-a-website-can-boost-engagement-and-conversions</loc>
 		<lastmod>2025-09-08T11:47:41.171Z</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1.0</priority>
@@ -144,7 +138,13 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
-		<loc>https://concatstring.com/blog/how-an-ai-chatbot-for-a-website-can-boost-engagement-and-conversions</loc>
+		<loc>https://concatstring.com/blog/top-mobile-app-development-trends-2025</loc>
+		<lastmod>2025-09-08T11:47:41.171Z</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>https://concatstring.com/blog/sales-team-needs-cpq-software-2025</loc>
 		<lastmod>2025-09-08T11:47:41.171Z</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1.0</priority>
@@ -172,7 +172,7 @@
 		<lastmod>2025-09-08T11:47:41.171Z</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1.0</priority>
-	</url>
+	</url>	
 	<url>
 		<loc>https://concatstring.com/blog/ios-19-mobile-app-development-for-businesses-copy</loc>
 		<lastmod>2025-09-08T11:47:41.171Z</lastmod>
@@ -210,8 +210,8 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
-		<loc>https://concatstring.com/blog/e-commerce-website-development-in-2025</loc>
-		<lastmod>2025-11-03T11:47:41.171Z</lastmod>
+		<loc>https://concatstring.com/blog/flutter-vs-react-native-better-for-your-mobile-app-2025</loc>
+		<lastmod>2025-10-28T11:47:41.171Z</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1.0</priority>
 	</url>
@@ -222,8 +222,26 @@
 		<priority>1.0</priority>
 	</url>
 	<url>
-		<loc>https://concatstring.com/blog/flutter-vs-react-native-better-for-your-mobile-app-2025</loc>
-		<lastmod>2025-10-28T11:47:41.171Z</lastmod>
+		<loc>https://concatstring.com/blog/e-commerce-website-development-in-2025</loc>
+		<lastmod>2025-11-03T11:47:41.171Z</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>https://concatstring.com/blog/mobile-app-development-explained-step-by-step</loc>
+		<lastmod>2025-11-06T11:47:41.171Z</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>https://concatstring.com/blog/choose-the-right-tech-stack-for-your-web-or-mobile-app</loc>
+		<lastmod>2025-11-07T11:47:41.171Z</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>https://concatstring.com/blog/ai-in-web-development-can-transfer-your-website</loc>
+		<lastmod>2025-11-11T11:47:41.171Z</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1.0</priority>
 	</url>
