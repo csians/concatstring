@@ -64,9 +64,18 @@ const Empowering = () => {
           autoPlay
           loop
           playsInline
+          preload="auto"
+          fetchPriority="high"
           className="absolute top-0 left-0 w-full h-full object-cover object-center"
         >
           <source src={videoUrl} type={videoType} />
+          <track
+            kind="captions"
+            src="/captions/about-banner.en.vtt"
+            srcLang="en"
+            label="English captions"
+            default
+          />
           Your browser does not support the video tag.
         </video>
         <div className="absolute inset-0 bg-black/50"></div>
