@@ -263,9 +263,9 @@ const WorkingMethod = () => {
                     <span className="h-[34px] w-max p-[10px] rounded-[6px] bg-[#E72125]/10">
                       {romanNumeralSVGs[idx]}
                     </span>
-                    <h4 className="h4 text-white font-bold">
+                    <h3 className="h4 text-white font-bold">
                       {step.workingCycleTitle}
-                    </h4>
+                    </h3>
                     <p className="font-lato text-white text-[16px] leading-[26px] font-medium">
                       {step.workingCycleDescription}
                     </p>
