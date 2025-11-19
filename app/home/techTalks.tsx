@@ -100,7 +100,7 @@ const TechTalks = () => {
                           className="2xl:rounded-[16px] xl:rounded-[16px] lg:rounded-[16px] md:rounded-[15px] sm:rounded-[10px] rounded-[10px] mb-[16px] w-full h-[270px] object-fit object-cover"
                           alt={post?.title}
                           loading="lazy"
-                          decoding="async"
+                          fetchPriority="low"
                         />
                       </Link>
                       <div className="flex flex-row flex-wrap justify-between gap-[10px] mb-[20px] items-start">
@@ -127,7 +127,7 @@ const TechTalks = () => {
                               width={18}
                               height={18}
                               loading="lazy"
-                              decoding="async"
+                              fetchPriority="low"
                             />
                           )}
                           {formatDate && formatDate(post?.date)}
@@ -164,7 +164,7 @@ const TechTalks = () => {
                             width={15}
                             height={20}
                             loading="lazy"
-                            decoding="async"
+                            fetchPriority="low"
                           />
                         )}
                       </Link>

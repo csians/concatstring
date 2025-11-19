@@ -145,7 +145,7 @@ const LifeAtCompany = () => {
                     }
                     className="w-full h-full object-cover object-cover group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
-                    decoding="async"
+                    fetchPriority="low"
                     width={1200}
                     height={800}
                   />
@@ -237,7 +237,7 @@ const LifeAtCompany = () => {
                       }
                       className="w-full h-full object-cover object-cover group-hover:scale-105 transition-transform duration-300"
                       loading="lazy"
-                      decoding="async"
+                      fetchPriority="low"
                       width={1200}
                       height={800}
                     />
@@ -332,7 +332,7 @@ const LifeAtCompany = () => {
                       }
                       className="w-full h-full object-cover object-cover group-hover:scale-105 transition-transform duration-300"
                       loading="lazy"
-                      decoding="async"
+                      fetchPriority="low"
                       width={1200}
                       height={800}
                     />
@@ -427,7 +427,7 @@ const LifeAtCompany = () => {
                     }
                     className="w-full h-full object-cover object-cover group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
-                    decoding="async"
+                    fetchPriority="low"
                     width={1200}
                     height={800}
                   />
