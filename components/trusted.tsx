@@ -120,6 +120,8 @@ const Trusted: React.FC<TrustSliderProps> = ({ mainClass }) => {
                 src={img.sourceUrl}
                 alt={img.altText || "brand"}
                 className={classNames[idx]}
+                loading="lazy"
+                fetchPriority="low"
               />
             ) : null
           )}

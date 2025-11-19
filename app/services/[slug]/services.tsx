@@ -192,6 +192,8 @@ const Service: React.FC<Props> = ({ data }) => {
                                   width="10"
                                   height="10"
                                   alt="bullet"
+                                  loading="lazy"
+                                  fetchPriority="low"
                                 />
                                 <h4 className="font-denton font-bold text-[17px] leading-[28px] text-black w-[calc(100%-20px)]">
                                   {item.listTitle}
@@ -283,6 +285,8 @@ const Service: React.FC<Props> = ({ data }) => {
                                       width="10"
                                       height="10"
                                       alt="bullet"
+                                      loading="lazy"
+                                      fetchPriority="low"
                                     />
                                     <h4 className="font-denton font-bold text-[17px] leading-[28px] text-black w-[calc(100%-20px)]">
                                       {item.listTitle}

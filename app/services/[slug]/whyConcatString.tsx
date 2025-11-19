@@ -79,6 +79,8 @@ const WhyConcatString: React.FC<Props> = ({ data }) => {
                   alt={partnerImage.node.altText || ""}
                   width="670"
                   height="776"
+                  loading="lazy"
+                  fetchPriority="low"
                 />
               )}
             </div>

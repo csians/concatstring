@@ -121,6 +121,8 @@ const Technology: React.FC<Props> = ({ data }) => {
                                 width="100"
                                 height="54"
                                 className="group-hover:scale-[1.1] transition-all duration-300 ease-in-out object-contain w-[auto] max-h-[54px] h-[54px]"
+                                loading="lazy"
+                                fetchPriority="low"
                               />
                               <h3 className="font-denton font-medium text-[18px] leading-[100%] text-white">
                                 {sub.techSubStackName}

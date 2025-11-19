@@ -121,6 +121,8 @@ const Culture = () => {
                     alt={perk.gif?.node?.altText || perk.title}
                     height="86"
                     width="86"
+                    loading="lazy"
+                    fetchPriority="low"
                     className="2xl:w-[86px] xl:w-[86px] lg:w-[80px] md:w-[70px] sm:w-[50px] w-[50px] 2xl:h-[86px] xl:h-[86px] lg:h-[70px] md:h-[70px] sm:h-[50px] h-[50px] transition-all duration-[1200ms] ease-in-out"
                   />
                 </div>

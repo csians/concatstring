@@ -115,6 +115,8 @@ const StartBuilding: React.FC<Props> = ({ data }) => {
                     width={26}
                     height={26}
                     className="md:w-[26px] md:h-[auto] w-[26px] h-[auto]"
+                    loading="lazy"
+                    fetchPriority="low"
                   />
                   <Link
                     href={`tel:${techSettings.contactNumber}`}
@@ -130,6 +132,8 @@ const StartBuilding: React.FC<Props> = ({ data }) => {
                     width={26}
                     height={26}
                     className="md:w-[26px] md:h-[auto] w-[26px] h-[auto]"
+                    loading="lazy"
+                    fetchPriority="low"
                   />
                   <Link
                     href={`mailto:${techSettings.emailAddress}`}

@@ -52,7 +52,7 @@ const TechnologyItem = React.memo(({ tech, index }: { tech: any; index: number }
             height={298}
             className="float-left"
             loading="lazy"
-            decoding="async"
+            fetchPriority="low"
           />
         )}
       </div>
