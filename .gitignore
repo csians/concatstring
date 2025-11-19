@@ -40,3 +40,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# cache files
+/site-cache/*.json
+!/site-cache/.gitkeep
