@@ -8,22 +8,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { WhyChooseSkeleton } from "@/components/skeletons";
 
-const WhyChoose = () => {
+interface WhyChooseProps {
+  initialData?: any;
+}
+
+const WhyChoose = ({ initialData }: WhyChooseProps) => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.whyChoose);
-  // Skip query if cached data exists to prevent unnecessary refetches
+  // Skip query if cached data or initial data exists to prevent unnecessary refetches
   const { data, loading } = useQuery(GET_WHY_CHOOSE_US, {
-    skip: !!cachedData,
+    skip: !!cachedData || !!initialData,
   });
 
-  const freshData = data?.page?.flexibleContent?.flexibleContent?.find(
+  const freshData = initialData?.page?.flexibleContent?.flexibleContent?.find(
+    (block: any) => block?.whyChooseUsTitle
+  ) || data?.page?.flexibleContent?.flexibleContent?.find(
     (block: any) => block?.whyChooseUsTitle
   );
 
   const whyChooseData = cachedData || freshData;
 
   useEffect(() => {
-    if (data) {
+    if (initialData && !cachedData) {
+      const whyChooseBlock = initialData?.page?.flexibleContent?.flexibleContent?.find(
+        (block: any) => block?.whyChooseUsTitle
+      );
+      if (whyChooseBlock) {
+        dispatch(setWhyChooseData(whyChooseBlock));
+      }
+    } else if (data) {
       const whyChooseBlock = data?.page?.flexibleContent?.flexibleContent?.find(
         (block: any) => block?.whyChooseUsTitle
       );
@@ -31,10 +44,10 @@ const WhyChoose = () => {
         dispatch(setWhyChooseData(whyChooseBlock));
       }
     }
-  }, [data, dispatch]);
+  }, [data, initialData, cachedData, dispatch]);
 
   // Show skeleton while loading and no cached data
-  if (loading && !cachedData) {
+  if (loading && !cachedData && !initialData) {
     return <WhyChooseSkeleton />;
   }
 

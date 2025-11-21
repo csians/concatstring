@@ -12,16 +12,26 @@ import { TrustedSkeleton } from "@/components/skeletons";
 
 interface TrustSliderProps {
   mainClass?: string;
+  initialData?: any;
 }
 
-const Trusted: React.FC<TrustSliderProps> = ({ mainClass }) => {
+const Trusted: React.FC<TrustSliderProps> = ({ mainClass, initialData }) => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.trusted);
-  const { data, loading } = useQuery(GET_TRUSTED_BRANDS);
+  const { data, loading } = useQuery(GET_TRUSTED_BRANDS, {
+    skip: !!cachedData || !!initialData,
+  });
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    if (data) {
+    if (initialData && !cachedData) {
+      const trustedBlock = initialData?.page?.flexibleContent?.flexibleContent?.find(
+        (block: any) => block?.trustedTitle
+      );
+      if (trustedBlock) {
+        dispatch(setTrusted(trustedBlock));
+      }
+    } else if (data) {
       const trustedBlock = data?.page?.flexibleContent?.flexibleContent?.find(
         (block: any) => block?.trustedTitle
       );
@@ -29,7 +39,7 @@ const Trusted: React.FC<TrustSliderProps> = ({ mainClass }) => {
         dispatch(setTrusted(trustedBlock));
       }
     }
-  }, [data, dispatch]);
+  }, [data, initialData, cachedData, dispatch]);
 
   // Animation effect
   useEffect(() => {
@@ -65,11 +75,13 @@ const Trusted: React.FC<TrustSliderProps> = ({ mainClass }) => {
   
 
   // Show skeleton while loading and no cached data
-  if (loading && !cachedData) {
+  if (loading && !cachedData && !initialData) {
     return <TrustedSkeleton />;
   }
 
-  const brandGroup = data?.page?.flexibleContent?.flexibleContent?.find(
+  const brandGroup = initialData?.page?.flexibleContent?.flexibleContent?.find(
+    (block: any) => block?.trustedTitle
+  ) || data?.page?.flexibleContent?.flexibleContent?.find(
     (block: any) => block?.trustedTitle
   );
 
