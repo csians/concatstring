@@ -65,7 +65,6 @@ const Empowering = () => {
           loop
           playsInline
           preload="auto"
-          fetchPriority="high"
           className="absolute top-0 left-0 w-full h-full object-cover object-center"
         >
           <source src={videoUrl} type={videoType} />

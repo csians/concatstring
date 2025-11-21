@@ -6,6 +6,7 @@ import { RootState } from "@/store";
 import { setTeamData } from "@/store/slices/teamSlice";
 import { GET_TEAM_LISTING } from "@/lib/queries";
 import { TeamBannerSkeleton } from "@/components/skeletons";
+import Image from "next/image";
 
 const OurTeam = () => {
   const dispatch = useDispatch();
@@ -53,11 +54,19 @@ const OurTeam = () => {
   // if (!teamListTitle || !bannerImage) return null;
 
   return (
-    <section
-      className="mt-[114px] bg-cover lg:pt-[100px] sm:pt-[40px] pt-[20px] lg:pb-[100px] sm:pb-[40px] pb-[20px] bg-no-repeat bg-left aspect-[1700/800] rounded-bl-[20px] rounded-br-[20px]"
-      style={{ backgroundImage: `url(${bannerImage})` }}
-    >
-      <div className="container max-w-[1440px] 2xl:px-[20px] xl:px-[20px] lg:px-[20px] md:px-[15px] sm:px-[12px] px-[10px] mx-auto">        
+    <section className="mt-[114px] relative lg:pt-[100px] sm:pt-[40px] pt-[20px] lg:pb-[100px] sm:pb-[40px] pb-[20px] aspect-[1700/800] rounded-bl-[20px] rounded-br-[20px] overflow-hidden">
+      {bannerImage && (
+        <Image
+          src={bannerImage}
+          alt={bannerAltText || "Team banner"}
+          fill
+          priority
+          fetchPriority="high"
+          className="object-cover object-left"
+          sizes="100vw"
+        />
+      )}
+      <div className="container max-w-[1440px] 2xl:px-[20px] xl:px-[20px] lg:px-[20px] md:px-[15px] sm:px-[12px] px-[10px] mx-auto relative z-10">        
         <div className="flex justify-center items-center">
           <h1 className="h1 text-white leading-[100%] xl:text-[100px] max-sm:text-[30px]">
             {titleWords.map((word: string, index: number) => (
