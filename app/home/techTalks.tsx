@@ -8,7 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import Link from "next/link";
 
-const TechTalks = () => {
+interface TechTalksProps {
+  initialPostsData?: any;
+  initialIconsData?: any;
+}
+
+const TechTalks = ({ initialPostsData, initialIconsData }: TechTalksProps) => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.techTalks);
 
@@ -17,24 +22,33 @@ const TechTalks = () => {
       perPage: 3, // Get the latest 3 posts
       after: null,
     },
+    skip: !!cachedData?.posts || !!initialPostsData,
   });
 
-  const { data: iconsData } = useQuery(GET_BLOG_ICONS);
+  const { data: iconsData } = useQuery(GET_BLOG_ICONS, {
+    skip: !!cachedData?.icons || !!initialIconsData,
+  });
 
   useEffect(() => {
-    if (postsData && iconsData) {
+    if (initialPostsData && initialIconsData && !cachedData) {
+      const techTalksData = {
+        posts: initialPostsData?.posts?.nodes || [],
+        icons: initialIconsData?.page?.blogSettings?.techTalks,
+      };
+      dispatch(setTechTalksData(techTalksData));
+    } else if (postsData && iconsData) {
       const techTalksData = {
         posts: postsData?.posts?.nodes || [],
         icons: iconsData?.page?.blogSettings?.techTalks,
       };
       dispatch(setTechTalksData(techTalksData));
     }
-  }, [postsData, iconsData, dispatch]);
+  }, [postsData, iconsData, initialPostsData, initialIconsData, cachedData, dispatch]);
 
-  // Use cached data from Redux if available, otherwise use fresh data from query
-  const finalPostsData = cachedData?.posts || postsData?.posts?.nodes || [];
+  // Use cached data from Redux if available, otherwise use initial data, then fresh data from query
+  const finalPostsData = cachedData?.posts || initialPostsData?.posts?.nodes || postsData?.posts?.nodes || [];
   const finalIconsData =
-    cachedData?.icons || iconsData?.page?.blogSettings?.techTalks;
+    cachedData?.icons || initialIconsData?.page?.blogSettings?.techTalks || iconsData?.page?.blogSettings?.techTalks;
 
   const posts = finalPostsData;
   const blogIcons = finalIconsData;
@@ -100,7 +114,7 @@ const TechTalks = () => {
                           className="2xl:rounded-[16px] xl:rounded-[16px] lg:rounded-[16px] md:rounded-[15px] sm:rounded-[10px] rounded-[10px] mb-[16px] w-full h-[270px] object-fit object-cover"
                           alt={post?.title}
                           loading="lazy"
-                          decoding="async"
+                          fetchPriority="low"
                         />
                       </Link>
                       <div className="flex flex-row flex-wrap justify-between gap-[10px] mb-[20px] items-start">
@@ -127,7 +141,7 @@ const TechTalks = () => {
                               width={18}
                               height={18}
                               loading="lazy"
-                              decoding="async"
+                              fetchPriority="low"
                             />
                           )}
                           {formatDate && formatDate(post?.date)}
@@ -164,7 +178,7 @@ const TechTalks = () => {
                             width={15}
                             height={20}
                             loading="lazy"
-                            decoding="async"
+                            fetchPriority="low"
                           />
                         )}
                       </Link>

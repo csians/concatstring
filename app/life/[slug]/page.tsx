@@ -462,6 +462,7 @@ const EventDetailPage = ({ params }: PageProps) => {
                         <img
                           src={mediaUrl}
                           alt={mediaData?.altText || `Event image ${index + 1}`}
+                          loading="lazy"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       ) : (
@@ -609,6 +610,7 @@ const EventDetailPage = ({ params }: PageProps) => {
                         allMedia[currentImageIndex]?.data?.eventImage?.node
                           ?.altText || `Event image ${currentImageIndex + 1}`
                       }
+                      loading="lazy"
                       className="w-full h-auto max-h-[60vh] object-contain aspect-[16/9] object-center rounded-[10px] select-none pointer-events-none"
                       id="gallery-popup-description"
                       draggable={false}
@@ -785,6 +787,7 @@ const EventDetailPage = ({ params }: PageProps) => {
                                 <img
                                   src={image.sourceUrl}
                                   alt={`Thumbnail ${index + 1}`}
+                                  loading="lazy"
                                   className="w-full h-full object-cover"
                                 />
                               </button>

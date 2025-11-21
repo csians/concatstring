@@ -370,6 +370,7 @@ const FutureTech = () => {
                           alt={post.featuredImage?.node?.altText || post.title}
                           width="399"
                           height="270"
+                          loading="lazy"
                           className="2xl:rounded-[16px] xl:rounded-[16px] lg:rounded-[16px] md:rounded-[15px] sm:rounded-[10px] rounded-[10px] mb-[16px] w-full object-cover"
                         />
                       </Link>
@@ -395,6 +396,7 @@ const FutureTech = () => {
                               alt={blogIcons.dateIcon.node.altText}
                               width="18"
                               height="19"
+                              loading="lazy"
                               className="w-[18px] h-[19px]"
                             />
                           )}
@@ -454,6 +456,7 @@ const FutureTech = () => {
                           alt={blogIcons.readMoreIcon.node.altText}
                           width="15"
                           height="20"
+                          loading="lazy"
                           className="w-[15px] h-[20px]"
                         />
                       )}

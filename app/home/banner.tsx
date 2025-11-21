@@ -54,11 +54,15 @@ const usePrefersReducedData = () => {
   return reduced;
 };
 
-const Banner: React.FC = () => {
+interface BannerProps {
+  initialData?: any;
+}
+
+const Banner: React.FC<BannerProps> = ({ initialData }) => {
   const cachedData = useSelector((state: RootState) => state.home.banner);
 
   const { data, loading: gqlLoading } = useQuery(GET_BANNER_CONTENT, {
-    skip: !!cachedData,
+    skip: !!cachedData || !!initialData,
     fetchPolicy: "cache-first",
   });
 
@@ -67,9 +71,10 @@ const Banner: React.FC = () => {
   const column = useMemo(() => {
     return (
       cachedData?.page?.flexibleContent?.flexibleContent?.[0]?.column?.[0] ??
+      initialData?.page?.flexibleContent?.flexibleContent?.[0]?.column?.[0] ??
       data?.page?.flexibleContent?.flexibleContent?.[0]?.column?.[0]
     );
-  }, [cachedData, data]);
+  }, [cachedData, initialData, data]);
 
   const title: string | undefined = column?.title;
   const content: string | undefined = column?.content;
@@ -78,8 +83,12 @@ const Banner: React.FC = () => {
   // Activate animation once content is ready
   const [isActive, setIsActive] = useState(false);
   useEffect(() => {
-    if (data) dispatch(setBanner(data));
-  }, [data, dispatch]);
+    if (initialData && !cachedData) {
+      dispatch(setBanner(initialData));
+    } else if (data) {
+      dispatch(setBanner(data));
+    }
+  }, [data, initialData, cachedData, dispatch]);
   useEffect(() => {
     if (!title || !content) return;
     const id = window.setTimeout(() => setIsActive(true), 100);
@@ -98,11 +107,11 @@ const Banner: React.FC = () => {
   const posterSrc = "/images/home_banner.webp";
   const videoSrc = "/video/banner_background.webm";
 
-  const cmsStillLoading = !cachedData && gqlLoading;
+  const cmsStillLoading = !cachedData && !initialData && gqlLoading;
   if (cmsStillLoading) return <BannerSkeleton />;
 
   return (
-    <LoadingProvider cachedData={cachedData ?? data}>
+    <LoadingProvider cachedData={cachedData ?? initialData ?? data}>
       <section
         className={`banner relative min-h-screen max-lg:min-h-[auto] overflow-hidden ${
           isActive ? "active" : ""

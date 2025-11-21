@@ -115,6 +115,8 @@ const ClientFeedback = () => {
                               <img
                                 src={testimonial.featuredImage.node.sourceUrl}
                                 alt={testimonial.featuredImage.node.altText || settings?.clientName || 'Client'}
+                                loading="lazy"
+                                fetchPriority="low"
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
                                   // Hide image on error

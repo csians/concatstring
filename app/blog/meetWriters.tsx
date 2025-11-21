@@ -141,6 +141,8 @@ const MeetWriters = () => {
                         alt={user.name}
                         width="84"
                         height="84"
+                        loading="lazy"
+                        fetchPriority="low"
                         className="rounded-full object-cover w-[84px] h-[84px] object-top"
                       />
                       <h3 className="font-denton font-bold text-[24px] text-white leading-[100%]">
@@ -166,6 +168,8 @@ const MeetWriters = () => {
                           alt={writersList.buttonIcon.node.altText}
                           width="15"
                           height="20"
+                          loading="lazy"
+                          fetchPriority="low"
                         />
                       )}
                     </a>

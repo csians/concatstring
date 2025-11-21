@@ -1,4 +1,0 @@
-# Cache directory for life page data
-# This directory stores cached GraphQL responses to improve performance
-# Cache files (*.json) are ignored by git but this directory structure is maintained
-

@@ -27,9 +27,10 @@ const useIsTouchDevice = () => {
 
 interface WorkImpactProps {
   showViewMore?: boolean;
+  initialData?: any;
 }
 
-const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
+const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true, initialData }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [isInViewport, setIsInViewport] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -39,10 +40,20 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
 
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.workImpact);
-  const { data } = useQuery(GET_POWERFUL_IMPACTS);
+  const { data } = useQuery(GET_POWERFUL_IMPACTS, {
+    skip: !!cachedData || !!initialData,
+  });
 
   useEffect(() => {
-    if (data) {
+    if (initialData && !cachedData) {
+      const workImpactBlock =
+        initialData?.page?.flexibleContent?.flexibleContent?.find(
+          (item: any) => item?.powerfulImpactTitle
+        );
+      if (workImpactBlock) {
+        dispatch(setWorkImpact(workImpactBlock));
+      }
+    } else if (data) {
       const workImpactBlock =
         data?.page?.flexibleContent?.flexibleContent?.find(
           (item: any) => item?.powerfulImpactTitle
@@ -51,7 +62,7 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
         dispatch(setWorkImpact(workImpactBlock));
       }
     }
-  }, [data, dispatch]);
+  }, [data, initialData, cachedData, dispatch]);
 
   // Intersection Observer to detect when component is in viewport
   useEffect(() => {
@@ -80,6 +91,10 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
 
   if (cachedData) {
     impactData = cachedData;
+  } else if (initialData) {
+    impactData = initialData?.page?.flexibleContent?.flexibleContent?.find(
+      (item: any) => item?.powerfulImpactTitle
+    );
   } else if (data) {
     impactData = data?.page?.flexibleContent?.flexibleContent?.find(
       (item: any) => item?.powerfulImpactTitle
@@ -401,6 +416,8 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
                                 group-hover:scale-[1.03] group-hover:-translate-y-[6px] group-hover:-translate-x-[4px] object-cover"
                                 width="900"
                                 height="480"
+                                loading="lazy"
+                                fetchPriority="low"
                               />
                               <div className={`logo absolute top-[46px] 2xl:left-[86px] xl:left-[86px] lg:left-[70px] md:left-[60px] sm:left-[50px] left-[30px] transition-opacity duration-500 ease-in-out z-[9999] ${isTouchDevice ? 'opacity-0' : 'opacity-100 group-hover:opacity-0'}`}>
                                 <img
@@ -408,6 +425,8 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
                                   alt={project?.techImage?.node?.altText || "Logo"}
                                   width="205"
                                   height="111"
+                                  loading="lazy"
+                                  fetchPriority="low"
                                 // className="2xl:w-[200px] xl:w-[200px] lg:w-[150px] md:w-[150px] sm:w-[130px] w-[120px]
                                 //  h-[100px]"
                                 />
@@ -421,6 +440,8 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
                                   }
                                   width="286"
                                   height="220"
+                                  loading="lazy"
+                                  fetchPriority="low"
                                   className="object-top object-contain 2xl:w-[286px] xl:w-[284px] lg:w-[200px] md:w-[200px] sm:w-[150px] w-[100px]
                           2xl:h-[220px] xl:h-[220px] lg:h-[200px] md:h-[180px] sm:h-[180px] h-[100px]"
                                 />
@@ -484,6 +505,8 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
                             src={project?.projectTechnologyImage?.node?.mediaItemUrl}
                             width="128"
                             height="70"
+                            loading="lazy"
+                            fetchPriority="low"
                             className={
                               activeTab === idx ? "opacity-100" : "opacity-50"
                             }

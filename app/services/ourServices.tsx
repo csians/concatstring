@@ -44,6 +44,8 @@ const OurServices = () => {
             autoPlay
             loop
             playsInline
+            preload="auto"
+            {...{ fetchPriority: "high" } as any}
             className="absolute top-0 left-0 w-full h-full object-cover object-center"
           >
             <source src={videoUrl} type={videoType} />

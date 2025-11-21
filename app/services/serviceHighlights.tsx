@@ -202,7 +202,7 @@ const ServiceHighlights = () => {
                                     width="46"
                                     height="46"
                                   /> */}
-                                  <img alt="view more" width="15" height="20" className="w-[15px] h-[20px]" src="https://staging1.concatstring.com/wp-content/uploads/2025/07/svgviewer-png-output.png"></img>
+                                  <img alt={settings.redirectSvg?.node?.altText ||"progress"} width="15" height="20" loading="lazy" fetchPriority="low" className="w-[15px] h-[20px]" src={settings.redirectSvg?.node?.sourceUrl ||"./images/gif/progress.gif"}  ></img>
                                 </Link>
                               </div>
                             </div>
@@ -212,6 +212,8 @@ const ServiceHighlights = () => {
                                 alt={settings.ourServiceSvg?.node?.altText}
                                 width="298"
                                 height="298"
+                                loading="lazy"
+                                fetchPriority="low"
                                 className="2xl:w-[298px] xl:w-[298px] lg:w-[298px] md:w-[298px] sm:w-[200px] w-[150px]"
                               />
                             </div>
@@ -225,6 +227,8 @@ const ServiceHighlights = () => {
                                 width="298"
                                 height="298"
                                 className="2xl:w-[298px] xl:w-[298px] lg:w-[298px] md:w-[298px] sm:w-[200px] w-[200px]"
+                                loading="lazy"
+                                fetchPriority="low"
                               />
                             </div>
                             <div className="flex flex-col gap-[24px] items-start 2xl:w-[calc(100%-310px)] xl:w-[calc(100%-310px)] lg:w-[calc(100%-310px)] md:w-[calc(100%-310px)] sm:w-full w-full">
@@ -344,7 +348,7 @@ const ServiceHighlights = () => {
                                   width="46"
                                   height="46"
                                 /> */}
-                                <img alt="view more" width="15" height="20" className="w-[15px] h-[20px]" src="https://staging1.concatstring.com/wp-content/uploads/2025/07/svgviewer-png-output.png"></img>
+                                <img alt={settings.redirectSvg?.node?.altText || "progress"} width="15" height="20" loading="lazy" fetchPriority="low" className="w-[15px] h-[20px]" src={settings.redirectSvg?.node?.sourceUrl ||"./images/gif/progress.gif"}></img>
                               </Link>
                             </div>
                           </>

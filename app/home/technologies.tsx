@@ -52,7 +52,7 @@ const TechnologyItem = React.memo(({ tech, index }: { tech: any; index: number }
             height={298}
             className="float-left"
             loading="lazy"
-            decoding="async"
+            fetchPriority="low"
           />
         )}
       </div>
@@ -62,8 +62,12 @@ const TechnologyItem = React.memo(({ tech, index }: { tech: any; index: number }
 
 TechnologyItem.displayName = 'TechnologyItem';
 
-const Technologies = React.memo(() => {
-  const { techSection, technologies, loading, error, hasData } = useTechnologiesData();
+interface TechnologiesProps {
+  initialData?: any;
+}
+
+const Technologies = React.memo(({ initialData }: TechnologiesProps) => {
+  const { techSection, technologies, loading, error, hasData } = useTechnologiesData(initialData);
 
   // Virtual scrolling for better performance with large lists
   const { visibleItems, handleScroll } = useVirtualScroll({

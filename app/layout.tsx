@@ -35,8 +35,7 @@ export default function RootLayout({
       <head>
         {/* Unpkg CDN - large Lottie script */}
         <link rel="preconnect" href="https://unpkg.com" crossOrigin="anonymous" />
-        {/* Preload banner image to prevent black flash on first render */}
-        <link rel="preload" as="image" href="/images/home_banner.webp" />
+       
         {/* <link
           href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
           rel="stylesheet"
