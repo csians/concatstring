@@ -8,22 +8,35 @@ import { setFaqData } from "@/store/slices/homeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 
-const Faq = () => {
+interface FaqProps {
+  initialData?: any;
+}
+
+const Faq = ({ initialData }: FaqProps) => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.faq);
-  // Skip query if cached data exists to prevent unnecessary refetches
+  // Skip query if cached data or initial data exists to prevent unnecessary refetches
   const { data } = useQuery(GET_FAQ, {
-    skip: !!cachedData,
+    skip: !!cachedData || !!initialData,
   });
 
-  const freshData = data?.page?.flexibleContent?.flexibleContent?.find(
+  const freshData = initialData?.page?.flexibleContent?.flexibleContent?.find(
+    (item: any) => item?.faqTitle
+  ) || data?.page?.flexibleContent?.flexibleContent?.find(
     (item: any) => item?.faqTitle
   );
 
   const faqSection = cachedData || freshData;
 
   useEffect(() => {
-    if (data) {
+    if (initialData && !cachedData) {
+      const faqBlock = initialData?.page?.flexibleContent?.flexibleContent?.find(
+        (item: any) => item?.faqTitle
+      );
+      if (faqBlock) {
+        dispatch(setFaqData(faqBlock));
+      }
+    } else if (data) {
       const faqBlock = data?.page?.flexibleContent?.flexibleContent?.find(
         (item: any) => item?.faqTitle
       );
@@ -31,7 +44,7 @@ const Faq = () => {
         dispatch(setFaqData(faqBlock));
       }
     }
-  }, [data, dispatch]);
+  }, [data, initialData, cachedData, dispatch]);
 
   const faqTitle = faqSection?.faqTitle;
   const faqItems = faqSection?.faqData?.nodes || [];

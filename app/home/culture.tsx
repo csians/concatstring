@@ -38,22 +38,35 @@ const useIsTouchDevice = () => {
   return isTouchDevice;
 };
 
-const Culture = () => {
+interface CultureProps {
+  initialData?: any;
+}
+
+const Culture = ({ initialData }: CultureProps) => {
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.csian);
-  // Skip query if cached data exists to prevent unnecessary refetches
+  // Skip query if cached data or initial data exists to prevent unnecessary refetches
   const { data, loading } = useQuery(GET_CSIAN_CULTURE, {
-    skip: !!cachedData,
+    skip: !!cachedData || !!initialData,
   });
   const isTouchDevice = useIsTouchDevice();
-  const freshData = data?.page?.flexibleContent?.flexibleContent?.find(
+  const freshData = initialData?.page?.flexibleContent?.flexibleContent?.find(
+    (block: any) => block?.csianTitle
+  ) || data?.page?.flexibleContent?.flexibleContent?.find(
     (block: any) => block?.csianTitle
   );
 
   const csianData = cachedData || freshData;
 
   useEffect(() => {
-    if (data) {
+    if (initialData && !cachedData) {
+      const csianBlock = initialData?.page?.flexibleContent?.flexibleContent?.find(
+        (block: any) => block?.csianTitle
+      );
+      if (csianBlock) {
+        dispatch(setCsianData(csianBlock));
+      }
+    } else if (data) {
       const csianBlock = data?.page?.flexibleContent?.flexibleContent?.find(
         (block: any) => block?.csianTitle
       );
@@ -61,10 +74,10 @@ const Culture = () => {
         dispatch(setCsianData(csianBlock));
       }
     }
-  }, [data, dispatch]);
+  }, [data, initialData, cachedData, dispatch]);
 
   // Show skeleton while loading and no cached data
-  if (loading && !cachedData) {
+  if (loading && !cachedData && !initialData) {
     return <CultureSkeleton />;
   }
 

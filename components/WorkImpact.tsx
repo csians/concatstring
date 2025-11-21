@@ -27,9 +27,10 @@ const useIsTouchDevice = () => {
 
 interface WorkImpactProps {
   showViewMore?: boolean;
+  initialData?: any;
 }
 
-const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
+const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true, initialData }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [isInViewport, setIsInViewport] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -39,10 +40,20 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
 
   const dispatch = useDispatch();
   const cachedData = useSelector((state: RootState) => state.home.workImpact);
-  const { data } = useQuery(GET_POWERFUL_IMPACTS);
+  const { data } = useQuery(GET_POWERFUL_IMPACTS, {
+    skip: !!cachedData || !!initialData,
+  });
 
   useEffect(() => {
-    if (data) {
+    if (initialData && !cachedData) {
+      const workImpactBlock =
+        initialData?.page?.flexibleContent?.flexibleContent?.find(
+          (item: any) => item?.powerfulImpactTitle
+        );
+      if (workImpactBlock) {
+        dispatch(setWorkImpact(workImpactBlock));
+      }
+    } else if (data) {
       const workImpactBlock =
         data?.page?.flexibleContent?.flexibleContent?.find(
           (item: any) => item?.powerfulImpactTitle
@@ -51,7 +62,7 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
         dispatch(setWorkImpact(workImpactBlock));
       }
     }
-  }, [data, dispatch]);
+  }, [data, initialData, cachedData, dispatch]);
 
   // Intersection Observer to detect when component is in viewport
   useEffect(() => {
@@ -80,6 +91,10 @@ const WorkImpact: React.FC<WorkImpactProps> = ({ showViewMore = true }) => {
 
   if (cachedData) {
     impactData = cachedData;
+  } else if (initialData) {
+    impactData = initialData?.page?.flexibleContent?.flexibleContent?.find(
+      (item: any) => item?.powerfulImpactTitle
+    );
   } else if (data) {
     impactData = data?.page?.flexibleContent?.flexibleContent?.find(
       (item: any) => item?.powerfulImpactTitle

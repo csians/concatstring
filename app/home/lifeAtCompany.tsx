@@ -9,22 +9,38 @@ import { setLifeAtCompanyData } from "@/store/slices/homeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 
-const LifeAtCompany = () => {
+interface LifeAtCompanyProps {
+  initialData?: any;
+}
+
+const LifeAtCompany = ({ initialData }: LifeAtCompanyProps) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const cachedData = useSelector(
     (state: RootState) => state.home.lifeAtCompany
   );
-  const { loading, error, data } = useQuery(GET_LIFE_AT_COMPANY_WITH_EVENTS);
+  const { loading, error, data } = useQuery(GET_LIFE_AT_COMPANY_WITH_EVENTS, {
+    skip: !!cachedData || !!initialData,
+  });
 
-  const freshData = data?.page?.flexibleContent?.flexibleContent?.find(
+  const freshData = initialData?.page?.flexibleContent?.flexibleContent?.find(
+    (item: any) => item.lifeAtCompanyTitle
+  ) || data?.page?.flexibleContent?.flexibleContent?.find(
     (item: any) => item.lifeAtCompanyTitle
   );
 
   const lifeAtCompanyData = cachedData || freshData;
 
   useEffect(() => {
-    if (data) {
+    if (initialData && !cachedData) {
+      const lifeAtCompanyBlock =
+        initialData?.page?.flexibleContent?.flexibleContent?.find(
+          (item: any) => item.lifeAtCompanyTitle
+        );
+      if (lifeAtCompanyBlock) {
+        dispatch(setLifeAtCompanyData(lifeAtCompanyBlock));
+      }
+    } else if (data) {
       const lifeAtCompanyBlock =
         data?.page?.flexibleContent?.flexibleContent?.find(
           (item: any) => item.lifeAtCompanyTitle
@@ -33,7 +49,7 @@ const LifeAtCompany = () => {
         dispatch(setLifeAtCompanyData(lifeAtCompanyBlock));
       }
     }
-  }, [data, dispatch]);
+  }, [data, initialData, cachedData, dispatch]);
 
   // Early return if no essential data exists
   // if (!lifeAtCompanyData?.lifeAtCompanyTitle) {
