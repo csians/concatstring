@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_EVENTS_BANNER, GET_LIFE_AT_COMPANY } from "@/lib/queries";
 import { setEventsBannerData } from "@/store/slices/eventsSlice";
@@ -12,46 +12,8 @@ const Banner = () => {
         (state: RootState) => state.events.eventsBanner
     );
 
-    const [cacheData, setCacheData] = useState<any>(null);
-    const [cacheLoading, setCacheLoading] = useState(true);
-    const [cacheError, setCacheError] = useState(false);
-
-    // Try to fetch from cache API first
-    useEffect(() => {
-        const fetchCache = async () => {
-            try {
-                const response = await fetch("/api/life-cache");
-                const result = await response.json();
-                if (result.success && result.data) {
-                    setCacheData(result.data);
-                    setCacheError(false);
-                } else {
-                    setCacheError(true);
-                }
-            } catch (error) {
-                console.error("Failed to fetch from cache:", error);
-                setCacheError(true);
-            } finally {
-                setCacheLoading(false);
-            }
-        };
-        fetchCache();
-    }, []);
-
-    // Skip GraphQL if cache is available (wait for cache to load first)
-    const shouldSkipGraphQL = cacheLoading ? true : !!cacheData;
-    
-    // Fallback to GraphQL only if cache is not available
-    const { data: eventsBannerData } = useQuery(GET_EVENTS_BANNER, {
-        skip: shouldSkipGraphQL,
-    });
-    const { data: lifeAtCompanyQueryData } = useQuery(GET_LIFE_AT_COMPANY, {
-        skip: shouldSkipGraphQL,
-    });
-
-    // Use cache data if available, otherwise use GraphQL data
-    const data = cacheData?.eventsBanner || eventsBannerData;
-    const lifeAtCompanyData = cacheData?.lifeAtCompany || lifeAtCompanyQueryData;
+    const { data } = useQuery(GET_EVENTS_BANNER);
+    const { data: lifeAtCompanyData } = useQuery(GET_LIFE_AT_COMPANY);
 
     const title = lifeAtCompanyData?.page?.flexibleContent?.flexibleContent?.find(
         (item: any) => item.lifeAtCompanyTitle
