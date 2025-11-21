@@ -121,6 +121,7 @@ const TechTalks = () => {
                 alt={blogIcons?.newIcon?.node?.altText}
                 width="108"
                 height="108"
+                loading="lazy"
                 className="2xl:w-[108px] xl:w-[108px] lg:w-[100px] md:w-[100px] sm:w-[80px] w-[60px]"
               />
             </div>
@@ -149,6 +150,7 @@ const TechTalks = () => {
                           alt={blogIcons.dateIcon.node.altText}
                           width="18"
                           height="18"
+                          loading="lazy"
                           className="md:w-[18px] md:h-[18px] w-[14px] h-[14px]"
                         />
                       )}
@@ -204,6 +206,7 @@ const TechTalks = () => {
                         alt={blogIcons.readMoreIcon.node.altText}
                         width="15"
                         height="20"
+                        loading="lazy"
                         className="md:w-[15px] md:h-[20px] w-[10px] h-[15px]"
                       />
                     )}

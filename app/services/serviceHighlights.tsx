@@ -202,7 +202,7 @@ const ServiceHighlights = () => {
                                     width="46"
                                     height="46"
                                   /> */}
-                                  <img alt="view more" width="15" height="20" loading="lazy" fetchPriority="low" className="w-[15px] h-[20px]" src="https://staging1.concatstring.com/wp-content/uploads/2025/07/svgviewer-png-output.png"></img>
+                                  <img alt={settings.redirectSvg?.node?.altText ||"progress"} width="15" height="20" loading="lazy" fetchPriority="low" className="w-[15px] h-[20px]" src={settings.redirectSvg?.node?.sourceUrl ||"./images/gif/progress.gif"}  ></img>
                                 </Link>
                               </div>
                             </div>
@@ -348,7 +348,7 @@ const ServiceHighlights = () => {
                                   width="46"
                                   height="46"
                                 /> */}
-                                <img alt="view more" width="15" height="20" loading="lazy" fetchPriority="low" className="w-[15px] h-[20px]" src="https://staging1.concatstring.com/wp-content/uploads/2025/07/svgviewer-png-output.png"></img>
+                                <img alt={settings.redirectSvg?.node?.altText || "progress"} width="15" height="20" loading="lazy" fetchPriority="low" className="w-[15px] h-[20px]" src={settings.redirectSvg?.node?.sourceUrl ||"./images/gif/progress.gif"}></img>
                               </Link>
                             </div>
                           </>
