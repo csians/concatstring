@@ -22,45 +22,10 @@ const Pagination = () => {
     (state: RootState) => state.events.lifeAtCompany
   );
 
-  const [cacheData, setCacheData] = useState<any>(null);
-  const [cacheLoading, setCacheLoading] = useState(true);
-  const [cacheError, setCacheError] = useState(false);
-
-  // Try to fetch from cache API first
-  useEffect(() => {
-    const fetchCache = async () => {
-      try {
-        const response = await fetch("/api/life-cache");
-        const result = await response.json();
-        if (result.success && result.data) {
-          setCacheData(result.data);
-          setCacheError(false);
-        } else {
-          setCacheError(true);
-        }
-      } catch (error) {
-        console.error("Failed to fetch from cache:", error);
-        setCacheError(true);
-      } finally {
-        setCacheLoading(false);
-      }
-    };
-    fetchCache();
-  }, []);
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9; // Number of images to show per page
 
-  // Skip GraphQL if cache is available (wait for cache to load first)
-  const shouldSkipGraphQL = cacheLoading ? true : !!cacheData;
-
-  // Fallback to GraphQL only if cache is not available
-  const { data: queryData } = useQuery(GET_LIFE_AT_COMPANY, {
-    skip: shouldSkipGraphQL,
-  });
-
-  // Use cache data if available, otherwise use GraphQL data
-  const data = cacheData?.lifeAtCompany || queryData;
+  const { data } = useQuery(GET_LIFE_AT_COMPANY);
 
   // Store data in Redux when it comes from query
   useEffect(() => {
