@@ -72,14 +72,19 @@ interface TeamGroup {
   };
 }
 
-const StrategySquad = () => {
+interface StrategySquadProps {
+  initialData?: any;
+}
+
+const StrategySquad = ({ initialData }: StrategySquadProps) => {
   const dispatch = useDispatch();
   const apolloClient = useApolloClient();
   const cachedTeamData = useSelector((state: RootState) => state.team.teamData);
   const { data, loading, error } = useQuery(GET_TEAM_LISTING, {
     fetchPolicy: 'cache-first', // Use cache first for faster loading
     errorPolicy: 'all',
-    notifyOnNetworkStatusChange: true
+    notifyOnNetworkStatusChange: true,
+    skip: !!cachedTeamData || !!initialData,
   });
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -153,9 +158,9 @@ const StrategySquad = () => {
     }
   };
 
-  // Prefetch data for better performance
+  // Prefetch data for better performance (only if we don't have initial data)
   const prefetchTeamData = useCallback(async () => {
-    if (!cachedTeamData) {
+    if (!cachedTeamData && !initialData) {
       try {
         await apolloClient.query({
           query: GET_TEAM_LISTING,
@@ -165,20 +170,22 @@ const StrategySquad = () => {
         console.warn('Failed to prefetch team data:', error);
       }
     }
-  }, [apolloClient, cachedTeamData]);
+  }, [apolloClient, cachedTeamData, initialData]);
 
   // Prefetch data on component mount
   useEffect(() => {
     prefetchTeamData();
   }, [prefetchTeamData]);
   useEffect(() => {
-    if (data) {
+    if (initialData && !cachedTeamData) {
+      dispatch(setTeamData(initialData));
+    } else if (data) {
       dispatch(setTeamData(data));
     }
-  }, [data, dispatch]);
+  }, [data, initialData, cachedTeamData, dispatch]);
 
-  // Use Redux first
-  const finalData = cachedTeamData || data;
+  // Use Redux first, otherwise initial data, then GraphQL response
+  const finalData = cachedTeamData || initialData || data;
   useEffect(() => {
     const handleEscKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isPopupOpen) {

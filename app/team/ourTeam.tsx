@@ -8,20 +8,28 @@ import { GET_TEAM_LISTING } from "@/lib/queries";
 import { TeamBannerSkeleton } from "@/components/skeletons";
 import Image from "next/image";
 
-const OurTeam = () => {
+interface OurTeamProps {
+  initialData?: any;
+}
+
+const OurTeam = ({ initialData }: OurTeamProps) => {
   const dispatch = useDispatch();
   const cachedTeamData = useSelector((state: RootState) => state.team.teamData);
 
-  const { data, loading, error } = useQuery(GET_TEAM_LISTING);
+  const { data, loading, error } = useQuery(GET_TEAM_LISTING, {
+    skip: !!cachedTeamData || !!initialData,
+  });
   // When data arrives, save to Redux
   useEffect(() => {
-    if (data) {
+    if (initialData && !cachedTeamData) {
+      dispatch(setTeamData(initialData));
+    } else if (data) {
       dispatch(setTeamData(data));
     }
-  }, [data, dispatch]);
+  }, [data, initialData, cachedTeamData, dispatch]);
 
-  // Use Redux first, otherwise GraphQL response
-  const finalData = cachedTeamData || data;
+  // Use Redux first, otherwise initial data, then GraphQL response
+  const finalData = cachedTeamData || initialData || data;
 
   const teamListingData =
     finalData?.page?.flexibleContent?.flexibleContent?.find(
@@ -34,7 +42,7 @@ const OurTeam = () => {
 
   const titleWords = teamListTitle ? teamListTitle.split(" ") : [];
 
-  if (!cachedTeamData || loading) {
+  if ((!cachedTeamData && !initialData) || loading) {
     return <TeamBannerSkeleton />;
   }
 
