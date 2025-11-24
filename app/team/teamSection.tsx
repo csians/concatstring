@@ -75,10 +75,16 @@ interface TeamGroup {
   } | null;
 }
 
-const TeamSection: React.FC = () => {
+interface TeamSectionProps {
+  initialData?: any;
+}
+
+const TeamSection: React.FC<TeamSectionProps> = ({ initialData }) => {
   const cachedTeamData = useSelector((state: RootState) => state.team.teamData);
   const dispatch = useDispatch();
-  const { data: teamListingData, loading, error } = useQuery(GET_TEAM_LISTING);
+  const { data: teamListingData, loading, error } = useQuery(GET_TEAM_LISTING, {
+    skip: !!cachedTeamData || !!initialData,
+  });
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isPopupDataReady, setIsPopupDataReady] = useState(false);
@@ -105,13 +111,15 @@ const TeamSection: React.FC = () => {
     );
   }, []);
   useEffect(() => {
-    if (teamListingData) {
+    if (initialData && !cachedTeamData) {
+      dispatch(setTeamData(initialData));
+    } else if (teamListingData) {
       dispatch(setTeamData(teamListingData));
     }
-  }, [teamListingData, dispatch]);
+  }, [teamListingData, initialData, cachedTeamData, dispatch]);
 
-  // Use Redux data if available
-  const finalData = cachedTeamData || teamListingData;
+  // Use Redux data if available, otherwise initial data, then GraphQL response
+  const finalData = cachedTeamData || initialData || teamListingData;
 
   // Memoize layout & group selection to avoid unnecessary recalculations on re-renders
   const visionArchitectsGroup: TeamGroup | undefined = useMemo(() => {
