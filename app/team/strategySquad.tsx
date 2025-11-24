@@ -7,6 +7,7 @@ import { RootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setTeamData } from "@/store/slices/teamSlice";
 import Link from "next/link";
+import Image from "next/image";
 
 interface TeamMember {
   teamSetting: {
@@ -71,14 +72,19 @@ interface TeamGroup {
   };
 }
 
-const StrategySquad = () => {
+interface StrategySquadProps {
+  initialData?: any;
+}
+
+const StrategySquad = ({ initialData }: StrategySquadProps) => {
   const dispatch = useDispatch();
   const apolloClient = useApolloClient();
   const cachedTeamData = useSelector((state: RootState) => state.team.teamData);
   const { data, loading, error } = useQuery(GET_TEAM_LISTING, {
     fetchPolicy: 'cache-first', // Use cache first for faster loading
     errorPolicy: 'all',
-    notifyOnNetworkStatusChange: true
+    notifyOnNetworkStatusChange: true,
+    skip: !!cachedTeamData || !!initialData,
   });
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -152,9 +158,9 @@ const StrategySquad = () => {
     }
   };
 
-  // Prefetch data for better performance
+  // Prefetch data for better performance (only if we don't have initial data)
   const prefetchTeamData = useCallback(async () => {
-    if (!cachedTeamData) {
+    if (!cachedTeamData && !initialData) {
       try {
         await apolloClient.query({
           query: GET_TEAM_LISTING,
@@ -164,20 +170,22 @@ const StrategySquad = () => {
         console.warn('Failed to prefetch team data:', error);
       }
     }
-  }, [apolloClient, cachedTeamData]);
+  }, [apolloClient, cachedTeamData, initialData]);
 
   // Prefetch data on component mount
   useEffect(() => {
     prefetchTeamData();
   }, [prefetchTeamData]);
   useEffect(() => {
-    if (data) {
+    if (initialData && !cachedTeamData) {
+      dispatch(setTeamData(initialData));
+    } else if (data) {
       dispatch(setTeamData(data));
     }
-  }, [data, dispatch]);
+  }, [data, initialData, cachedTeamData, dispatch]);
 
-  // Use Redux first
-  const finalData = cachedTeamData || data;
+  // Use Redux first, otherwise initial data, then GraphQL response
+  const finalData = cachedTeamData || initialData || data;
   useEffect(() => {
     const handleEscKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isPopupOpen) {
@@ -283,18 +291,30 @@ const StrategySquad = () => {
                       onClick={() => handleMemberClick(member)}
                     >
                       {/* Static Background Image */}
-                      <img
-                        src={member.teamSetting.memberImage?.node?.sourceUrl}
-                        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0 object-top"
-                        alt={member.teamSetting.memberImage?.node?.altText}
-                      />
+                      {member.teamSetting.memberImage?.node?.sourceUrl && (
+                        <Image
+                          src={member.teamSetting.memberImage.node.sourceUrl}
+                          alt={member.teamSetting.memberImage.node.altText || member.teamSetting.memberName}
+                          fill
+                          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0 object-top"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          loading="lazy"
+                          fetchPriority="low"
+                        />
+                      )}
 
                       {/* GIF on Hover */}
-                      <img
-                        src={member.teamSetting.memberGif?.node?.sourceUrl}
-                        className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        alt={member.teamSetting.memberGif?.node?.altText}
-                      />
+                      {member.teamSetting.memberGif?.node?.sourceUrl && (
+                        <Image
+                          src={member.teamSetting.memberGif.node.sourceUrl}
+                          alt={member.teamSetting.memberGif.node.altText || member.teamSetting.memberName}
+                          fill
+                          className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          loading="lazy"
+                          fetchPriority="low"
+                        />
+                      )}
 
                       {/* Content Area */}
                       <div className="bg-white rounded-[12px] p-[8px] sm:p-[12px] md:p-[15px] relative w-full z-10 flex items-center gap-[6px] sm:gap-[10px]">
@@ -408,17 +428,18 @@ const StrategySquad = () => {
                   <div className="xl:w-[auto] lg:w-[auto] max-h-[calc(100vh-80px)] w-full xl:h-[auto] lg:h-[100%] h-[auto] relative  xl:pr-[20px] pr-[20px] lg:pr-[0px] rounded-[10px] overflow-hidden sm:max-w-[520px] lg:m-[0] sm:m-[auto] max-lg:pe-[0] aspect-[400/470]">
                     <div className="w-full h-full">
                       <div className="w-full h-full overflow-hidden rounded-[10px]">
-                        <img
-                          src={
-                            selectedMember?.teamSetting?.memberImage?.node
-                              ?.sourceUrl
-                          }
-                          alt={
-                            selectedMember?.teamSetting?.memberImage?.node
-                              ?.altText
-                          }
-                          className="w-full h-full object-cover object-top aspect-[400/470]"
-                        />
+                        {selectedMember?.teamSetting?.memberImage?.node?.sourceUrl && (
+                          <Image
+                            src={selectedMember.teamSetting.memberImage.node.sourceUrl}
+                            alt={selectedMember.teamSetting.memberImage.node.altText || selectedMember.teamSetting.memberName}
+                            width={400}
+                            height={470}
+                            className="w-full h-full object-cover object-top aspect-[400/470]"
+                            sizes="(max-width: 768px) 100vw, 400px"
+                            loading="lazy"
+                            fetchPriority="low"
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -500,16 +521,14 @@ const StrategySquad = () => {
                                 className="group w-[25px] h-[25px] flex items-center justify-center"
                               >
                                 {selectedMember.teamSetting.socialSvg && (
-                                  <img
-                                    src={
-                                      selectedMember.teamSetting.socialSvg.node
-                                        .sourceUrl
-                                    }
-                                    alt={
-                                      selectedMember.teamSetting.socialSvg.node
-                                        .altText
-                                    }
+                                  <Image
+                                    src={selectedMember.teamSetting.socialSvg.node.sourceUrl}
+                                    alt={selectedMember.teamSetting.socialSvg.node.altText || "Social link"}
+                                    width={20}
+                                    height={20}
                                     className="w-[20px] h-[20px] group-hover:scale-[1.1]"
+                                    loading="lazy"
+                                    fetchPriority="low"
                                   />
                                 )}
                               </Link>
