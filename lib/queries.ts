@@ -45,41 +45,43 @@ export const GET_HEADER_MENU = gql`
 
 export const GET_FOOTER_MENU = gql`
   query GetFooterMenu {
-    footerSettings {
-      footerOptions {
-        newsletterTitle
-        footerPaths {
-          pathLink {
-            target
-            title
-            url
-          }
-        }
-        servicesTitle
-        serviceName {
-          nodes {
-            ... on Technology {
-              title
-            }
-            id
-            slug
-          }
-        }
-        companyAddress
-        companyNumber
-        companyEmail
-        rightsTitle
-        termsLink {
-          title
-          url
-        }
-        privacyLink {
+  footerSettings {
+    footerOptions {
+      newsletterTitle
+      footerPaths {
+        pathLink {
+          target
           title
           url
         }
       }
+      servicesTitle
+      serviceName {
+        nodes {
+          ... on Technology {
+            title
+          }
+          id
+          slug
+        }
+      }
+      companyAddress
+      companyNumber
+      companyEmail
+      rightsTitle
+      termsLink {
+        title
+        url
+      }
+      privacyLink {
+        title
+        url
+      }
+      usCompanyAddress
+      usCompanyNumber
     }
   }
+}
 `;
 
 export const GET_BANNER_CONTENT = gql`
