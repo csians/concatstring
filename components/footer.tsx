@@ -296,7 +296,7 @@ const Footer = () => {
                           <defs><linearGradient id="paint0_linear_fa1" x1="23.9957" y1="19.5732" x2="23.9957" y2="34.1693" gradientUnits="userSpaceOnUse"><stop offset="0.037" stopColor="#DA2124" /><stop offset="1" stopColor="#8E1D1D" /></linearGradient></defs>
                         </svg>
                       </span>
-                      <span className="font-lato text-white font-normal text-[16px] leading-[24px] flex-1">{footer.companyAddress}</span>
+                      <span className="font-lato text-white font-normal text-[16px] leading-[24px] flex-1"><span className="mr-2 inline-block text-[20px] leading-[24px]" aria-hidden>🇮🇳</span>{footer.companyAddress}</span>
                     </Link>
                   )}
                   {footer?.companyAddress && footer?.companyNumber && <div className="h-px w-full bg-[#434345] my-[16px] shrink-0" aria-hidden />}
@@ -326,7 +326,7 @@ const Footer = () => {
                           <defs><linearGradient id="paint0_linear_fa2" x1="23.9957" y1="19.5732" x2="23.9957" y2="34.1693" gradientUnits="userSpaceOnUse"><stop offset="0.037" stopColor="#DA2124" /><stop offset="1" stopColor="#8E1D1D" /></linearGradient></defs>
                         </svg>
                       </span>
-                      <span className="font-lato text-white font-normal text-[16px] leading-[24px] flex-1">{footer.usCompanyAddress}</span>
+                      <span className="font-lato text-white font-normal text-[16px] leading-[24px] flex-1"><span className="mr-2 inline-block text-[20px] leading-[24px]" aria-hidden>🇺🇸</span>{footer.usCompanyAddress}</span>
                     </Link>
                   )}
                   {footer?.usCompanyAddress && footer?.usCompanyNumber && <div className="h-px w-full bg-[#434345] my-[16px] shrink-0" aria-hidden />}
