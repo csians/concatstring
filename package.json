@@ -6,8 +6,7 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start -p 3001",
-    "convert:webp": "node convert-png-to-webp.js"
+    "start": "next start -p 4100"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
