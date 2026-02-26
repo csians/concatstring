@@ -286,7 +286,7 @@ const Footer = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[20px] 2xl:gap-[30px] xl:gap-[30px] lg:gap-[25px]">
               {/* Card 1: Minneapolis (US) — address + phone */}
               <div className="p-[1px] rounded-[12px] bg-[linear-gradient(180deg,_#54A3DA_0%,_#E72125_100%)] h-full min-h-[140px]">
-                <div className="flex flex-col gap-[16px] bg-[#2B2B2B] rounded-[12px] h-full min-h-[140px] 2xl:py-[24px] xl:py-[24px] lg:py-[24px] md:py-[20px] py-[20px] 2xl:px-[24px] xl:px-[24px] lg:px-[20px] md:px-[20px] px-[20px]">
+                <div className={`flex flex-col gap-[16px] bg-[#2B2B2B] rounded-[12px] h-full min-h-[140px] 2xl:py-[24px] xl:py-[24px] lg:py-[24px] md:py-[20px] py-[20px] 2xl:px-[24px] xl:px-[24px] lg:px-[20px] md:px-[20px] px-[20px] ${footer?.usCompanyAddress && !footer?.usCompanyNumber ? "justify-center" : ""}`}>
                   {footer?.usCompanyAddress && (
                     <Link href="https://maps.app.goo.gl/Fq1hJhXXHjjCmMf57" target="_blank" rel="noopener noreferrer" className="flex items-start gap-[15px] text-left hover:opacity-90 transition-opacity">
                       <span className="icon w-[50px] h-[50px] shrink-0 flex items-center justify-center">
@@ -316,7 +316,7 @@ const Footer = () => {
               </div>
               {/* Card 2: Ahmedabad (India) — address + phone */}
               <div className="p-[1px] rounded-[12px] bg-[linear-gradient(180deg,_#54A3DA_0%,_#E72125_100%)] h-full min-h-[140px]">
-                <div className="flex flex-col gap-[16px] bg-[#2B2B2B] rounded-[12px] h-full min-h-[140px] 2xl:py-[24px] xl:py-[24px] lg:py-[24px] md:py-[20px] py-[20px] 2xl:px-[24px] xl:px-[24px] lg:px-[20px] md:px-[20px] px-[20px]">
+                <div className={`flex flex-col gap-[16px] bg-[#2B2B2B] rounded-[12px] h-full min-h-[140px] 2xl:py-[24px] xl:py-[24px] lg:py-[24px] md:py-[20px] py-[20px] 2xl:px-[24px] xl:px-[24px] lg:px-[20px] md:px-[20px] px-[20px] ${footer?.companyAddress && !footer?.companyNumber ? "justify-center" : ""}`}>
                   {footer?.companyAddress && (
                     <Link href="https://maps.app.goo.gl/2ENUbrW1qMk1FeBj8" target="_blank" rel="noopener noreferrer" className="flex items-start gap-[15px] text-left hover:opacity-90 transition-opacity">
                       <span className="icon w-[50px] h-[50px] shrink-0 flex items-center justify-center">
