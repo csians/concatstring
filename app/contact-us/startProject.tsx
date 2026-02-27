@@ -1491,7 +1491,7 @@ const MultiStepForm = () => {
   };
 
   return (
-    <section className="bg-[linear-gradient(358.24deg,_rgba(44,56,148,0)_-2.9%,_rgba(84,163,218,0.5)_98.71%)] py-[120px] pt-[200px] sm:pt-[200px] md:pt-[240px] lg:pt-[240px] xl:pt-[250px] 2xl:pt-[254px]">
+    <section className="bg-[linear-gradient(358.24deg,_rgba(44,56,148,0)_-2.9%,_rgba(84,163,218,0.5)_98.71%)] pb-[80px] pt-[200px] sm:pt-[200px] md:pt-[240px] lg:pt-[240px] xl:pt-[250px] 2xl:pt-[254px]">
       <div className="container max-w-[1640px] px-[20px] w-full mx-auto">        
         <div className="flex flex-col items-center justify-center lg:gap-[120px] md:gap-[80px] gap-[50px]">
           <div className="flex flex-col gap-[16px] items-center justify-center">
@@ -1505,7 +1505,7 @@ const MultiStepForm = () => {
             </p>
           </div>
 
-          <div className="max-lg:bg-[#2e0707]  lg:bg-[url('/images/contact/box-bg.svg')] 2xl:px-[130px] xl:px-[130px] lg:px-[100px] md:px-[80px] sm:px-[50px] px-[30px] rounded-[34px] 2xl:min-h-[900px] xl:min-h-[900px] lg:min-h-[900px] md:min-h-full sm:min-h-full min-h-full mb-[24px] sm:mb-[40px] md:mb-[50px] lg:mb-[60px] w-full relative bg-cover bg-bottom h-full flex justify-center items-center relative pt-[50px] pb-[50px] overflow-hidden">
+          <div className="max-lg:bg-[#2e0707]  lg:bg-[url('/images/contact/box-bg.svg')] 2xl:px-[130px] xl:px-[130px] lg:px-[100px] md:px-[80px] sm:px-[50px] px-[30px] rounded-[34px] 2xl:min-h-[900px] xl:min-h-[900px] lg:min-h-[900px] md:min-h-full sm:min-h-full min-h-full mb-[16px] sm:mb-[24px] md:mb-[32px] lg:mb-[40px] w-full relative bg-cover bg-bottom h-full flex justify-center items-center relative pt-[50px] pb-[50px] overflow-hidden">
             <div className="flex flex-col items-center justify-center h-full w-full">
               <div className="flex flex-col items-center justify-center w-full self-center justify-self-center h-full">
                 <h2 className="font-denton font-bold 2xl:text-[92px] xl:text-[92px] lg:text-[70px] md:text-[50px] sm:text-[40px] text-[30px] 2xl:leading-[122px] xl:leading-[122px] lg:leading-[100px] md:leading-[60px] sm:leading-[50px] leading-[40px] text-center text-white 2xl:mb-[60px] xl:mb-[60px] lg:mb-[50px] md:mb-[40px] sm:mb-[30px] mb-[20px]">

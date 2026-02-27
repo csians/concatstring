@@ -1478,7 +1478,6 @@ query GetLifeAtCompany {
                       }
                     }
                   }
-                  eventCategory
                   eventVideos {
                     eventVideo {
                       node {
@@ -1530,7 +1529,6 @@ export const GET_LIFE_AT_COMPANY_WITH_EVENTS = gql`
                     title
                     url
                   }
-                  eventCategory
                 }
               }
             }
@@ -1634,10 +1632,6 @@ export const GET_TEAM_LISTING = gql`
                           altText
                           sourceUrl
                         }
-                      }
-                      memberExperienceInfo {
-                        experienceTitle
-                        experienceDate
                       }
                     }
                   }

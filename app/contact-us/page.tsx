@@ -1,5 +1,6 @@
 import React from "react";
 import StartProject from "@/app/contact-us/startProject";
+import SmsUpdatesForm from "@/app/contact-us/SmsUpdatesForm";
 import Faq from "@/app/contact-us/faq";
 import LoadingProvider from "@/components/LoadingContext";
 import { generateSeoMetadata } from "@/components/SEOComponent";
@@ -12,6 +13,7 @@ const page = () => {
   return (
     <LoadingProvider>
       <StartProject />
+      <SmsUpdatesForm />
       <Faq />
     </LoadingProvider>
   );

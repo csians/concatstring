@@ -74,13 +74,8 @@ const LifeAtCompany = ({ initialData }: LifeAtCompanyProps) => {
 
   const events = rawEvents
     .filter((e: any) => {
-      const { eventDate, eventCategory } = e?.eventSettings || {};
-      if (!eventDate || !eventCategory) return false;
-
-      const categories = []
-        .concat(eventCategory)
-        .map((c: string) => c.toLowerCase());
-      return categories.includes("main");
+      const { eventDate } = e?.eventSettings || {};
+      return !!eventDate;
     })
 
     .sort((a: any, b: any) => {
