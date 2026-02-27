@@ -747,3 +747,41 @@ button:hover {
     height: 47px !important;
   }
 }
+
+/* Phone input styling overrides (dark theme) */
+.react-tel-input .form-control,
+.react-tel-input .form-control:focus {
+  background-color: #111218 !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Flag / dropdown button area (remove white when open) */
+.react-tel-input .flag-dropdown,
+.react-tel-input .selected-flag {
+  background-color: #151824 !important;
+  border: none !important;
+}
+
+.react-tel-input .flag-dropdown.open,
+.react-tel-input .flag-dropdown.open .selected-flag,
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag:focus {
+  background-color: #151824 !important;
+}
+
+.react-tel-input .country-list {
+  background-color: #050308 !important;
+  border: 1px solid #2b2b2b !important;
+}
+
+.react-tel-input .country-list .country {
+  color: #e1e1e1 !important;
+}
+
+.react-tel-input .country-list .country:hover,
+.react-tel-input .country-list .country.highlight {
+  background-color: #262636 !important; /* visible dark hover */
+  color: #ffffff !important;
+}

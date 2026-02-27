@@ -304,7 +304,7 @@ const Faq = () => {
   }, [faqNodes]);
 
   return (
-    <section className="faq pb-[120px]">
+    <section className="faq pt-[80px] pb-[120px]">
       <div className="container max-w-[1432px] px-[20px] mx-auto w-full">
         <h2 className="font-denton font-bold 2xl:text-[66px] xl:text-[66px] lg:text-[50px] md:text-[40px] sm:text-[30px] text-[30px] leading-[100%] text-white 2xl:mb-[62px] xl:mb-[62px] lg:mb-[50px] md:mb-[40px] sm:mb-[30px] mb-[25px]">
           {faqTitle}

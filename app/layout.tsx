@@ -8,6 +8,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import StickyButton from "@/components/StickyButton";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "react-phone-input-2/lib/style.css";
 import { generateSeoMetadata } from "@/components/SEOComponent";
 import CookieConsent from "@/components/CookieConsent";
 import CookiePreferencesButton from "@/components/CookiePreferencesButton";
